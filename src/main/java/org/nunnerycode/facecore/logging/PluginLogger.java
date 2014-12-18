@@ -1,6 +1,7 @@
 package org.nunnerycode.facecore.logging;
 
 import org.bukkit.plugin.Plugin;
+import org.nunnerycode.facecore.utilities.IOUtils;
 import org.nunnerycode.kern.apache.commons.lang3.Validate;
 
 import java.io.File;
@@ -51,6 +52,9 @@ public final class PluginLogger {
         Validate.notNull(message, "message cannot be null");
         Validate.notNull(file, "file cannot be null");
         File writeFile = file;
+        if (!IOUtils.createFile(writeFile)) {
+            return;
+        }
         try (FileWriter fileWriter = new FileWriter(writeFile, true); PrintWriter writer = new PrintWriter(fileWriter)) {
             writer.println("[" + level.getName() + "] " + Calendar.getInstance().getTime().toString() + " | " + message);
         } catch (IOException e) {
@@ -76,6 +80,9 @@ public final class PluginLogger {
         Validate.notNull(messages, "message cannot be null");
         Validate.notNull(file, "file cannot be null");
         File writeFile = file;
+        if (!IOUtils.createFile(writeFile)) {
+            return;
+        }
         try (FileWriter fileWriter = new FileWriter(writeFile, true); PrintWriter writer = new PrintWriter(fileWriter)) {
             String time = Calendar.getInstance().getTime().toString();
             for (String message : messages) {
