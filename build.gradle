@@ -79,7 +79,7 @@ shadowJar {
 
 license {
     header file('HEADER')
-    sourceSets = project.sourceSets
+    include "src/main/java/org/nunnerycode/facecore/**/*.java"
     ignoreFailures false
     strictCheck true
     mapping {
