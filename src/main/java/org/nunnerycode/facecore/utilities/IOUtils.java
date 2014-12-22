@@ -48,12 +48,32 @@ public final class IOUtils {
         boolean succeeded = file.exists();
         if (!succeeded) {
             try {
-                succeeded = file.isDirectory() ? file.mkdirs() : file.createNewFile();
+                succeeded = file.createNewFile();
             } catch (IOException ignored) {
                 // do nothing here
             }
         }
         return succeeded;
+    }
+
+    /**
+     * Create a directory at the given path.
+     * @param path path to directory
+     * @return if creation was successful
+     */
+    public static boolean createDirectory(String path) {
+        Validate.notNull(path, "path cannot be null");
+        return createDirectory(new File(path));
+    }
+
+    /**
+     * Create a directory from the given {@link java.io.File}.
+     * @param file directory to create
+     * @return if creation was successful
+     */
+    public static boolean createDirectory(File file) {
+        Validate.notNull(file, "file cannot be null");
+        return file.exists() || file.mkdirs();
     }
 
 }
