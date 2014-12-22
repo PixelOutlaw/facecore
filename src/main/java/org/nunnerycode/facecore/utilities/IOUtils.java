@@ -48,7 +48,7 @@ public final class IOUtils {
         boolean succeeded = file.exists();
         if (!succeeded) {
             try {
-                succeeded = file.createNewFile();
+                succeeded = file.isDirectory() ? file.mkdirs() : file.createNewFile();
             } catch (IOException ignored) {
                 // do nothing here
             }
