@@ -27,13 +27,49 @@ repositories {
     }
 }
 
-artifacts {
-    archives shadowJar
-}
-
 dependencies {
     compile "org.nunnerycode:kern-all:0.0.3"
     compile "com.comphenix.attribute:AttributeStorage:0.0.2-SNAPSHOT"
+}
+
+processResources {
+    filter ReplaceTokens, tokens: [
+            VERSION: version + "-" + (System.getenv("DRONE") != null ? "drone" : "compiled") + "-" + (System.getenv("BUILD_ID") ?: "0"),
+            NAME: project.name
+    ]
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+shadowJar {
+    baseName = "facecore-gradle-all"
+    classifier = ""
+
+    relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
+}
+
+artifacts {
+    archives shadowJar
+    archives sourcesJar
+    archives javadocJar
+}
+
+license {
+    header file('HEADER')
+    include "src/main/java/org/nunnerycode/facecore/**/*.java"
+    ignoreFailures false
+    strictCheck true
+    mapping {
+        java = 'SLASHSTAR_STYLE'
+    }
 }
 
 publishing {
@@ -56,33 +92,5 @@ publishing {
                 password System.getenv("nexusPassword") ?: nexusPassword
             }
         }
-    }
-}
-
-processResources {
-    filter ReplaceTokens, tokens: [
-            VERSION: version + "-" + (System.getenv("DRONE") != null ? "drone" : "compiled") + "-" + (System.getenv("BUILD_ID") ?: "0"),
-            NAME: project.name
-    ]
-}
-
-shadowJar {
-    baseName = "facecore-gradle-all"
-    classifier = ""
-
-    dependencies {
-        include("org.nunnerycode:kern-all:0.0.3")
-    }
-
-    relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
-}
-
-license {
-    header file('HEADER')
-    include "src/main/java/org/nunnerycode/facecore/**/*.java"
-    ignoreFailures false
-    strictCheck true
-    mapping {
-        java = 'SLASHSTAR_STYLE'
     }
 }

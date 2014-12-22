@@ -18,6 +18,7 @@ import org.bukkit.event.HandlerList;
 import org.nunnerycode.facecore.plugin.FacePlugin;
 import org.nunnerycode.facecore.profile.PlayerJoinListener;
 import org.nunnerycode.facecore.profile.PlayerResolver;
+import org.nunnerycode.facecore.utilities.IOUtils;
 
 public final class FacecorePlugin extends FacePlugin {
 
@@ -26,6 +27,7 @@ public final class FacecorePlugin extends FacePlugin {
 
     @Override
     public void enable() {
+        IOUtils.createDirectory(getDataFolder());
         playerResolver = new PlayerResolver(this);
         playerJoinListener = new PlayerJoinListener(playerResolver);
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
