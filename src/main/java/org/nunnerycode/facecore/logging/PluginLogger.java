@@ -34,7 +34,9 @@ public final class PluginLogger {
 
     /**
      * Constructs a new PluginLogger with a debug file in the given Plugin's data folder.
-     * @param plugin Plugin owning this PluginLogger
+     *
+     * @param plugin
+     *         Plugin owning this PluginLogger
      */
     public PluginLogger(Plugin plugin) {
         this.file = new File(plugin.getDataFolder(), "debug.log");
@@ -42,7 +44,9 @@ public final class PluginLogger {
 
     /**
      * Constructs a new PluginLogger with the given debug file.
-     * @param file File to log to
+     *
+     * @param file
+     *         File to log to
      */
     public PluginLogger(File file) {
         this.file = file;
@@ -50,7 +54,9 @@ public final class PluginLogger {
 
     /**
      * Logs a message with a default {@link java.util.logging.Level} of {@link java.util.logging.Level#INFO}.
-     * @param message message to log
+     *
+     * @param message
+     *         message to log
      */
     public void log(String message) {
         log(Level.INFO, message);
@@ -58,8 +64,11 @@ public final class PluginLogger {
 
     /**
      * Logs a message with a given {@link java.util.logging.Level}.
-     * @param level Level of logging message
-     * @param message message to log
+     *
+     * @param level
+     *         Level of logging message
+     * @param message
+     *         message to log
      */
     public void log(Level level, String message) {
         Validate.notNull(level, "level cannot be null");
@@ -78,7 +87,9 @@ public final class PluginLogger {
 
     /**
      * Logs messages with a default {@link java.util.logging.Level} of {@link java.util.logging.Level#INFO}.
-     * @param messages messages to log
+     *
+     * @param messages
+     *         messages to log
      */
     public void log(Iterable<String> messages) {
         log(Level.INFO, messages);
@@ -86,8 +97,11 @@ public final class PluginLogger {
 
     /**
      * Logs messages with a given {@link java.util.logging.Level}.
-     * @param level Level of logging message
-     * @param messages messages to log
+     *
+     * @param level
+     *         Level of logging message
+     * @param messages
+     *         messages to log
      */
     public void log(Level level, Iterable<String> messages) {
         Validate.notNull(level, "level cannot be null");

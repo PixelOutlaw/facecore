@@ -22,22 +22,22 @@ public abstract class FacePlugin extends JavaPlugin {
     private PluginLogger pluginLogger;
 
     @Override
+    public final void onDisable() {
+        disable();
+    }
+
+    @Override
     public final void onEnable() {
         pluginLogger = new PluginLogger(this);
         enable();
     }
 
-    @Override
-    public final void onDisable() {
-        disable();
-    }
+    public abstract void enable();
+
+    public abstract void disable();
 
     public PluginLogger getPluginLogger() {
         return pluginLogger;
     }
-
-    public abstract void enable();
-
-    public abstract void disable();
 
 }

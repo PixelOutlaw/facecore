@@ -4,20 +4,11 @@ import org.bukkit.Bukkit;
 
 public class BukkitTool {
 
-    public static enum ClassType {
-        NMS,
-        CB
+    public static Class getNMSClass(String name) {
+        return getClass(getNMSPackageName() + "." + name);
     }
 
-    public static String getNMSPackageName() {
-        return "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-    }
-
-    public static String getOBCPackageName(){
-        return "org.bukkit.craftbukkit" + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
-    }
-
-    public static Class getClass(String name){
+    public static Class getClass(String name) {
         try {
             return Class.forName(name);
         } catch (ClassNotFoundException e) {
@@ -26,11 +17,20 @@ public class BukkitTool {
         }
     }
 
-    public static Class getNMSClass(String name){
-        return getClass(getNMSPackageName() + "." + name);
+    public static String getNMSPackageName() {
+        return "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
 
-    public static Class getCBClass(String name){
+    public static Class getCBClass(String name) {
         return getClass(getOBCPackageName() + "." + name);
+    }
+
+    public static String getOBCPackageName() {
+        return "org.bukkit.craftbukkit" + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+    }
+
+    public static enum ClassType {
+        NMS,
+        CB
     }
 }
