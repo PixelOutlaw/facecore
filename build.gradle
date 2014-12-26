@@ -30,6 +30,9 @@ repositories {
 dependencies {
     compile "org.nunnerycode:kern-all:0.0.3"
     compile "com.comphenix.attribute:AttributeStorage:0.0.2-SNAPSHOT"
+    compile "org.apache.commons:commons-pool2:2.2"
+    compile "org.apache.commons:commons-dbcp2:2.0.1"
+    compile "commons-logging:commons-logging:1.2"
 }
 
 processResources {
@@ -54,6 +57,7 @@ shadowJar {
     classifier = ""
 
     relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
+    relocate "org.apache", "org.nunnerycode.facecore.apache"
 }
 
 artifacts {
