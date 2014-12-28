@@ -12,16 +12,32 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.configuration;
+package org.nunnerycode.facecore.hilt;
 
-public interface VersionedSmartConfiguration extends SmartConfiguration {
+import org.bukkit.Material;
+import org.bukkit.inventory.meta.SkullMeta;
 
-    String getResourceVersion();
+public class HiltSkull extends HiltItemStack {
 
-    String getLocalVersion();
+    public HiltSkull(String owner) {
+        super(Material.SKULL_ITEM);
+        setOwner(owner);
+    }
 
-    boolean needsToUpdate();
+    public String getOwner() {
+        createItemMeta();
+        if (getItemMeta() instanceof SkullMeta && ((SkullMeta) getItemMeta()).hasOwner()) {
+            return ((SkullMeta) getItemMeta()).getOwner();
+        }
+        return "";
+    }
 
-    boolean update();
+    public HiltSkull setOwner(String owner) {
+        createItemMeta();
+        if (getItemMeta() instanceof SkullMeta) {
+            ((SkullMeta) getItemMeta()).setOwner(owner);
+        }
+        return this;
+    }
 
 }
