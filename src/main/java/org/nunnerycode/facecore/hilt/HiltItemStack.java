@@ -14,12 +14,12 @@
  */
 package org.nunnerycode.facecore.hilt;
 
-import com.google.common.base.Joiner;
-import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.nunnerycode.kern.apache.commons.lang3.text.WordUtils;
+import org.nunnerycode.kern.shade.google.common.base.Joiner;
 
 import java.util.ArrayList;
 import java.util.List;
