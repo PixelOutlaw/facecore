@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compile "org.nunnerycode:kern-all:0.0.3"
+    compile "org.nunnerycode:kern-all:0.0.4-SNAPSHOT"
     compile "com.comphenix.attribute:AttributeStorage:0.0.2-SNAPSHOT"
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
