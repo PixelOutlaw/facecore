@@ -24,17 +24,17 @@ public class HiltMap extends HiltItemStack {
         setScalable(scalable);
     }
 
+    public boolean isScalable() {
+        createItemMeta();
+        return getItemMeta() instanceof MapMeta && ((MapMeta) getItemMeta()).isScaling();
+    }
+
     public HiltMap setScalable(boolean b) {
         createItemMeta();
         if (getItemMeta() instanceof MapMeta) {
             ((MapMeta) getItemMeta()).setScaling(b);
         }
         return this;
-    }
-
-    public boolean isScalable() {
-        createItemMeta();
-        return getItemMeta() instanceof MapMeta && ((MapMeta) getItemMeta()).isScaling();
     }
 
 }

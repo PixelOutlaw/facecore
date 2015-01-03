@@ -30,14 +30,6 @@ public class HiltFirework extends HiltItemStack {
         setPower(power);
     }
 
-    public HiltFirework setFireworkEffects(Collection<FireworkEffect> effects) {
-        createItemMeta();
-        if (getItemMeta() instanceof FireworkMeta) {
-            ((FireworkMeta) getItemMeta()).addEffects(effects);
-        }
-        return this;
-    }
-
     public HiltFirework setPower(int power) {
         createItemMeta();
         if (getItemMeta() instanceof FireworkMeta) {
@@ -52,6 +44,14 @@ public class HiltFirework extends HiltItemStack {
             return new ArrayList<>(((FireworkMeta) getItemMeta()).getEffects());
         }
         return new ArrayList<>();
+    }
+
+    public HiltFirework setFireworkEffects(Collection<FireworkEffect> effects) {
+        createItemMeta();
+        if (getItemMeta() instanceof FireworkMeta) {
+            ((FireworkMeta) getItemMeta()).addEffects(effects);
+        }
+        return this;
     }
 
 }

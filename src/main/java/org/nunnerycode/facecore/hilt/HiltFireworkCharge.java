@@ -25,20 +25,20 @@ public class HiltFireworkCharge extends HiltItemStack {
         setFireworkEffect(effect);
     }
 
-    public HiltFireworkCharge setFireworkEffect(FireworkEffect effect) {
-        createItemMeta();
-        if (getItemMeta() instanceof FireworkEffectMeta) {
-            ((FireworkEffectMeta) getItemMeta()).setEffect(effect);
-        }
-        return this;
-    }
-
     public FireworkEffect getFireworkEffect() {
         createItemMeta();
         if (getItemMeta() instanceof FireworkEffectMeta && ((FireworkEffectMeta) getItemMeta()).hasEffect()) {
             return ((FireworkEffectMeta) getItemMeta()).getEffect();
         }
         return null;
+    }
+
+    public HiltFireworkCharge setFireworkEffect(FireworkEffect effect) {
+        createItemMeta();
+        if (getItemMeta() instanceof FireworkEffectMeta) {
+            ((FireworkEffectMeta) getItemMeta()).setEffect(effect);
+        }
+        return this;
     }
 
 }

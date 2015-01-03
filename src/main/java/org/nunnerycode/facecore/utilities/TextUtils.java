@@ -48,8 +48,7 @@ public final class TextUtils {
     /**
      * Returns a colored copy of the passed-in String.
      *
-     * @param pString
-     *         String to color
+     * @param pString String to color
      * @return colored copy of passed in String
      */
     public static String color(String pString) {
@@ -67,10 +66,8 @@ public final class TextUtils {
      * <code>String val = TextUtils.args("I like %fruit%", new String[][]{{"%fruit%", "apples"}});</code>
      * </pre>
      *
-     * @param pString
-     *         String to replace arguments
-     * @param args
-     *         Arguments to replace in String
+     * @param pString String to replace arguments
+     * @param args    Arguments to replace in String
      * @return copy of the passed-in String with arguments replaced
      */
     public static String args(String pString, String[][] args) {
@@ -89,10 +86,8 @@ public final class TextUtils {
     /**
      * Returns the Levenshtein Distance between the two given Strings.
      *
-     * @param str1
-     *         First String
-     * @param str2
-     *         Second String
+     * @param str1 First String
+     * @param str2 Second String
      * @return Levenshtein Distance
      */
     public static int levenshteinDistance(String str1, String str2) {

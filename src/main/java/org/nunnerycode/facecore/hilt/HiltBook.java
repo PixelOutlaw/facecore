@@ -22,17 +22,6 @@ import java.util.List;
 
 public class HiltBook extends HiltItemStack {
 
-    public enum TomeType {
-        BOOK_AND_QUILL(Material.BOOK_AND_QUILL),
-        WRITTEN_BOOK(Material.WRITTEN_BOOK);
-
-        private final Material material;
-
-        private TomeType(Material mat) {
-            this.material = mat;
-        }
-    }
-
     public HiltBook(TomeType tomeType) {
         super(tomeType.material);
     }
@@ -67,6 +56,17 @@ public class HiltBook extends HiltItemStack {
             ((BookMeta) getItemMeta()).setPages(pages);
         }
         return this;
+    }
+
+    public enum TomeType {
+        BOOK_AND_QUILL(Material.BOOK_AND_QUILL),
+        WRITTEN_BOOK(Material.WRITTEN_BOOK);
+
+        private final Material material;
+
+        private TomeType(Material mat) {
+            this.material = mat;
+        }
     }
 
 }

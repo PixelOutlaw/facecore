@@ -39,6 +39,14 @@ public class HiltPotion extends HiltItemStack {
         return this;
     }
 
+    public List<PotionEffect> getEffects() {
+        createItemMeta();
+        if (getItemMeta() instanceof PotionMeta && ((PotionMeta) getItemMeta()).hasCustomEffects()) {
+            return new ArrayList<>(((PotionMeta) getItemMeta()).getCustomEffects());
+        }
+        return new ArrayList<>();
+    }
+
     public HiltPotion setEffects(Collection<PotionEffect> effects) {
         createItemMeta();
         if (getItemMeta() instanceof PotionMeta) {
@@ -50,14 +58,6 @@ public class HiltPotion extends HiltItemStack {
             }
         }
         return this;
-    }
-
-    public List<PotionEffect> getEffects() {
-        createItemMeta();
-        if (getItemMeta() instanceof PotionMeta && ((PotionMeta) getItemMeta()).hasCustomEffects()) {
-            return new ArrayList<>(((PotionMeta) getItemMeta()).getCustomEffects());
-        }
-        return new ArrayList<>();
     }
 
 }

@@ -29,12 +29,20 @@ public class HiltEnchantStorage extends HiltItemStack {
         setStoredEnchantments(enchantmentMap);
     }
 
+    public Map<Enchantment, Integer> getStoredEnchantments() {
+        createItemMeta();
+        if (getItemMeta() instanceof EnchantmentStorageMeta) {
+            return new HashMap<>(((EnchantmentStorageMeta) getItemMeta()).getStoredEnchants());
+        }
+        return new HashMap<>();
+    }
+
     public HiltEnchantStorage setStoredEnchantments(Map<Enchantment, Integer> enchantments) {
         createItemMeta();
         if (getItemMeta() instanceof EnchantmentStorageMeta) {
             if (((EnchantmentStorageMeta) getItemMeta()).hasStoredEnchants()) {
                 for (Map.Entry<Enchantment, Integer> entry : new HashSet<>(((EnchantmentStorageMeta) getItemMeta())
-                                                                                   .getStoredEnchants().entrySet())) {
+                        .getStoredEnchants().entrySet())) {
                     ((EnchantmentStorageMeta) getItemMeta()).removeStoredEnchant(entry.getKey());
                 }
             }
@@ -43,14 +51,6 @@ public class HiltEnchantStorage extends HiltItemStack {
             }
         }
         return this;
-    }
-
-    public Map<Enchantment, Integer> getStoredEnchantments() {
-        createItemMeta();
-        if (getItemMeta() instanceof EnchantmentStorageMeta) {
-            return new HashMap<>(((EnchantmentStorageMeta) getItemMeta()).getStoredEnchants());
-        }
-        return new HashMap<>();
     }
 
 }

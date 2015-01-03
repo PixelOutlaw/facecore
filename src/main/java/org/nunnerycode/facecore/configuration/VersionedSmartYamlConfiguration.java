@@ -16,11 +16,7 @@ package org.nunnerycode.facecore.configuration;
 
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 
 public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration implements VersionedSmartConfiguration {
 
@@ -47,7 +43,9 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
         int result = super.hashCode();
         result = 31 * result + (checkAgainst != null ? checkAgainst.hashCode() : 0);
         return result;
-    }    @Override
+    }
+
+    @Override
     public String getResourceVersion() {
         return checkAgainst.getString("version");
     }
@@ -67,7 +65,9 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
         VersionedSmartYamlConfiguration that = (VersionedSmartYamlConfiguration) o;
 
         return super.equals(o) && !(checkAgainst != null ? !checkAgainst.equals(that.checkAgainst) : that.checkAgainst != null);
-    }    @Override
+    }
+
+    @Override
     public String getLocalVersion() {
         return getString("version");
     }
@@ -93,8 +93,6 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
         set("version", getResourceVersion());
         return true;
     }
-
-
 
 
 }
