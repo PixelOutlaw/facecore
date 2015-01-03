@@ -15,6 +15,7 @@
 package org.nunnerycode.facecore.configuration;
 
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.nunnerycode.kern.apache.commons.lang.Validate;
 
 import java.io.*;
 
@@ -24,11 +25,13 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
 
     public VersionedSmartYamlConfiguration(File file, File checkAgainst) {
         super(file);
+        Validate.notNull(checkAgainst, "checkAgainst cannot be null");
         this.checkAgainst = YamlConfiguration.loadConfiguration(checkAgainst);
     }
 
     public VersionedSmartYamlConfiguration(File file, InputStream checkAgainst) {
         super(file);
+        Validate.notNull(checkAgainst, "checkAgainst cannot be null");
         Reader reader = new InputStreamReader(checkAgainst);
         this.checkAgainst = YamlConfiguration.loadConfiguration(reader);
         try {
