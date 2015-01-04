@@ -66,7 +66,7 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
 
     @Override
     public String getLocalVersion() {
-        return getString("version");
+        return getString("version", "");
     }
 
     @Override
