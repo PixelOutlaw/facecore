@@ -17,7 +17,9 @@ package org.nunnerycode.facecore.configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.nunnerycode.kern.apache.commons.lang.Validate;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration implements VersionedSmartConfiguration {
 
@@ -79,13 +81,16 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
         if (!needsToUpdate()) {
             return false;
         }
+        try {
+            save(new File(getFile().getParentFile(), getFileName() + ".old"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (String key : getKeys(true)) {
             if (isConfigurationSection(key)) {
                 continue;
             }
-            if (!isSet(key)) {
-                set(key, checkAgainst.get(key));
-            }
+            set(key, checkAgainst.get(key));
         }
         set("version", getResourceVersion());
         return true;
