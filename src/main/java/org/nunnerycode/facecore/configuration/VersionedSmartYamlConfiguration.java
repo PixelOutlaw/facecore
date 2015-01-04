@@ -32,13 +32,7 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
     public VersionedSmartYamlConfiguration(File file, InputStream checkAgainst) {
         super(file);
         Validate.notNull(checkAgainst, "checkAgainst cannot be null");
-        Reader reader = new InputStreamReader(checkAgainst);
-        this.checkAgainst = YamlConfiguration.loadConfiguration(reader);
-        try {
-            reader.close();
-        } catch (IOException ignored) {
-            // do nothing
-        }
+        this.checkAgainst = YamlConfiguration.loadConfiguration(checkAgainst);
     }
 
     @Override
@@ -50,7 +44,7 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
 
     @Override
     public String getResourceVersion() {
-        return checkAgainst.getString("version");
+        return checkAgainst != null ? checkAgainst.getString("version") : "";
     }
 
     @Override
