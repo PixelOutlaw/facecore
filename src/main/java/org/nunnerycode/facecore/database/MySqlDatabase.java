@@ -56,6 +56,7 @@ public final class MySqlDatabase extends Database {
         // Attempt to close the connection
         try {
             connection.close();
+            connection = null;
         } catch (SQLException e) {
             return false;
         }
