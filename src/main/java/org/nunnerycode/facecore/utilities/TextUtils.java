@@ -78,6 +78,23 @@ public final class TextUtils {
     }
 
     /**
+     * Returns a copy of the passed-in List with arguments replaced.
+     *
+     * @param pList List to replace arguments
+     * @param args  Arguments to replace in List
+     * @return copy of the passed-in List with arguments replaced
+     */
+    public static List<String> args(List<String> pList, String[][] args) {
+        Validate.notNull(pList, "pList cannot be null");
+        Validate.notNull(args, "args cannot be null");
+        List<String> ret = new ArrayList<>();
+        for (String s : pList) {
+            ret.add(args(s, args));
+        }
+        return ret;
+    }
+
+    /**
      * Returns a copy of the passed-in String with arguments replaced. The below example will return "I like apples".
      * <pre>
      * <code>String val = TextUtils.args("I like %fruit%", new String[][]{{"%fruit%", "apples"}});</code>
