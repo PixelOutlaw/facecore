@@ -68,6 +68,7 @@ artifacts {
 
 license {
     header file('HEADER')
+    include "org/nunnerycode/facecore/**/*.java"
     ignoreFailures false
     strictCheck true
     mapping {
