@@ -73,8 +73,10 @@ public final class PluginLogger {
         if (!IOUtils.createFile(writeFile)) {
             return;
         }
-        try (FileWriter fileWriter = new FileWriter(writeFile, true); PrintWriter writer = new PrintWriter(fileWriter)) {
-            writer.println("[" + level.getName() + "] " + Calendar.getInstance().getTime().toString() + " | " + message);
+        try (FileWriter fileWriter = new FileWriter(writeFile, true);
+             PrintWriter writer = new PrintWriter(fileWriter)) {
+            writer.println(
+                    "[" + level.getName() + "] " + Calendar.getInstance().getTime().toString() + " | " + message);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,7 +105,8 @@ public final class PluginLogger {
         if (!IOUtils.createFile(writeFile)) {
             return;
         }
-        try (FileWriter fileWriter = new FileWriter(writeFile, true); PrintWriter writer = new PrintWriter(fileWriter)) {
+        try (FileWriter fileWriter = new FileWriter(writeFile, true);
+             PrintWriter writer = new PrintWriter(fileWriter)) {
             String time = Calendar.getInstance().getTime().toString();
             for (String message : messages) {
                 writer.println("[" + level.getName() + "] " + time + " | " + message);

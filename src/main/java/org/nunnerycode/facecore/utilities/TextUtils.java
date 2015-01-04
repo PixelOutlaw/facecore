@@ -19,7 +19,10 @@ import org.nunnerycode.kern.apache.commons.lang3.StringUtils;
 import org.nunnerycode.kern.apache.commons.lang3.Validate;
 import org.nunnerycode.kern.apache.commons.lang3.math.NumberUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A class containing a few useful methods for dealing with text.
@@ -45,6 +48,21 @@ public final class TextUtils {
     }
 
     /**
+     * Returns a colored copy of the passed-in {@code List<String>}.
+     *
+     * @param pList List to color
+     * @return colored copy of passed-in List
+     */
+    public static List<String> color(List<String> pList) {
+        Validate.notNull(pList, "pList cannot be null");
+        List<String> rList = new ArrayList<>();
+        for (String s : pList) {
+            rList.add(color(s));
+        }
+        return rList;
+    }
+
+    /**
      * Returns a colored copy of the passed-in String.
      *
      * @param pString String to color
@@ -57,20 +75,6 @@ public final class TextUtils {
             ret = StringUtils.replace(ret, entry.getKey(), entry.getValue().toString());
         }
         return ret;
-    }
-
-    /**
-     * Returns a colored copy of the passed-in {@code List<String>}.
-     * @param pList List to color
-     * @return colored copy of passed-in List
-     */
-    public static List<String> color(List<String> pList) {
-        Validate.notNull(pList, "pList cannot be null");
-        List<String> rList = new ArrayList<>();
-        for (String s : pList) {
-            rList.add(color(s));
-        }
-        return rList;
     }
 
     /**

@@ -31,6 +31,12 @@ public class HiltItemStack extends ItemStack {
         createItemMeta();
     }
 
+    protected void createItemMeta() {
+        if (!hasItemMeta()) {
+            setItemMeta(Bukkit.getItemFactory().getItemMeta(getType()));
+        }
+    }
+
     public HiltItemStack(Material type, int amount) {
         super(type, amount);
         createItemMeta();
@@ -44,12 +50,6 @@ public class HiltItemStack extends ItemStack {
     public HiltItemStack(ItemStack stack) throws IllegalArgumentException {
         super(stack);
         createItemMeta();
-    }
-
-    protected void createItemMeta() {
-        if (!hasItemMeta()) {
-            setItemMeta(Bukkit.getItemFactory().getItemMeta(getType()));
-        }
     }
 
     public String getName() {

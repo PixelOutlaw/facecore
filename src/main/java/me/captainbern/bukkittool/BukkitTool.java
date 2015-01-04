@@ -18,7 +18,8 @@ public class BukkitTool {
     }
 
     public static String getNMSPackageName() {
-        return "net.minecraft.server." + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        return "net.minecraft.server." +
+                Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
 
     public static Class getCBClass(String name) {
@@ -26,7 +27,8 @@ public class BukkitTool {
     }
 
     public static String getOBCPackageName() {
-        return "org.bukkit.craftbukkit" + Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
+        return "org.bukkit.craftbukkit" +
+                Bukkit.getServer().getClass().getPackage().getName().replace(".", ",").split(",")[3];
     }
 
     public static enum ClassType {
