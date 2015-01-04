@@ -50,7 +50,17 @@ shadowJar {
     relocate "org.apache", "org.nunnerycode.facecore.apache"
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.getDestinationDir()
+}
+
 artifacts {
+    archives sourcesJar
+    archives javadocJar
     archives shadowJar
 }
 
@@ -69,10 +79,26 @@ publishing {
         java(MavenPublication) {
             artifactId = "facecore-gradle"
             from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact javadocJar {
+                classifier "javadoc"
+            }
         }
         shadow(MavenPublication) {
             artifactId = "facecore-gradle-all"
             from components.shadow
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact javadocJar {
+                classifier "javadoc"
+            }
         }
     }
     repositories {
