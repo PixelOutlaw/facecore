@@ -33,6 +33,7 @@ dependencies {
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
+    compile "com.h2database:h2:1.3.170"
 }
 
 processResources {
@@ -48,6 +49,7 @@ shadowJar {
 
     relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
     relocate "org.apache", "org.nunnerycode.facecore.apache"
+    relocate "com.h2database", "org.nunnerycode.facecore.h2"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -66,7 +68,6 @@ artifacts {
 
 license {
     header file('HEADER')
-    include "src/main/java/org/nunnerycode/facecore/**/*.java"
     ignoreFailures false
     strictCheck true
     mapping {
