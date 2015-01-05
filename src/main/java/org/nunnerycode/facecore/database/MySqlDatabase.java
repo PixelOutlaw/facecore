@@ -14,17 +14,24 @@
  */
 package org.nunnerycode.facecore.database;
 
-import org.nunnerycode.facecore.database.settings.MySqlSettings;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public final class MySqlDatabase extends Database {
+    private final String host;
+    private final String port;
+    private final String username;
+    private final String password;
+    private final String database;
     private Connection connection;
 
-    public MySqlDatabase(MySqlSettings settings) {
-        super(settings);
+    public MySqlDatabase(String host, String port, String username, String password, String database) {
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+        this.database = database;
     }
 
     @Override
@@ -40,8 +47,8 @@ public final class MySqlDatabase extends Database {
         }
         // Initialize the connection
         try {
-            connection = DriverManager.getConnection(getDatabaseSettings().toString(),
-                    getDatabaseSettings().getUsername(), getDatabaseSettings().getPassword());
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + database, username,
+                    password);
         } catch (SQLException e) {
             return false;
         }

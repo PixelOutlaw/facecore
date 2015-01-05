@@ -23,12 +23,6 @@ import java.sql.Connection;
  */
 public abstract class Database {
 
-    private final DatabaseSettings databaseSettings;
-
-    protected Database(DatabaseSettings settings) {
-        this.databaseSettings = settings;
-    }
-
     /**
      * Initializes the database connection. Returns true if successful, false if not.
      * @return success
@@ -55,13 +49,5 @@ public abstract class Database {
      * @return Connection for use
      */
     public abstract Connection getConnection();
-
-    /**
-     * Gets and returns the {@link org.nunnerycode.facecore.database.settings.DatabaseSettings} for this Database.
-     * @return settings
-     */
-    public final DatabaseSettings getDatabaseSettings() {
-        return databaseSettings;
-    }
 
 }

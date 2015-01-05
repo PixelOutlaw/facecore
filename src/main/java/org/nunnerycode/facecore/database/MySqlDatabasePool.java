@@ -21,21 +21,31 @@ import org.apache.commons.dbcp2.PoolableConnectionFactory;
 import org.apache.commons.dbcp2.PoolingDataSource;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.nunnerycode.facecore.database.settings.MySqlSettings;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public final class MySqlDatabasePool extends Database {
+    private final String host;
+    private final String port;
+    private final String username;
+    private final String password;
+    private final String database;
     private PoolingDataSource<PoolableConnection> poolingDataSource;
-    public MySqlDatabasePool(MySqlSettings settings) {
-        super(settings);
+
+    public MySqlDatabasePool(String host, String port, String username, String password, String database) {
+        this.host = host;
+        this.port = port;
+        this.username = username;
+        this.password = password;
+        this.database = database;
     }
 
     @Override
     public boolean initialize() {
-        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(getDatabaseSettings().toString(),
-                getDatabaseSettings().getUsername(), getDatabaseSettings().getPassword());
+        ConnectionFactory connectionFactory =
+                new DriverManagerConnectionFactory("jdbc:mysql://" + host + ":" + port + "/" + database,
+                        username, password);
         PoolableConnectionFactory poolableConnectionFactory = new PoolableConnectionFactory(connectionFactory, null);
         ObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(poolableConnectionFactory);
         poolableConnectionFactory.setPool(connectionPool);
