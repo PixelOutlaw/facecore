@@ -14,8 +14,6 @@
  */
 package org.nunnerycode.facecore.database;
 
-import org.nunnerycode.facecore.database.settings.DatabaseSettings;
-
 import java.sql.Connection;
 
 /**
