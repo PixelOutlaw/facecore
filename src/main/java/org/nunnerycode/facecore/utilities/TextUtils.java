@@ -47,6 +47,24 @@ public final class TextUtils {
         // do nothing
     }
 
+    public static ChatColor convertTag(String string) {
+        for (Map.Entry<String, ChatColor> entry : COLOR_MAP.entrySet()) {
+            if (entry.getKey().equals(string)) {
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
+
+    public static String convertTag(ChatColor chatColor) {
+        for (Map.Entry<String, ChatColor> entry : COLOR_MAP.entrySet()) {
+            if (entry.getValue() == chatColor) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
     /**
      * Returns a colored copy of the passed-in {@code List<String>}.
      *
