@@ -43,5 +43,4 @@ public final class FacecorePlugin extends FacePlugin {
     public PlayerResolver getPlayerResolver() {
         return playerResolver;
     }
-
 }
