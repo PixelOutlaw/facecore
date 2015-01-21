@@ -23,6 +23,9 @@ repositories {
         url "http://repo-topplethenun.rhcloud.com/nexus/content/groups/public/"
     }
     maven {
+        url "https://hub.spigotmc.org/nexus/content/groups/public/"
+    }
+    maven {
         url "http://repo.comphenix.net/content/groups/public/"
     }
 }
@@ -34,6 +37,8 @@ dependencies {
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
     compile "com.h2database:h2:1.3.170"
+    compile "me.topplethenun:hilt:1.0.0"
+    compile "me.topplethenun:config:0.0.1-SNAPSHOT"
 }
 
 processResources {
@@ -50,6 +55,8 @@ shadowJar {
     relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
     relocate "org.apache", "org.nunnerycode.facecore.apache"
     relocate "com.h2database", "org.nunnerycode.facecore.h2"
+    relocate "me.topplethenun.hilt", "org.nunnerycode.facecore.hilt"
+    relocate "me.topplethenun.config", "org.nunnerycode.facecore.configuration"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
