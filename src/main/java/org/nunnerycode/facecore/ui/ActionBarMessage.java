@@ -14,15 +14,12 @@
  */
 package org.nunnerycode.facecore.ui;
 
-import me.captainbern.bukkittool.BukkitTool;
+import me.topplethenun.reflect.ClassType;
+import me.topplethenun.reflect.Mirror;
 import org.bukkit.entity.Player;
 import org.nunnerycode.facecore.utilities.TextUtils;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
-
-import static me.captainbern.bukkittool.ServerClass.*;
 
 public class ActionBarMessage {
 
@@ -31,29 +28,11 @@ public class ActionBarMessage {
     private final Class<?> chatBaseComponent;
     private final Class<?> playOutChatPacket;
 
-    private static final Map<Class<?>, Class<?>> CORRESPONDING_TYPES = new HashMap<Class<?>, Class<?>>();
-
     public ActionBarMessage(String message) {
         this.message = message;
-        this.chatSerializer = BukkitTool.getNMSClass("ChatSerializer");
-        this.chatBaseComponent = BukkitTool.getNMSClass("IChatBaseComponent");
-        this.playOutChatPacket = BukkitTool.getNMSClass("PacketPlayOutChat");
-    }
-
-    public void send(Player player) {
-        Object handle = new ServerMethod(player.getClass(), "getHandle").invoke(player);
-        Object connection = new ServerField(handle.getClass(), "playerConnection").get(handle);
-        Method sendPacket = getMethod(connection.getClass(), "sendPacket");
-        try {
-            Object serialized = new ServerMethod(chatSerializer, "a", String.class).getMethod().invoke(null,
-                    "{\"text\":\"" +
-                            TextUtils.color(message) + "\"}");
-            Object packet = playOutChatPacket.getConstructor(chatBaseComponent, Byte.TYPE).newInstance(serialized,
-                    (byte) 2);
-            sendPacket.invoke(connection, packet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.chatSerializer = Mirror.getClass("ChatSerializer", ClassType.NMS);
+        this.chatBaseComponent = Mirror.getClass("IChatBaseComponent", ClassType.NMS);
+        this.playOutChatPacket = Mirror.getClass("PacketPlayOutChat", ClassType.NMS);
     }
 
     public void send(Iterable<Player> players) {
@@ -62,27 +41,20 @@ public class ActionBarMessage {
         }
     }
 
-    private Method getMethod(Class<?> clazz, String name, Class<?>... args) {
-        for (Method m : clazz.getMethods())
-            if (m.getName().equals(name)
-                    && (args.length == 0 || ClassListEqual(args,
-                    m.getParameterTypes()))) {
-                m.setAccessible(true);
-                return m;
-            }
-        return null;
-    }
-
-    private boolean ClassListEqual(Class<?>[] l1, Class<?>[] l2) {
-        boolean equal = true;
-        if (l1.length != l2.length)
-            return false;
-        for (int i = 0; i < l1.length; i++)
-            if (l1[i] != l2[i]) {
-                equal = false;
-                break;
-            }
-        return equal;
+    public void send(Player player) {
+        try {
+            Class<?> packetClass = Mirror.getClass("Packet", ClassType.NMS);
+            Object handle = Mirror.getMethod(player.getClass(), "getHandle").invoke(player);
+            Object connection = Mirror.getField(handle.getClass(), "playerConnection").get(handle);
+            Method sendPacket = Mirror.getMethod(connection.getClass(), "sendPacket", packetClass);
+            Object serialized = Mirror.getMethod(chatSerializer, "a", String.class).invoke(null,
+                    "{\"text\":\"" + TextUtils.color(message) + "\"}");
+            Object packet = playOutChatPacket.getConstructor(chatBaseComponent, Byte.TYPE).newInstance(serialized,
+                    (byte) 2);
+            sendPacket.invoke(connection, packet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
