@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -258,7 +259,7 @@ public class Title {
                 packet = packetTitle.getConstructor(packetActions,
                         chatBaseComponent).newInstance(actions[0], serialized);
                 sendPacket.invoke(connection, packet);
-                if (subtitle != "") {
+                if (subtitle != null && !subtitle.isEmpty()) {
                     // Send subtitle if present
                     serialized = getMethod(nmsChatSerializer, "a", String.class)
                             .invoke(null,
