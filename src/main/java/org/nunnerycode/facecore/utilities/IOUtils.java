@@ -50,6 +50,9 @@ public final class IOUtils {
         boolean succeeded = file.exists();
         if (!succeeded) {
             try {
+                if (!createDirectory(file.getParentFile())) {
+                    return false;
+                }
                 succeeded = file.createNewFile();
             } catch (IOException ignored) {
                 // do nothing here
