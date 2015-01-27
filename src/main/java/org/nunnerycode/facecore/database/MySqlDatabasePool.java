@@ -72,7 +72,7 @@ public final class MySqlDatabasePool extends Database {
         try {
             return poolingDataSource.getConnection();
         } catch (SQLException e) {
-            throw new IllegalStateException("database pool is unavailable");
+            throw new IllegalStateException("database pool is unavailable", e);
         }
     }
 }
