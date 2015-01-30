@@ -38,6 +38,8 @@ public final class TextUtils {
             COLOR_MAP.put("<" + name.toLowerCase() + ">", cc);
             COLOR_MAP.put("<" + name.replace("_", " ").toUpperCase() + ">", cc);
             COLOR_MAP.put("<" + name.replace("_", " ").toLowerCase() + ">", cc);
+            COLOR_MAP.put("<" + name.replace("_", "").toUpperCase() + ">", cc);
+            COLOR_MAP.put("<" + name.replace("_", "").toLowerCase() + ">", cc);
             COLOR_MAP.put(cc.toString().replace('\u00A7', '&').toUpperCase(), cc);
             COLOR_MAP.put(cc.toString().replace('\u00A7', '&').toLowerCase(), cc);
         }
