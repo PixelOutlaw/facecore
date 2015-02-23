@@ -12,16 +12,16 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.profile;
+package com.tealcube.minecraft.bukkit.facecore.profile;
 
 import com.sk89q.squirrelid.Profile;
 import com.sk89q.squirrelid.cache.ProfileCache;
 import com.sk89q.squirrelid.cache.SQLiteCache;
 import com.sk89q.squirrelid.resolver.CacheForwardingService;
 import com.sk89q.squirrelid.resolver.HttpRepositoryService;
-import org.nunnerycode.facecore.FacecorePlugin;
-import org.nunnerycode.kern.apache.commons.lang3.Validate;
-import org.nunnerycode.kern.shade.google.common.base.Optional;
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
+import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Optional;
 
 import java.io.File;
 import java.io.IOException;

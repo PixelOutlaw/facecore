@@ -12,13 +12,13 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore;
+package com.tealcube.minecraft.bukkit.facecore;
 
+import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
+import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
+import com.tealcube.minecraft.bukkit.facecore.utilities.IOUtils;
 import org.bukkit.event.HandlerList;
-import org.nunnerycode.facecore.plugin.FacePlugin;
-import org.nunnerycode.facecore.profile.PlayerJoinListener;
-import org.nunnerycode.facecore.profile.PlayerResolver;
-import org.nunnerycode.facecore.utilities.IOUtils;
+import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
 
 public final class FacecorePlugin extends FacePlugin {
 

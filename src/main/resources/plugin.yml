@@ -1,3 +1,3 @@
-main: org.nunnerycode.facecore.FacecorePlugin
+main: FacecorePlugin
 version: @VERSION@
 name: @NAME@

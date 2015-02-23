@@ -4,7 +4,6 @@ plugins {
     id "com.github.hierynomus.license" version "0.11.0"
     id "com.github.johnrengelman.shadow" version "1.2.0"
     id "java"
-    id "maven"
     id "maven-publish"
     id "wrapper"
 }
@@ -13,14 +12,14 @@ sourceCompatibility = "1.7"
 
 defaultTasks 'clean', 'licenseFormat', 'check', 'build'
 
-group = "org.nunnerycode"
-archivesBaseName = "facecore-gradle"
-version = "0.0.3-SNAPSHOT"
+group = "com.tealcube.minecraft.bukkit"
+archivesBaseName = "facecore"
+version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
     maven {
-        url "http://repo-topplethenun.rhcloud.com/nexus/content/groups/public/"
+        url "http://tealcube.com/nexus/content/groups/public/"
     }
     maven {
         url "https://hub.spigotmc.org/nexus/content/groups/public/"
@@ -31,20 +30,19 @@ repositories {
 }
 
 dependencies {
-    compile "org.nunnerycode:kern-all:0.0.5-SNAPSHOT"
     compile "com.comphenix.attribute:AttributeStorage:0.0.2-SNAPSHOT"
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
-    compile "com.h2database:h2:1.3.170"
-    compile "me.topplethenun:hilt:1.0.1"
-    compile "me.topplethenun:config:latest.integration"
-    compile "me.topplethenun:mirror:latest.integration"
+    compile "com.tealcube.minecraft.bukkit:kern-all:1.0.0-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:hilt:1.0.0-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:config:1.0.0-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:mirror:1.0.0-SNAPSHOT"
 }
 
 processResources {
     filter ReplaceTokens, tokens: [
-            VERSION: version + "-" + (System.getenv("CIRCLECI") != null ? "circleci" : "compiled") + "-" + (System.getenv("CIRCLE_BUILD_NUM") ?: "0"),
+            VERSION: version + "-" + (System.getenv("bambooo.planKey") ?: "compiled") + "-" + (System.getenv("bamboo.buildNumber") ?: "0"),
             NAME   : project.name
     ]
 }
@@ -53,12 +51,11 @@ shadowJar {
     baseName = "facecore-gradle-all"
     classifier = ""
 
-    relocate "com.comphenix", "org.nunnerycode.facecore.comphenix"
-    relocate "org.apache", "org.nunnerycode.facecore.apache"
-    relocate "com.h2database", "org.nunnerycode.facecore.h2"
-    relocate "me.topplethenun.hilt", "org.nunnerycode.facecore.hilt"
-    relocate "me.topplethenun.config", "org.nunnerycode.facecore.configuration"
-    relocate "me.topplethenun.reflect", "org.nunnerycode.facecore.reflect"
+    relocate "com.comphenix", "com.tealcube.minecraft.bukkit.facecore.shade.comphenix"
+    relocate "org.apache", "com.tealcube.minecraft.bukkit.facecore.shade.apache"
+    relocate "com.tealcube.minecraft.bukkit.hilt", "com.tealcube.minecraft.bukkit.facecore.shade.hilt"
+    relocate "com.tealcube.minecraft.bukkit.config", "com.tealcube.minecraft.bukkit.facecore.shade.config"
+    relocate "com.tealcube.minecraft.bukkit.mirror", "com.tealcube.minecraft.bukkit.facecore.shade.reflect"
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -77,7 +74,7 @@ artifacts {
 
 license {
     header file('HEADER')
-    include "org/nunnerycode/facecore/**/*.java"
+    include "com/tealcube/minecraft/bukkit/facecore/**/*.java"
     ignoreFailures false
     strictCheck true
     mapping {
@@ -88,7 +85,7 @@ license {
 publishing {
     publications {
         java(MavenPublication) {
-            artifactId = "facecore-gradle"
+            artifactId = "facecore"
             from components.java
 
             artifact sourcesJar {
@@ -100,22 +97,14 @@ publishing {
             }
         }
         shadow(MavenPublication) {
-            artifactId = "facecore-gradle-all"
+            artifactId = "facecore-all"
             from components.shadow
-
-            artifact sourcesJar {
-                classifier "sources"
-            }
-
-            artifact javadocJar {
-                classifier "javadoc"
-            }
         }
     }
     repositories {
         maven {
-            url "http://repo-topplethenun.rhcloud.com/nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}/"
-            name "nunnerycode-repo"
+            url "http://tealcube.com/nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}/"
+            name "TealCube"
             credentials {
                 username System.getenv("nexusUsername") ?: nexusUsername
                 password System.getenv("nexusPassword") ?: nexusPassword

@@ -12,14 +12,14 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.profile;
+package com.tealcube.minecraft.bukkit.facecore.profile;
 
 import com.sk89q.squirrelid.Profile;
+import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Optional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.nunnerycode.kern.shade.google.common.base.Optional;
 
 public final class PlayerJoinListener implements Listener {
 

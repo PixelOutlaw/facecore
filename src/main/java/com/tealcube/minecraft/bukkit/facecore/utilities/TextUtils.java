@@ -12,12 +12,12 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.utilities;
+package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.StringUtils;
+import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
+import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.ChatColor;
-import org.nunnerycode.kern.apache.commons.lang3.StringUtils;
-import org.nunnerycode.kern.apache.commons.lang3.Validate;
-import org.nunnerycode.kern.apache.commons.lang3.math.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -12,9 +12,9 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.utilities;
+package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import org.nunnerycode.kern.apache.commons.lang3.Validate;
+import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
 
 import java.io.File;
 import java.io.IOException;

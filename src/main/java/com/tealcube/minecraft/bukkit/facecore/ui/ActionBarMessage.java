@@ -12,12 +12,12 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.ui;
+package com.tealcube.minecraft.bukkit.facecore.ui;
 
-import me.topplethenun.reflect.ClassType;
-import me.topplethenun.reflect.Mirror;
+import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
+import com.tealcube.minecraft.bukkit.mirror.ClassType;
+import com.tealcube.minecraft.bukkit.mirror.Mirror;
 import org.bukkit.entity.Player;
-import org.nunnerycode.facecore.utilities.TextUtils;
 
 import java.lang.reflect.Method;
 

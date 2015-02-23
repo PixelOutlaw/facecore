@@ -4,12 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.nunnerycode.facecore.utilities.TextUtils;
+import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 
 /**
  * Minecraft 1.8 Title

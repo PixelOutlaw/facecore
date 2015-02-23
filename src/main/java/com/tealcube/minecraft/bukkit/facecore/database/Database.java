@@ -12,7 +12,7 @@
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
  * THIS SOFTWARE.
  */
-package org.nunnerycode.facecore.database;
+package com.tealcube.minecraft.bukkit.facecore.database;
 
 import java.sql.Connection;
 
@@ -42,7 +42,7 @@ public abstract class Database {
     /**
      * Returns a {@link java.sql.Connection} for use.
      *
-     * If {@link org.nunnerycode.facecore.database.Database#isPool()} is true, returns a new
+     * If {@link Database#isPool()} is true, returns a new
      * {@link java.sql.Connection}, otherwise returns available {@link java.sql.Connection}.
      * @return Connection for use
      */
