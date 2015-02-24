@@ -48,7 +48,7 @@ processResources {
 }
 
 shadowJar {
-    baseName = "facecore-gradle-all"
+    baseName = "facecore-all"
     classifier = ""
 
     relocate "com.comphenix", "com.tealcube.minecraft.bukkit.facecore.shade.comphenix"
