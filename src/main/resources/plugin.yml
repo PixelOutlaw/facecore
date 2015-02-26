@@ -1,3 +1,3 @@
-main: com.tealcube.minecraft.bukkit.FacecorePlugin
+main: com.tealcube.minecraft.bukkit.facecore.FacecorePlugin
 version: @VERSION@
 name: @NAME@
