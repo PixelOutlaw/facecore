@@ -25,12 +25,14 @@ repositories {
         url "https://hub.spigotmc.org/nexus/content/groups/public/"
     }
     maven {
-        url "http://repo.comphenix.net/content/groups/public/"
+        url "http://ci.shadowvolt.com/plugin/repository/everything/"
     }
 }
 
 dependencies {
-    compile "com.comphenix.attribute:AttributeStorage:0.0.2-SNAPSHOT"
+    compile("com.comphenix.protocol:ProtocolLib:3.6.3-SNAPSHOT") {
+        exclude module: "BukkitExecutors"
+    }
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
@@ -42,7 +44,7 @@ dependencies {
 
 processResources {
     filter ReplaceTokens, tokens: [
-            VERSION: version + "-" + (System.getenv("bambooo.planKey") ?: "compiled") + "-" + (System.getenv("bamboo.buildNumber") ?: "0"),
+            VERSION: version + "-" + (System.getenv("BUILD_NUMBER") ?: "0"),
             NAME   : project.name
     ]
 }
@@ -51,7 +53,6 @@ shadowJar {
     baseName = "facecore-all"
     classifier = ""
 
-    relocate "com.comphenix", "com.tealcube.minecraft.bukkit.facecore.shade.comphenix"
     relocate "org.apache", "com.tealcube.minecraft.bukkit.facecore.shade.apache"
     relocate "com.tealcube.minecraft.bukkit.hilt", "com.tealcube.minecraft.bukkit.facecore.shade.hilt"
     relocate "com.tealcube.minecraft.bukkit.config", "com.tealcube.minecraft.bukkit.facecore.shade.config"
