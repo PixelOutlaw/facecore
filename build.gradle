@@ -53,6 +53,10 @@ shadowJar {
     baseName = "facecore-all"
     classifier = ""
 
+    dependencies {
+        exclude(dependency("com.comphenix.protocol:ProtocolLib"))
+    }
+
     relocate "org.apache", "com.tealcube.minecraft.bukkit.facecore.shade.apache"
     relocate "com.tealcube.minecraft.bukkit.hilt", "com.tealcube.minecraft.bukkit.facecore.shade.hilt"
     relocate "com.tealcube.minecraft.bukkit.config", "com.tealcube.minecraft.bukkit.facecore.shade.config"
