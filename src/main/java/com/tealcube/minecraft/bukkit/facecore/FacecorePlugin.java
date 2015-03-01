@@ -14,33 +14,33 @@
  */
 package com.tealcube.minecraft.bukkit.facecore;
 
+import com.tealcube.minecraft.bukkit.config.SmartYamlConfiguration;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
-import com.tealcube.minecraft.bukkit.facecore.utilities.IOUtils;
 import org.bukkit.event.HandlerList;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
 
+import java.io.File;
+
 public final class FacecorePlugin extends FacePlugin {
 
-    private PlayerResolver playerResolver;
+    private SmartYamlConfiguration playerDataYAML;
     private PlayerJoinListener playerJoinListener;
 
     @Override
     public void enable() {
-        IOUtils.createDirectory(getDataFolder());
-        playerResolver = new PlayerResolver(this);
-        playerJoinListener = new PlayerJoinListener(playerResolver);
+        playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
+        PlayerResolver.getInstance().loadFrom(playerDataYAML);
+        playerJoinListener = new PlayerJoinListener(this);
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
     }
 
     @Override
     public void disable() {
+        PlayerResolver.getInstance().saveTo(playerDataYAML);
         HandlerList.unregisterAll(this);
         playerJoinListener = null;
-        playerResolver = null;
+        playerDataYAML = null;
     }
 
-    public PlayerResolver getPlayerResolver() {
-        return playerResolver;
-    }
 }

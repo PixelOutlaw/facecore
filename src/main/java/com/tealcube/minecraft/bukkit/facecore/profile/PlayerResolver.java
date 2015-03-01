@@ -14,63 +14,75 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
-import com.sk89q.squirrelid.Profile;
-import com.sk89q.squirrelid.cache.ProfileCache;
-import com.sk89q.squirrelid.cache.SQLiteCache;
-import com.sk89q.squirrelid.resolver.CacheForwardingService;
-import com.sk89q.squirrelid.resolver.HttpRepositoryService;
-import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
-import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
+import com.tealcube.minecraft.bukkit.config.SmartYamlConfiguration;
 import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Optional;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class PlayerResolver {
 
-    private ProfileCache cache;
-    private CacheForwardingService forwardingService;
+    private static PlayerResolver instance;
+    private final Map<String, Profile> profileMap = new ConcurrentHashMap<>();
 
-    public PlayerResolver(FacecorePlugin plugin) {
-        try {
-            cache = new SQLiteCache(new File(plugin.getDataFolder(), "players.sqlite"));
-            forwardingService = new CacheForwardingService(HttpRepositoryService.forMinecraft(), cache);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private PlayerResolver() {
+        // do nothing
     }
 
     public Optional<Profile> getProfile(String name) {
-        Validate.notNull(name, "name cannot be null");
-        Optional<Profile> profileOptional = Optional.absent();
-        if (forwardingService != null) {
-            try {
-                Profile p = forwardingService.findByName(name);
-                profileOptional = Optional.fromNullable(p);
-            } catch (InterruptedException | IOException e) {
-                e.printStackTrace();
-            }
+        Optional<Profile> optional = Optional.absent();
+        if (profileMap.containsKey(name.toLowerCase())) {
+            return Optional.of(profileMap.get(name.toLowerCase()));
         }
-        return profileOptional;
+        return optional;
     }
 
     public Optional<Profile> getProfile(UUID uuid) {
-        Validate.notNull(uuid, "uuid cannot be null");
-        Optional<Profile> profileOptional = Optional.absent();
-        if (cache != null) {
-            Profile p = cache.getIfPresent(uuid);
-            profileOptional = Optional.fromNullable(p);
+        Optional<Profile> optional = Optional.absent();
+        for (Profile prof : profileMap.values()) {
+            if (prof.getUuid().equals(uuid)) {
+                optional = Optional.of(prof);
+                break;
+            }
         }
-        return profileOptional;
+        return optional;
     }
 
-    public PlayerResolver addProfile(Optional<Profile> profileOptional) {
-        Validate.notNull(profileOptional, "profileOptional cannot be null");
-        if (profileOptional.isPresent()) {
-            cache.put(profileOptional.get());
+    public void addProfile(Profile profile) {
+        if (profile == null) {
+            return;
         }
-        return this;
+        profileMap.put(profile.getName().toLowerCase(), profile);
+    }
+
+    public void loadFrom(SmartYamlConfiguration config) {
+        config.load();
+        for (String s : config.getKeys(false)) {
+            if (!config.isConfigurationSection(s)) {
+                continue;
+            }
+            UUID uuid = UUID.fromString(s);
+            String name = config.getString(s + ".name");
+            String lastKnownName = config.getString(s + ".last-known-name");
+            Profile profile = new Profile(uuid, name, lastKnownName);
+            addProfile(profile);
+        }
+    }
+
+    public void saveTo(SmartYamlConfiguration config) {
+        for (Profile p : profileMap.values()) {
+            config.set(p.getUuid().toString() + ".name", p.getName());
+            config.set(p.getUuid().toString() + ".last-known-name", p.getLastKnownName());
+        }
+        config.save();
+    }
+
+    public static PlayerResolver getInstance() {
+        if (instance == null) {
+            instance = new PlayerResolver();
+        }
+        return instance;
     }
 
 }
