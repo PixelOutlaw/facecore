@@ -33,20 +33,20 @@ public final class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerJoinEvent(final PlayerJoinEvent event) {
-        Optional<Profile> profileOptional = PlayerResolver.getInstance().getProfile(event.getPlayer().getUniqueId());
+        Optional<Profile> profileOptional = PlayerResolver.getInstance().findProfile(event.getPlayer().getUniqueId());
         Profile p = profileOptional.or(new Profile(event.getPlayer().getUniqueId(), event.getPlayer().getName()));
         if (!p.getName().equals(event.getPlayer().getName())) {
             p.setLastKnownName(p.getName());
             p.setName(event.getPlayer().getName());
+            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    MessageUtils.sendMessage(event.getPlayer(),
+                            "<yellow>You recently did a name change! You must access your chests before you get another name change or you won't be able to unlock them.");
+                }
+            }, 20L * 3);
         }
         PlayerResolver.getInstance().addProfile(p);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                MessageUtils.sendMessage(event.getPlayer(),
-                        "<yellow>You recently did a name change! You must access your chests before you get a new name change or you won't be able to unlock them.");
-            }
-        }, 20L * 3);
     }
 
 }

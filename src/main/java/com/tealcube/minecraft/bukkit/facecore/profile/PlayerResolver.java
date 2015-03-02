@@ -17,6 +17,8 @@ package com.tealcube.minecraft.bukkit.facecore.profile;
 import com.tealcube.minecraft.bukkit.config.SmartYamlConfiguration;
 import com.tealcube.minecraft.bukkit.kern.shade.google.common.base.Optional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,21 +32,40 @@ public final class PlayerResolver {
         // do nothing
     }
 
-    public Optional<Profile> getProfile(String name) {
+    public List<Optional<Profile>> findAllProfiles(String name) {
+        List<Optional<Profile>> optionals = new ArrayList<>();
+        for (Profile profile : profileMap.values()) {
+            if (profile != null && (profile.getName().equals(name) || profile.getLastKnownName().equals(name))) {
+                optionals.add(Optional.of(profile));
+            }
+        }
+        return optionals;
+    }
+
+    public List<Optional<Profile>> findAllProfiles(UUID uuid) {
+        List<Optional<Profile>> optionals = new ArrayList<>();
+        for (Profile profile : profileMap.values()) {
+            if (profile != null && profile.getUuid().equals(uuid)) {
+                optionals.add(Optional.of(profile));
+            }
+        }
+        return optionals;
+    }
+
+    public Optional<Profile> findProfile(String name) {
         Optional<Profile> optional = Optional.absent();
-        if (profileMap.containsKey(name.toLowerCase())) {
-            return Optional.of(profileMap.get(name.toLowerCase()));
+        List<Optional<Profile>> profiles = findAllProfiles(name);
+        if (profiles.size() > 0) {
+            return profiles.get(0);
         }
         return optional;
     }
 
-    public Optional<Profile> getProfile(UUID uuid) {
+    public Optional<Profile> findProfile(UUID uuid) {
         Optional<Profile> optional = Optional.absent();
-        for (Profile prof : profileMap.values()) {
-            if (prof.getUuid().equals(uuid)) {
-                optional = Optional.of(prof);
-                break;
-            }
+        List<Optional<Profile>> profiles = findAllProfiles(uuid);
+        if (profiles.size() > 0) {
+            return profiles.get(0);
         }
         return optional;
     }
