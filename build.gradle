@@ -43,6 +43,7 @@ dependencies {
     compile "com.tealcube.minecraft.bukkit:hilt:1.0.0-SNAPSHOT"
     compile "com.tealcube.minecraft.bukkit:config:1.0.0-SNAPSHOT"
     compile "com.tealcube.minecraft.bukkit:mirror:1.0.0-SNAPSHOT"
+    compile "commons-validator:commons-validator:1.4.1"
     //compile "com.tealcube.minecraft.bukkit:disco:0.0.1-SNAPSHOT"
     compile "ninja.amp:ampmenus:1.4-SNAPSHOT"
 }
