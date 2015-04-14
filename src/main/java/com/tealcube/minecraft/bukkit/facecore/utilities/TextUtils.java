@@ -92,7 +92,7 @@ public final class TextUtils {
         Validate.notNull(pString, "pString cannot be null");
         String ret = pString;
         for (Map.Entry<String, ChatColor> entry : COLOR_MAP.entrySet()) {
-            ret = StringUtils.replace(ret, entry.getKey(), entry.getValue().toString());
+            ret = StringUtils.replace(ret, entry.getKey(), entry.getValue() + "");
         }
         return ret;
     }
