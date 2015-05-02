@@ -2,3 +2,4 @@ main: com.tealcube.minecraft.bukkit.facecore.FacecorePlugin
 version: @VERSION@
 name: @NAME@
 depend: [ProtocolLib]
+load: startup
