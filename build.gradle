@@ -40,7 +40,7 @@ dependencies {
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
     compile "com.tealcube.minecraft.bukkit:kern-all:1.0.0-SNAPSHOT"
-    compile "com.tealcube.minecraft.bukkit:hilt:1.0.0-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:hilt:1.0.0"
     compile "com.tealcube.minecraft.bukkit:config:1.0.0-SNAPSHOT"
     compile "com.tealcube.minecraft.bukkit:mirror:1.0.0-SNAPSHOT"
     compile "commons-validator:commons-validator:1.4.1"
