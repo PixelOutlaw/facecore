@@ -33,9 +33,6 @@ repositories {
 }
 
 dependencies {
-    compile("com.comphenix.protocol:ProtocolLib:3.6.3-SNAPSHOT") {
-        exclude module: "BukkitExecutors"
-    }
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
@@ -57,11 +54,6 @@ processResources {
 shadowJar {
     baseName = "facecore-all"
     classifier = ""
-
-    dependencies {
-        exclude(dependency("com.comphenix.protocol:ProtocolLib"))
-        //exclude(dependency("com.tealcube.minecraft.bukkit:disco"))
-    }
 
     relocate "ninja.amp", "com.tealcube.minecraft.bukkit.facecore.shade.amp"
     relocate "org.apache", "com.tealcube.minecraft.bukkit.facecore.shade.apache"
