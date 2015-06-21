@@ -14,13 +14,13 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.facecore.collections.CaselessMap;
 import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.StringUtils;
 import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
 import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,19 +29,15 @@ import java.util.Map;
  */
 public final class TextUtils {
 
-    private static final Map<String, ChatColor> COLOR_MAP = new HashMap<>();
+    private static final Map<String, ChatColor> COLOR_MAP = new CaselessMap<>();
 
     static {
         for (ChatColor cc : ChatColor.values()) {
             String name = cc.name();
-            COLOR_MAP.put("<" + name.toUpperCase() + ">", cc);
-            COLOR_MAP.put("<" + name.toLowerCase() + ">", cc);
-            COLOR_MAP.put("<" + name.replace("_", " ").toUpperCase() + ">", cc);
-            COLOR_MAP.put("<" + name.replace("_", " ").toLowerCase() + ">", cc);
-            COLOR_MAP.put("<" + name.replace("_", "").toUpperCase() + ">", cc);
-            COLOR_MAP.put("<" + name.replace("_", "").toLowerCase() + ">", cc);
-            COLOR_MAP.put(cc.toString().replace('\u00A7', '&').toUpperCase(), cc);
-            COLOR_MAP.put(cc.toString().replace('\u00A7', '&').toLowerCase(), cc);
+            COLOR_MAP.put("<" + name + ">", cc);
+            COLOR_MAP.put("<" + name.replace("_", " ") + ">", cc);
+            COLOR_MAP.put("<" + name.replace("_", "") + ">", cc);
+            COLOR_MAP.put(cc.toString().replace('\u00A7', '&'), cc);
         }
     }
 
