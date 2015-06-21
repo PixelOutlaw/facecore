@@ -3,13 +3,16 @@
  *
  * Copyright (c) 2014 Richard Harrah
  *
- * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted,
+ * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby
+ * granted,
  * provided that the above copyright notice and this permission notice appear in all copies.
  *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
- * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
+ * INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER
+ * IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+ * PERFORMANCE OF
  * THIS SOFTWARE.
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
@@ -63,10 +66,50 @@ public final class TextUtils {
         return null;
     }
 
+    public static ChatColor findFirstColor(String pString) {
+        Validate.notNull(pString, "pString cannot be null");
+        char[] c = pString.toCharArray();
+        for (int i = 0; i < c.length; i++) {
+            if (c[i] == '\u00A7' && i + 1 < c.length) {
+                return ChatColor.getByChar(c[i + 1]);
+            }
+        }
+        return null;
+    }
+
+    public static String removeFirstColors(String pString) {
+        Validate.notNull(pString, "pString cannot be null");
+        char[] c = pString.toCharArray();
+        int index = 0;
+        for (int i = 0; i < c.length; i += 2) {
+            if (c[i] == '\u00A7' && i + 1 < c.length) {
+                index = i + 2;
+            }
+        }
+        char[] retArray = new char[c.length - index];
+        System.arraycopy(c, index, retArray, 0, retArray.length);
+        return new String(retArray);
+    }
+
+    public static String keepFirstColors(String pString) {
+        Validate.notNull(pString, "pString cannot be null");
+        char[] c = pString.toCharArray();
+        int index = 0;
+        for (int i = 0; i < c.length; i += 2) {
+            if (c[i] == '\u00A7' && i + 1 < c.length) {
+                index = i + 2;
+            }
+        }
+        char[] retArray = new char[index];
+        System.arraycopy(c, 0, retArray, 0, index);
+        return new String(retArray);
+    }
+
     /**
      * Returns a colored copy of the passed-in {@code List<String>}.
      *
-     * @param pList List to color
+     * @param pList
+     *         List to color
      * @return colored copy of passed-in List
      */
     public static List<String> color(List<String> pList) {
@@ -81,7 +124,8 @@ public final class TextUtils {
     /**
      * Returns a colored copy of the passed-in String.
      *
-     * @param pString String to color
+     * @param pString
+     *         String to color
      * @return colored copy of passed-in String
      */
     public static String color(String pString) {
@@ -96,8 +140,10 @@ public final class TextUtils {
     /**
      * Returns a copy of the passed-in List with arguments replaced.
      *
-     * @param pList List to replace arguments
-     * @param args  Arguments to replace in List
+     * @param pList
+     *         List to replace arguments
+     * @param args
+     *         Arguments to replace in List
      * @return copy of the passed-in List with arguments replaced
      */
     public static List<String> args(List<String> pList, String[][] args) {
@@ -116,8 +162,10 @@ public final class TextUtils {
      * <code>String val = TextUtils.args("I like %fruit%", new String[][]{{"%fruit%", "apples"}});</code>
      * </pre>
      *
-     * @param pString String to replace arguments
-     * @param args    Arguments to replace in String
+     * @param pString
+     *         String to replace arguments
+     * @param args
+     *         Arguments to replace in String
      * @return copy of the passed-in String with arguments replaced
      */
     public static String args(String pString, String[][] args) {
@@ -136,8 +184,10 @@ public final class TextUtils {
     /**
      * Returns the Levenshtein Distance between the two given Strings.
      *
-     * @param str1 First String
-     * @param str2 Second String
+     * @param str1
+     *         First String
+     * @param str2
+     *         Second String
      * @return Levenshtein Distance
      */
     public static int levenshteinDistance(String str1, String str2) {
