@@ -1,25 +1,32 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 plugins {
-    id "com.github.hierynomus.license" version "0.11.0"
-    id "com.github.johnrengelman.shadow" version "1.2.0"
     id "java"
-    id "maven-publish"
-    id "wrapper"
+    id "com.github.hierynomus.license" version "0.11.0"
+    id "pl.allegro.tech.build.axion-release" version "1.2.4"
+    id "com.github.johnrengelman.shadow" version "1.2.1"
+    id "signing"
 }
 
-sourceCompatibility = "1.7"
+sourceCompatibility = 1.7
 
-defaultTasks 'clean', 'licenseFormat', 'check', 'build'
+scmVersion {
+    tag {
+        prefix = project.name
+    }
+    createReleaseCommit true
+    releaseCommitMessage { version, position -> "[ci skip] release version: " + version}
+}
 
 group = "com.tealcube.minecraft.bukkit"
-archivesBaseName = "facecore"
-version = "1.0.1-SNAPSHOT"
+version = scmVersion.version
+
+apply from: "publish-java.gradle"
 
 repositories {
     mavenCentral()
     maven {
-        url "http://tealcube.com/nexus/content/groups/public/"
+        url "http://maven.tealcube.com/artifactory/public"
     }
     maven {
         url "https://hub.spigotmc.org/nexus/content/groups/public/"
@@ -36,12 +43,12 @@ dependencies {
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
-    compile "com.tealcube.minecraft.bukkit:kern-all:1.0.0"
-    compile "com.tealcube.minecraft.bukkit:hilt:1.0.0"
-    compile "com.tealcube.minecraft.bukkit:config:1.0.1-SNAPSHOT"
-    compile "com.tealcube.minecraft.bukkit:mirror:1.0.0"
+    compile "com.tealcube.minecraft.bukkit:kern:0.1.3:all"
+    compile "com.tealcube.minecraft.bukkit:hilt:2.0.1"
+    compile "com.tealcube.minecraft.bukkit:config:0.1.6-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:mirror:0.1.1-SNAPSHOT"
     compile "commons-validator:commons-validator:1.4.1"
-    compile "ninja.amp:ampmenus:1.4-SNAPSHOT"
+    compile "com.tealcube.minecraft.bukkit:AmpMenus:0.1.1-SNAPSHOT"
 }
 
 processResources {
@@ -52,9 +59,6 @@ processResources {
 }
 
 shadowJar {
-    baseName = "facecore-all"
-    classifier = ""
-
     relocate "ninja.amp", "com.tealcube.minecraft.bukkit.facecore.shade.amp"
     relocate "org.apache", "com.tealcube.minecraft.bukkit.facecore.shade.apache"
     relocate "com.tealcube.minecraft.bukkit.hilt", "com.tealcube.minecraft.bukkit.facecore.shade.hilt"
@@ -83,36 +87,5 @@ license {
     strictCheck true
     mapping {
         java = 'SLASHSTAR_STYLE'
-    }
-}
-
-publishing {
-    publications {
-        java(MavenPublication) {
-            artifactId = "facecore"
-            from components.java
-
-            artifact sourcesJar {
-                classifier "sources"
-            }
-
-            artifact javadocJar {
-                classifier "javadoc"
-            }
-        }
-        shadow(MavenPublication) {
-            artifactId = "facecore-all"
-            from components.shadow
-        }
-    }
-    repositories {
-        maven {
-            url "http://tealcube.com/nexus/content/repositories/${project.version.endsWith('-SNAPSHOT') ? 'snapshots' : 'releases'}/"
-            name "TealCube"
-            credentials {
-                username System.getenv("nexusUsername") ?: nexusUsername
-                password System.getenv("nexusPassword") ?: nexusPassword
-            }
-        }
     }
 }
