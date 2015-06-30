@@ -34,16 +34,13 @@ repositories {
     maven {
         url "http://ci.shadowvolt.com/plugin/repository/everything/"
     }
-    maven {
-        url "http://repo.greatmancode.com/content/groups/public/"
-    }
 }
 
 dependencies {
     compile "org.apache.commons:commons-pool2:2.2"
     compile "org.apache.commons:commons-dbcp2:2.0.1"
     compile "commons-logging:commons-logging:1.2"
-    compile "com.tealcube.minecraft.bukkit:kern:0.1.3:all"
+    compile "com.tealcube.minecraft.bukkit:kern:0.1.3-SNAPSHOT:all"
     compile "com.tealcube.minecraft.bukkit:hilt:2.0.1"
     compile "com.tealcube.minecraft.bukkit:config:0.1.6-SNAPSHOT"
     compile "com.tealcube.minecraft.bukkit:mirror:0.1.1-SNAPSHOT"
