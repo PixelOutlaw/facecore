@@ -192,6 +192,7 @@
                                     <include>com.tealcube.minecraft.bukkit:config</include>
                                     <include>com.tealcube.minecraft.bukkit:mirror</include>
                                     <include>com.tealcube.minecraft.bukkit:kern</include>
+                                    <include>com.tealcube.minecraft.bukkit:fanciful</include>
                                     <include>commons-validator:commons-validator</include>
                                     <include>commons-logging:commons-logging</include>
                                     <include>ninja.amp:ampmenus</include>
