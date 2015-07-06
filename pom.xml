@@ -202,8 +202,20 @@
                             </artifactSet>
                             <relocations>
                                 <relocation>
-                                    <pattern>org.apache</pattern>
-                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache</shadedPattern>
+                                    <pattern>org.apache.commons.dbcp2</pattern>
+                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.dbcp2</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.commons.logging</pattern>
+                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.logging</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.commons.validator</pattern>
+                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.validator</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>org.apache.commons.pool2</pattern>
+                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.pool2</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
