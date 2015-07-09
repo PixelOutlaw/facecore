@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.tealcube.minecraft.bukkit</groupId>
             <artifactId>kern</artifactId>
-            <version>0.1.4-SNAPSHOT</version>
+            <version>0.1.4</version>
         </dependency>
         <dependency>
             <groupId>com.tealcube.minecraft.bukkit</groupId>
