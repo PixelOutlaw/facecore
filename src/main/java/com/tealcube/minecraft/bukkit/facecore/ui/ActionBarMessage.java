@@ -38,7 +38,7 @@ public class ActionBarMessage {
 
     public ActionBarMessage(String message) {
         this.message = message;
-        this.chatSerializer = Mirror.getClass("ChatSerializer", ClassType.NMS);
+        this.chatSerializer = Mirror.getClass("IChatBaseComponent.ChatSerializer", ClassType.NMS);
         this.chatBaseComponent = Mirror.getClass("IChatBaseComponent", ClassType.NMS);
         this.playOutChatPacket = Mirror.getClass("PacketPlayOutChat", ClassType.NMS);
     }
