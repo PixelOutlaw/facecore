@@ -38,9 +38,9 @@ public class ActionBarMessage {
 
     public ActionBarMessage(String message) {
         this.message = message;
-        this.chatSerializer = Mirror.getClass("IChatBaseComponent.ChatSerializer", ClassType.NMS);
-        this.chatBaseComponent = Mirror.getClass("IChatBaseComponent", ClassType.NMS);
-        this.playOutChatPacket = Mirror.getClass("PacketPlayOutChat", ClassType.NMS);
+        this.chatSerializer = Mirror.getClass("IChatBaseComponent.ChatSerializer", ClassType.MINECRAFT_SERVER);
+        this.chatBaseComponent = Mirror.getClass("IChatBaseComponent", ClassType.MINECRAFT_SERVER);
+        this.playOutChatPacket = Mirror.getClass("PacketPlayOutChat", ClassType.MINECRAFT_SERVER);
     }
 
     public void send(Iterable<Player> players) {
@@ -51,7 +51,7 @@ public class ActionBarMessage {
 
     public void send(Player player) {
         try {
-            Class<?> packetClass = Mirror.getClass("Packet", ClassType.NMS);
+            Class<?> packetClass = Mirror.getClass("Packet", ClassType.MINECRAFT_SERVER);
             Object handle = Mirror.getMethod(player.getClass(), "getHandle").invoke(player);
             Object connection = Mirror.getField(handle.getClass(), "playerConnection").get(handle);
             Method sendPacket = Mirror.getMethod(connection.getClass(), "sendPacket", packetClass);
