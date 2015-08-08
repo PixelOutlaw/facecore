@@ -22,46 +22,55 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.ui;
 
+import com.google.common.base.Preconditions;
 import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 import com.tealcube.minecraft.bukkit.mirror.ClassType;
 import com.tealcube.minecraft.bukkit.mirror.Mirror;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Method;
 
-public class ActionBarMessage {
+public final class ActionBarMessage {
 
-    private final String message;
-    private final Class<?> chatSerializer;
-    private final Class<?> chatBaseComponent;
-    private final Class<?> playOutChatPacket;
+    private static final Class<?> CHAT_SERIALIZER;
+    private static final Class<?> CHAT_BASE_COMPONENT;
+    private static final Class<?> PACKET;
+    private static final Class<?> PLAY_OUT_CHAT_PACKET;
 
-    public ActionBarMessage(String message) {
-        this.message = message;
-        this.chatSerializer = Mirror.getClass("IChatBaseComponent.ChatSerializer", ClassType.MINECRAFT_SERVER);
-        this.chatBaseComponent = Mirror.getClass("IChatBaseComponent", ClassType.MINECRAFT_SERVER);
-        this.playOutChatPacket = Mirror.getClass("PacketPlayOutChat", ClassType.MINECRAFT_SERVER);
+    static {
+        CHAT_SERIALIZER = Mirror.getClass("IChatBaseComponent$ChatSerializer", ClassType.MINECRAFT_SERVER);
+        CHAT_BASE_COMPONENT = Mirror.getClass("IChatBaseComponent", ClassType.MINECRAFT_SERVER);
+        PACKET = Mirror.getClass("Packet", ClassType.MINECRAFT_SERVER);
+        PLAY_OUT_CHAT_PACKET = Mirror.getClass("PacketPlayOutChat", ClassType.MINECRAFT_SERVER);
     }
 
-    public void send(Iterable<Player> players) {
+    private ActionBarMessage() {
+        // do nothing, make it a singleton
+    }
+
+    public static void send(Iterable<Player> players, String message) {
         for (Player player : players) {
-            send(player);
+            send(player, message);
         }
     }
 
-    public void send(Player player) {
+    public static void send(Player player, String message) {
+        Preconditions.checkNotNull(CHAT_SERIALIZER);
+        Preconditions.checkNotNull(CHAT_BASE_COMPONENT);
+        Preconditions.checkNotNull(PACKET);
+        Preconditions.checkNotNull(PLAY_OUT_CHAT_PACKET);
         try {
-            Class<?> packetClass = Mirror.getClass("Packet", ClassType.MINECRAFT_SERVER);
             Object handle = Mirror.getMethod(player.getClass(), "getHandle").invoke(player);
             Object connection = Mirror.getField(handle.getClass(), "playerConnection").get(handle);
-            Method sendPacket = Mirror.getMethod(connection.getClass(), "sendPacket", packetClass);
-            Object serialized = Mirror.getMethod(chatSerializer, "a", String.class).invoke(null,
+            Method sendPacket = Mirror.getMethod(connection.getClass(), "sendPacket", PACKET);
+            Object serialized = Mirror.getMethod(CHAT_SERIALIZER, "a", String.class).invoke(null,
                     "{\"text\":\"" + TextUtils.color(message) + "\"}");
-            Object packet = playOutChatPacket.getConstructor(chatBaseComponent, Byte.TYPE).newInstance(serialized,
+            Object packet = PLAY_OUT_CHAT_PACKET.getConstructor(CHAT_BASE_COMPONENT, Byte.TYPE).newInstance(serialized,
                     (byte) 2);
             sendPacket.invoke(connection, packet);
         } catch (Exception e) {
-            e.printStackTrace();
+            Bukkit.getLogger().severe(e.getMessage());
         }
     }
 
