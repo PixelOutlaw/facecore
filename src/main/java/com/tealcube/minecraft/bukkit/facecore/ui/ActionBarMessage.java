@@ -23,7 +23,7 @@
 package com.tealcube.minecraft.bukkit.facecore.ui;
 
 import com.google.common.base.Preconditions;
-import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
+import com.tealcube.minecraft.bukkit.TextUtils;
 import com.tealcube.minecraft.bukkit.mirror.ClassType;
 import com.tealcube.minecraft.bukkit.mirror.Mirror;
 import org.bukkit.Bukkit;

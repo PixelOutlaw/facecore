@@ -23,7 +23,7 @@
 package com.tealcube.minecraft.bukkit.facecore.logging;
 
 import com.tealcube.minecraft.bukkit.facecore.utilities.IOUtils;
-import com.tealcube.minecraft.bukkit.kern.apache.commons.lang3.Validate;
+import com.tealcube.minecraft.bukkit.shade.apache.commons.lang3.Validate;
 import org.bukkit.plugin.Plugin;
 
 import java.io.File;
