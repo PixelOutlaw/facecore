@@ -25,12 +25,12 @@ package be.maximvdw.titlemotd.ui;
 import java.lang.reflect.Method;
 
 import com.google.common.base.Preconditions;
+import com.tealcube.minecraft.bukkit.TextUtils;
 import com.tealcube.minecraft.bukkit.mirror.ClassType;
 import com.tealcube.minecraft.bukkit.mirror.Mirror;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 
 /**
  * Minecraft 1.8 Title
