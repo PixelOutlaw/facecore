@@ -53,7 +53,7 @@ public class Title {
         CHAT_BASE_COMPONENT = Mirror.getClass("IChatBaseComponent", ClassType.MINECRAFT_SERVER);
         PACKET = Mirror.getClass("Packet", ClassType.MINECRAFT_SERVER);
         PLAY_OUT_TITLE_PACKET = Mirror.getClass("PacketPlayOutTitle", ClassType.MINECRAFT_SERVER);
-        ENUM_TITLE_ACTION = Mirror.getClass("EnumTitleAction", ClassType.MINECRAFT_SERVER);
+        ENUM_TITLE_ACTION = Mirror.getClass("PacketPlayOutTitle$EnumTitleAction", ClassType.MINECRAFT_SERVER);
     }
 
     /* Title text and color */
