@@ -1,29 +1,24 @@
 /**
- * The MIT License
- * Copyright (c) 2015 Teal Cube Games
+ * The MIT License Copyright (c) 2015 Teal Cube Games
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to the following conditions:
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+ * Software.
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 package be.maximvdw.titlemotd.ui;
 
 import com.google.common.base.Preconditions;
 import com.tealcube.minecraft.bukkit.TextUtils;
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import com.tealcube.minecraft.bukkit.mirror.ClassType;
 import com.tealcube.minecraft.bukkit.mirror.Mirror;
 import org.bukkit.Bukkit;
@@ -242,14 +237,16 @@ public class Title {
                     actions[2], null, fadeInTime * (ticks ? 1 : 20),
                     stayTime * (ticks ? 1 : 20), fadeOutTime * (ticks ? 1 : 20));
             // Send if set
-            if (fadeInTime != -1 && fadeOutTime != -1 && stayTime != -1)
+            if (fadeInTime != -1 && fadeOutTime != -1 && stayTime != -1) {
                 sendPacket.invoke(connection, packet);
+            }
 
             // Send title
             Object serialized = Mirror.getMethod(CHAT_SERIALIZER, "a", String.class).invoke(null,
                     "{\"text\":\"" + TextUtils.color(title) + "\",color:" + titleColor.name().toLowerCase() + "}");
             packet = PLAY_OUT_TITLE_PACKET.getConstructor(ENUM_TITLE_ACTION, CHAT_BASE_COMPONENT).newInstance(
                     actions[0], serialized);
+            FacecorePlugin.getInstance().debug("Sending title \"" + title + "\" to " + player.getDisplayName());
             sendPacket.invoke(connection, packet);
             if (subtitle != null && !subtitle.isEmpty()) {
                 // Send subtitle if present
@@ -257,6 +254,7 @@ public class Title {
                         "{\"text\":\"" + TextUtils.color(subtitle) + "\",color:" + subtitleColor.name().toLowerCase() + "}");
                 PLAY_OUT_TITLE_PACKET.getConstructor(ENUM_TITLE_ACTION, CHAT_BASE_COMPONENT).newInstance(
                         actions[1], serialized);
+                FacecorePlugin.getInstance().debug("Sending subtitle \"" + subtitle + "\" to " + player.getDisplayName());
                 sendPacket.invoke(connection, packet);
             }
         } catch (Exception e) {
