@@ -22,7 +22,8 @@
     THE SOFTWARE.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -135,6 +136,28 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.11</version>
+                <configuration>
+                    <header>com/mycila/maven/plugin/license/templates/MIT.txt</header>
+                    <properties>
+                        <owner>Teal Cube Games</owner>
+                        <email>tealcubegames@gmail.com</email>
+                    </properties>
+                    <includes>
+                        <include>src/main/java/com/tealcube/**</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>2.4</version>
@@ -154,7 +177,7 @@
                                     <include>com.tealcube.minecraft.bukkit:mirror</include>
                                     <include>com.tealcube.minecraft.bukkit:kern</include>
                                     <include>com.tealcube.minecraft.bukkit:fanciful</include>
-<include>com.tealcube.minecraft.bukkit:lumberjack</include>
+                                    <include>com.tealcube.minecraft.bukkit:lumberjack</include>
                                     <include>commons-validator:commons-validator</include>
                                     <include>commons-logging:commons-logging</include>
                                     <include>ninja.amp:ampmenus</include>
@@ -173,7 +196,8 @@
                                 </relocation>
                                 <relocation>
                                     <pattern>org.apache.commons.validator</pattern>
-                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.validator</shadedPattern>
+                                    <shadedPattern>com.tealcube.minecraft.bukkit.facecore.apache.validator
+                                    </shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>org.apache.commons.pool2</pattern>
