@@ -32,6 +32,8 @@ import org.bukkit.event.HandlerList;
 
 import java.io.File;
 
+import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
+
 public final class FacecorePlugin extends FacePlugin {
 
     private static FacecorePlugin _INSTANCE;
@@ -39,6 +41,7 @@ public final class FacecorePlugin extends FacePlugin {
     private File loggerFile;
     private SmartYamlConfiguration playerDataYAML;
     private PlayerJoinListener playerJoinListener;
+    private BusyListener busyListener;
 
     public static FacecorePlugin getInstance() {
         return _INSTANCE;
@@ -56,7 +59,9 @@ public final class FacecorePlugin extends FacePlugin {
         playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
         PlayerResolver.getInstance().loadFrom(playerDataYAML);
         playerJoinListener = new PlayerJoinListener(this);
+        busyListener = new BusyListener();
         getServer().getPluginManager().registerEvents(playerJoinListener, this);
+        getServer().getPluginManager().registerEvents(busyListener, this);
         logger.info("Facecore v" + getDescription().getVersion() + " enabled");
     }
 
