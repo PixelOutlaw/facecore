@@ -1,5 +1,7 @@
 package io.github.Cnly.BusyInv.BusyInv.items;
 
+import com.tealcube.minecraft.bukkit.TextUtils;
+
 import io.github.Cnly.BusyInv.BusyInv.ItemUtils;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
 
@@ -38,7 +40,7 @@ public class BusyItem
         boolean changed = false;
         if(null != displayName)
         {
-            meta.setDisplayName(ChatColor.RESET + displayName);
+            meta.setDisplayName(TextUtils.color(ChatColor.RESET + displayName));
             changed = true;
         }
         if(null != lores)
@@ -46,7 +48,7 @@ public class BusyItem
             ArrayList<String> loreList = new ArrayList<>();
             for(String lore : lores)
             {
-                loreList.add(ChatColor.RESET + lore);
+                loreList.add(TextUtils.color(ChatColor.RESET + lore));
             }
             meta.setLore(loreList);
             changed = true;
@@ -101,7 +103,7 @@ public class BusyItem
      */
     public BusyItem addLore(String lore)
     {
-        ItemUtils.addLore(this.look, ChatColor.RESET + lore);
+        ItemUtils.addLore(this.look, TextUtils.color(ChatColor.RESET + lore));
         return this;
     }
     
@@ -134,7 +136,7 @@ public class BusyItem
      */
     public BusyItem setDisplayName(String displayName)
     {
-        ItemUtils.setDisplayName(this.look, ChatColor.RESET + displayName);
+        ItemUtils.setDisplayName(this.look, TextUtils.color(ChatColor.RESET + displayName));
         return this;
     }
     
