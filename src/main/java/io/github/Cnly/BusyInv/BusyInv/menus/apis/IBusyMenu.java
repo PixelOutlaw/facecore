@@ -3,6 +3,7 @@ package io.github.Cnly.BusyInv.BusyInv.menus.apis;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.Inventory;
 
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
@@ -16,6 +17,8 @@ public interface IBusyMenu extends IOpenable, IParented
     public void onMenuClick(InventoryClickEvent e);
     
     public void onMenuClose(InventoryCloseEvent e);
+
+    public void onMenuOpen(InventoryOpenEvent e);
     
     /**
      * Gets the BusyHolder of the BusyMenu open for the player.
