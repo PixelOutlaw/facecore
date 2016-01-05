@@ -24,6 +24,7 @@
  */
 package com.stealthyone.mcb.mcml;
 
+import com.tealcube.minecraft.bukkit.shade.fanciful.FancyMessage;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
@@ -35,8 +36,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import mkremins.fanciful.FancyMessage;
 
 public final class MCMLBuilder {
 
