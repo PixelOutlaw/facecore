@@ -25,7 +25,7 @@
 package com.stealthyone.mcb.mcml;
 
 
-import com.tealcube.minecraft.bukkit.shade.fanciful.FancyMessage;
+import mkremins.fanciful.FancyMessage;
 
 final class EventClickURL extends EventClick {
 

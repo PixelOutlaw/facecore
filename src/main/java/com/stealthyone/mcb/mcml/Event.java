@@ -24,7 +24,7 @@
  */
 package com.stealthyone.mcb.mcml;
 
-import com.tealcube.minecraft.bukkit.shade.fanciful.FancyMessage;
+import mkremins.fanciful.FancyMessage;
 
 abstract class Event {
 

@@ -24,13 +24,13 @@
  */
 package com.stealthyone.mcb.mcml;
 
-import com.tealcube.minecraft.bukkit.shade.fanciful.FancyMessage;
-
 import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
+
+import mkremins.fanciful.FancyMessage;
 
 final class TempPart {
 

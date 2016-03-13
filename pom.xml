@@ -77,22 +77,22 @@
         <dependency>
             <groupId>com.tealcube.minecraft.bukkit</groupId>
             <artifactId>kern</artifactId>
-            <version>0.1.7</version>
+            <version>0.1.8-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>com.tealcubegames.minecraft.spigot</groupId>
             <artifactId>hilt</artifactId>
-            <version>2.0.5</version>
+            <version>3.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>com.tealcubegames.minecraft.spigot</groupId>
             <artifactId>config</artifactId>
-            <version>2.0.0</version>
+            <version>0.1.6-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>com.tealcubegames.minecraft.spigot</groupId>
             <artifactId>mirror</artifactId>
-            <version>0.4.2</version>
+            <version>3.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.tealcube.minecraft.bukkit</groupId>
@@ -172,11 +172,11 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>com.tealcube.minecraft.bukkit:hilt</include>
-                                    <include>com.tealcube.minecraft.bukkit:config</include>
-                                    <include>com.tealcube.minecraft.bukkit:mirror</include>
+                                    <include>com.tealcubegames.minecraft.spigot:hilt</include>
+                                    <include>com.tealcubegames.minecraft.spigot:config</include>
+                                    <include>com.tealcubegames.minecraft.spigot:mirror</include>
                                     <include>com.tealcube.minecraft.bukkit:kern</include>
-                                    <include>com.tealcube.minecraft.bukkit:fanciful</include>
+                                    <include>com.tealcubegames.minecraft.spigot:fanciful</include>
                                     <include>com.tealcube.minecraft.bukkit:lumberjack</include>
                                     <include>commons-validator:commons-validator</include>
                                     <include>commons-logging:commons-logging</include>

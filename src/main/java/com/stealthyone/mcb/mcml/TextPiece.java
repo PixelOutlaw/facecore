@@ -24,9 +24,9 @@
  */
 package com.stealthyone.mcb.mcml;
 
-import com.tealcube.minecraft.bukkit.shade.fanciful.FancyMessage;
-
 import org.bukkit.ChatColor;
+
+import mkremins.fanciful.FancyMessage;
 
 final class TextPiece {
 
