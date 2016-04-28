@@ -10,10 +10,8 @@ import org.bukkit.entity.Player;
  * 
  * Send a message to ingame.
  * 
- * @project BasePlugin
  * @version 1.0
  * @author Maxim Van de Wynckel (Maximvdw)
- * @site http://www.mvdw-software.be/
  */
 public class SendGame {
 

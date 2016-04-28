@@ -10,10 +10,8 @@ import org.bukkit.plugin.Plugin;
  * 
  * Log to the console.
  * 
- * @project BasePlugin
  * @version 1.0
  * @author Maxim Van de Wynckel (Maximvdw)
- * @site http://www.mvdw-software.be/
  */
 public class SendConsole {
 	static boolean enableLogging = false; // Enable logging
