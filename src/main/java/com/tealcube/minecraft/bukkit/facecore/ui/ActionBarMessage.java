@@ -33,17 +33,13 @@ import java.lang.reflect.Method;
 
 public final class ActionBarMessage {
 
-    private static final Class<?> CRAFT_PLAYER;
-    private static final Class<?> CHAT_SERIALIZER;
     private static final Class<?> CHAT_COMPONENT_TEXT;
     private static final Class<?> CHAT_BASE_COMPONENT;
     private static final Class<?> PACKET;
     private static final Class<?> PLAY_OUT_CHAT_PACKET;
 
     static {
-        CRAFT_PLAYER = Mirror.getClass("entity.CraftPlayer", ClassType.CRAFTBUKKIT);
         CHAT_COMPONENT_TEXT = Mirror.getClass("ChatComponentText", ClassType.MINECRAFT_SERVER);
-        CHAT_SERIALIZER = Mirror.getClass("ChatSerializer", ClassType.MINECRAFT_SERVER);
         CHAT_BASE_COMPONENT = Mirror.getClass("IChatBaseComponent", ClassType.MINECRAFT_SERVER);
         PACKET = Mirror.getClass("Packet", ClassType.MINECRAFT_SERVER);
         PLAY_OUT_CHAT_PACKET = Mirror.getClass("PacketPlayOutChat", ClassType.MINECRAFT_SERVER);
@@ -60,18 +56,16 @@ public final class ActionBarMessage {
     }
 
     public static void send(Player player, String message) {
-        Preconditions.checkNotNull(CRAFT_PLAYER);
-        Preconditions.checkNotNull(CHAT_SERIALIZER);
+        Preconditions.checkNotNull(CHAT_COMPONENT_TEXT);
         Preconditions.checkNotNull(CHAT_BASE_COMPONENT);
         Preconditions.checkNotNull(PACKET);
         Preconditions.checkNotNull(PLAY_OUT_CHAT_PACKET);
         try {
-            Object craftPlayer = CRAFT_PLAYER.cast(player);
             Object chatComponentText = CHAT_COMPONENT_TEXT.getConstructor(String.class).
                     newInstance(TextUtils.color(message));
             Object packet = PLAY_OUT_CHAT_PACKET.getConstructor(CHAT_BASE_COMPONENT, Byte.TYPE).
                     newInstance(chatComponentText, (byte) 2);
-            Object handle = Mirror.getMethod(CRAFT_PLAYER, "getHandle").invoke(craftPlayer);
+            Object handle = Mirror.getMethod(player.getClass(), "getHandle").invoke(player);
             Object connection = Mirror.getField(handle.getClass(), "playerConnection").get(handle);
             Method sendPacket = Mirror.getMethod(connection.getClass(), "sendPacket", PACKET);
             sendPacket.invoke(connection, packet);
