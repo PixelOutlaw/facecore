@@ -22,7 +22,7 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import com.tealcube.minecraft.bukkit.shade.apache.commons.lang3.Validate;
+import org.apache.commons.lang3.Validate;
 
 import java.io.File;
 import java.io.IOException;

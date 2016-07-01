@@ -22,8 +22,8 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
+import com.google.common.base.Optional;
 import com.tealcube.minecraft.bukkit.config.SmartYamlConfiguration;
-import com.tealcube.minecraft.bukkit.shade.google.common.base.Optional;
 
 import java.util.ArrayList;
 import java.util.List;

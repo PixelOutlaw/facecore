@@ -22,9 +22,9 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
+import com.google.common.base.Optional;
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import com.tealcube.minecraft.bukkit.facecore.utilities.MessageUtils;
-import com.tealcube.minecraft.bukkit.shade.google.common.base.Optional;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
