@@ -107,7 +107,7 @@
         <dependency>
             <groupId>com.tealcubegames.minecraft.spigot</groupId>
             <artifactId>version-utilities</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
