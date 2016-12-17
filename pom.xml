@@ -26,9 +26,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.tealcube.minecraft.bukkit</groupId>
-        <artifactId>bukkit-plugin-parent</artifactId>
-        <version>MC-1.10-SNAPSHOT</version>
+        <groupId>io.pixeloutlaw</groupId>
+        <artifactId>spigot-plugin-parent</artifactId>
+        <version>MC-1.11-SNAPSHOT</version>
     </parent>
 
     <artifactId>facecore</artifactId>
@@ -49,7 +49,7 @@
     <repositories>
         <repository>
             <id>tealcube-repo</id>
-            <url>http://maven.tealcube.com/content/groups/public</url>
+            <url>https://maven.pixeloutlaw.io/artifactory/public</url>
         </repository>
     </repositories>
 
