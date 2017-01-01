@@ -28,7 +28,7 @@
     <parent>
         <groupId>io.pixeloutlaw</groupId>
         <artifactId>spigot-plugin-parent</artifactId>
-        <version>MC-1.11-SNAPSHOT</version>
+        <version>1.11.2.1</version>
     </parent>
 
     <artifactId>facecore</artifactId>
@@ -48,8 +48,12 @@
 
     <repositories>
         <repository>
-            <id>tealcube-repo</id>
-            <url>https://maven.pixeloutlaw.io/artifactory/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <id>bintray-pixeloutlaw-pixeloutlaw-jars</id>
+            <name>bintray</name>
+            <url>http://dl.bintray.com/pixeloutlaw/pixeloutlaw-jars</url>
         </repository>
     </repositories>
 
