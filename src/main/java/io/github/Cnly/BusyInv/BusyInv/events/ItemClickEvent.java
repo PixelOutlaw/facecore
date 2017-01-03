@@ -1,13 +1,11 @@
 package io.github.Cnly.BusyInv.BusyInv.events;
 
 import io.github.Cnly.BusyInv.BusyInv.menus.apis.IBusyMenu;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-public class ItemClickEvent
-{
-    
+public class ItemClickEvent {
+
     private final Player player;
     private final IBusyMenu menu;
     private final ClickType clickType;
@@ -23,11 +21,10 @@ public class ItemClickEvent
     private boolean closeOnNoParent;
     private boolean closeDirectly;
     private boolean reloadMenu;
-    
+
     public ItemClickEvent(Player player, IBusyMenu menu, ClickType clickType,
-            int hotbarButton, boolean openParent, boolean closeOnNoParent,
-            boolean closeDirectly, boolean reloadMenu)
-    {
+                          int hotbarButton, boolean openParent, boolean closeOnNoParent,
+                          boolean closeDirectly, boolean reloadMenu) {
         super();
         this.player = player;
         this.menu = menu;
@@ -40,73 +37,60 @@ public class ItemClickEvent
     }
 
     public ItemClickEvent(Player player, IBusyMenu menu, ClickType clickType,
-            int hotbarButton)
-    {
+                          int hotbarButton) {
         super();
         this.player = player;
         this.menu = menu;
         this.clickType = clickType;
         this.hotbarButton = hotbarButton;
     }
-    
-    public Player getPlayer()
-    {
+
+    public Player getPlayer() {
         return player;
     }
-    
-    public IBusyMenu getMenu()
-    {
+
+    public IBusyMenu getMenu() {
         return menu;
     }
-    
-    public ClickType getClickType()
-    {
+
+    public ClickType getClickType() {
         return clickType;
     }
-    
-    public int getHotbarButton()
-    {
+
+    public int getHotbarButton() {
         return hotbarButton;
     }
-    
-    public boolean willOpenParent()
-    {
+
+    public boolean willOpenParent() {
         return openParent;
     }
-    
-    public void setOpenParent(boolean openParent)
-    {
+
+    public void setOpenParent(boolean openParent) {
         this.openParent = openParent;
     }
-    
-    public boolean willCloseOnNoParent()
-    {
+
+    public boolean willCloseOnNoParent() {
         return closeOnNoParent;
     }
-    
-    public void setCloseOnNoParent(boolean closeOnNoParent)
-    {
+
+    public void setCloseOnNoParent(boolean closeOnNoParent) {
         this.closeOnNoParent = closeOnNoParent;
     }
-    
-    public boolean willCloseDirectly()
-    {
+
+    public boolean willCloseDirectly() {
         return closeDirectly;
     }
-    
-    public void setCloseDirectly(boolean closeDirectly)
-    {
+
+    public void setCloseDirectly(boolean closeDirectly) {
         this.closeDirectly = closeDirectly;
     }
-    
-    public boolean willReloadMenu()
-    {
+
+    public boolean willReloadMenu() {
         return reloadMenu;
     }
-    
-    public void setReloadMenu(boolean reloadMenu)
-    {
+
+    public void setReloadMenu(boolean reloadMenu) {
         this.reloadMenu = reloadMenu;
     }
-    
+
 }

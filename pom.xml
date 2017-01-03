@@ -22,7 +22,8 @@
     THE SOFTWARE.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -32,7 +33,7 @@
     </parent>
 
     <artifactId>facecore</artifactId>
-    <version>2.0.5</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>facecore</name>
@@ -78,24 +79,19 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>io.pixeloutlaw</groupId>
             <artifactId>hilt</artifactId>
-            <version>2.0.6</version>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>io.pixeloutlaw</groupId>
             <artifactId>config</artifactId>
-            <version>2.0.2</version>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>io.pixeloutlaw</groupId>
             <artifactId>mirror</artifactId>
-            <version>0.4.3-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
-            <artifactId>lumberjack</artifactId>
-            <version>0.0.1</version>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
@@ -103,19 +99,14 @@
             <version>1.4.1</version>
         </dependency>
         <dependency>
-            <groupId>ninja.amp</groupId>
-            <artifactId>ampmenus</artifactId>
-            <version>1.6-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.tealcubegames.minecraft.spigot</groupId>
-            <artifactId>version-utilities</artifactId>
-            <version>0.0.1</version>
+            <groupId>io.pixeloutlaw</groupId>
+            <artifactId>amp-menus</artifactId>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>19.0-rc2</version>
+            <version>19.0</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -133,14 +124,14 @@
             <version>3.4</version>
         </dependency>
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>squirrelid</artifactId>
-            <version>0.2.0-SNAPSHOT</version>
+            <groupId>io.pixeloutlaw</groupId>
+            <artifactId>squirrel-id</artifactId>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
-            <groupId>com.tealcube.minecraft.bukkit</groupId>
+            <groupId>io.pixeloutlaw</groupId>
             <artifactId>fanciful</artifactId>
-            <version>2.0.10-SNAPSHOT</version>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>net.objecthunter</groupId>
@@ -148,9 +139,9 @@
             <version>0.4.5</version>
         </dependency>
         <dependency>
-            <groupId>se.ranzdo.bukkit</groupId>
-            <artifactId>methodcommand</artifactId>
-            <version>0.4-SNAPSHOT</version>
+            <groupId>io.pixeloutlaw</groupId>
+            <artifactId>method-command</artifactId>
+            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -215,11 +206,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <artifactSet>
                                 <includes>
-                                    <include>com.tealcube.minecraft.bukkit:hilt</include>
-                                    <include>com.tealcube.minecraft.bukkit:config</include>
-                                    <include>com.tealcube.minecraft.bukkit:mirror</include>
-                                    <include>com.tealcubegames.minecraft.spigot:version-utilities</include>
-                                    <include>com.tealcube.minecraft.bukkit:lumberjack</include>
+                                    <include>io.pixeloutlaw:*</include>
                                     <include>commons-validator:commons-validator</include>
                                     <include>commons-logging:commons-logging</include>
                                     <include>ninja.amp:ampmenus</include>
@@ -230,10 +217,7 @@
                                     <include>com.google.code.gson:gson</include>
                                     <include>com.typesafe:config</include>
                                     <include>org.apache.commons:commons-lang3</include>
-                                    <include>com.sk89q:squirrelid</include>
-                                    <include>com.tealcube.minecraft.bukkit:fanciful</include>
                                     <include>net.objecthunter:exp4j</include>
-                                    <include>se.ranzdo.bukkit:methodcommand</include>
                                 </includes>
                             </artifactSet>
                             <relocations>

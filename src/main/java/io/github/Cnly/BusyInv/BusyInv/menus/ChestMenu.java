@@ -3,113 +3,96 @@ package io.github.Cnly.BusyInv.BusyInv.menus;
 import io.github.Cnly.BusyInv.BusyInv.apis.IOpenable;
 import io.github.Cnly.BusyInv.BusyInv.holders.BusyHolder;
 import io.github.Cnly.BusyInv.BusyInv.items.BusyItem;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 
-public class ChestMenu extends BusyMenu
-{
-    
-    public ChestMenu(String title, IOpenable parent, int size)
-    {
+public class ChestMenu extends BusyMenu {
+
+    public ChestMenu(String title, IOpenable parent, int size) {
         super(InventoryType.CHEST, title, parent, getVerifiedSize(size));
     }
-    
-    public ChestMenu(String title, IOpenable parent, ChestSize size)
-    {
+
+    public ChestMenu(String title, IOpenable parent, ChestSize size) {
         super(InventoryType.CHEST, title, parent, size.getValue());
     }
-    
+
+    protected static int getVerifiedSize(int size) {
+        if (size % 9 != 0)
+            throw new IllegalArgumentException("size must be a multiple of 9");
+        return size;
+    }
+
     @Override
-    public ChestMenu openFor(Player p)
-    {
+    public ChestMenu openFor(Player p) {
         Inventory inv = Bukkit.createInventory(new BusyHolder(this), this.size,
                 this.title);
         this.applyOn(p, inv);
         p.openInventory(inv);
         return this;
     }
-    
+
     /**
      * Set items for a chest menu in a easy way.
-     * 
-     * @param naturalRow
-     *            The row the item should be on. 1~6(both included)
-     * @param naturalColumn
-     *            The column the item should be on. 1~9(both included)
-     * @param item
-     *            The item
+     *
+     * @param naturalRow    The row the item should be on. 1~6(both included)
+     * @param naturalColumn The column the item should be on. 1~9(both included)
+     * @param item          The item
      * @return itself
      */
     public ChestMenu naturalSet(int naturalRow, int naturalColumn,
-            BusyItem item)
-    {
-        return (ChestMenu)this.setItem(this.getRawSlot(naturalRow, naturalColumn), item);
+                                BusyItem item) {
+        return (ChestMenu) this.setItem(this.getRawSlot(naturalRow, naturalColumn), item);
     }
-    
-    public BusyItem naturalGet(int naturalRow, int naturalColumn)
-    {
+
+    public BusyItem naturalGet(int naturalRow, int naturalColumn) {
         return this.getItems()[this.getRawSlot(naturalRow, naturalColumn)];
     }
-    
-    protected int getRawSlot(int naturalRow, int naturalColumn)
-    {
+
+    protected int getRawSlot(int naturalRow, int naturalColumn) {
         return ((naturalRow - 1) * 9 + naturalColumn) - 1;
     }
-    
-    public static enum ChestSize
-    {
-        
+
+    @Override
+    public ChestMenu setSize(int size) {
+        return (ChestMenu) super.setSize(getVerifiedSize(size));
+    }
+
+    public static enum ChestSize {
+
         ONE_LINE(9),
         TWO_LINES(18),
         THREE_LINES(27),
         FOUR_LINES(36),
         FIVE_LINES(45),
         SIX_LINES(54);
-        
+
         private final int value;
-        
-        private ChestSize(int value)
-        {
+
+        private ChestSize(int value) {
             this.value = value;
         }
-        
-        public int getValue()
-        {
-            return value;
-        }
-        
-        public static ChestSize fit(int size)
-        {
-            if(size <= 9)
+
+        public static ChestSize fit(int size) {
+            if (size <= 9)
                 return ONE_LINE;
-            if(size <= 18)
+            if (size <= 18)
                 return TWO_LINES;
-            if(size <= 27)
+            if (size <= 27)
                 return THREE_LINES;
-            if(size <= 36)
+            if (size <= 36)
                 return FOUR_LINES;
-            if(size <= 45)
+            if (size <= 45)
                 return FIVE_LINES;
             else
                 return SIX_LINES;
         }
-        
+
+        public int getValue() {
+            return value;
+        }
+
     }
-    
-    @Override
-    public ChestMenu setSize(int size)
-    {
-        return (ChestMenu)super.setSize(getVerifiedSize(size));
-    }
-    
-    protected static int getVerifiedSize(int size)
-    {
-        if(size % 9 != 0)
-            throw new IllegalArgumentException("size must be a multiple of 9");
-        return size;
-    }
-    
+
 }

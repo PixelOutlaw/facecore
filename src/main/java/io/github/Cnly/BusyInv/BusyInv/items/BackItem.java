@@ -1,32 +1,26 @@
 package io.github.Cnly.BusyInv.BusyInv.items;
 
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
-
 import org.bukkit.inventory.ItemStack;
 
-public class BackItem extends BusyItem
-{
+public class BackItem extends BusyItem {
 
-    public BackItem(ItemStack look)
-    {
+    public BackItem(ItemStack look) {
         super(look);
     }
 
-    public BackItem(String displayName, ItemStack icon, String... lores)
-    {
+    public BackItem(String displayName, ItemStack icon, String... lores) {
         super(displayName, icon, lores);
     }
 
-    public BackItem(String displayName, ItemStack icon)
-    {
+    public BackItem(String displayName, ItemStack icon) {
         super(displayName, icon);
     }
-    
+
     @Override
-    public void onClick(ItemClickEvent e)
-    {
+    public void onClick(ItemClickEvent e) {
         e.setOpenParent(true);
         e.setCloseOnNoParent(true);
     }
-    
+
 }

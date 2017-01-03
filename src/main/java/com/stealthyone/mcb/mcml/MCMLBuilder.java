@@ -1,19 +1,19 @@
 /**
  * MCMarkupLanguage - Licensed under the MIT License (MIT)
- *
+ * <p>
  * Copyright (c) Stealth2800 <http://stealthyone.com/>
  * Copyright (c) contributors <https://github.com/Stealth2800/MCMarkupLanguage>
- *
+ * <p>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p>
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ * <p>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,6 +24,7 @@
  */
 package com.stealthyone.mcb.mcml;
 
+import mkremins.fanciful.FancyMessage;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
@@ -35,19 +36,14 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import mkremins.fanciful.FancyMessage;
-
 public final class MCMLBuilder {
 
     static final Pattern PATTERN_EVENT = Pattern.compile("^\\((txt|ach|itm|cmd|url|scmd): *([\\S\\s]+?)\\);");
     static final Pattern PATTERN_TEXT_GROUP = Pattern.compile("\\[(.+?)\\];");
     static final Pattern PATTERN_CHATCOLOR = Pattern.compile("&([a-f0-9l-o|kr])");
-
-    String rawText;
     final Map<String, Object> replacements = new HashMap<>();
-
     final List<TempPart> parts = new ArrayList<>();
-
+    String rawText;
     FancyMessage fancyMessage;
 
     public MCMLBuilder(String input) {
