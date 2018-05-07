@@ -28,11 +28,11 @@
     <parent>
         <groupId>io.pixeloutlaw</groupId>
         <artifactId>spigot-plugin-parent</artifactId>
-        <version>1.12.2.0</version>
+        <version>1.12.2.3-SNAPSHOT</version>
     </parent>
 
     <artifactId>facecore</artifactId>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>facecore</name>
@@ -48,19 +48,16 @@
 
     <repositories>
         <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-pixeloutlaw-pixeloutlaw-jars</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/pixeloutlaw/pixeloutlaw-jars</url>
+            <id>pixeloutlaw-repo</id>
+            <name>PixelOutlaw Repository</name>
+            <url>https://artifactory.pixeloutlaw.io/artifactory/public</url>
         </repository>
     </repositories>
 
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>com.destroystokyo.paper</groupId>
+            <artifactId>paper-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -79,28 +76,14 @@
         </dependency>
         <dependency>
             <groupId>io.pixeloutlaw</groupId>
-            <artifactId>hilt</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>config</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>mirror</artifactId>
-            <version>1.11.2.1</version>
+            <artifactId>spigot-commons</artifactId>
+            <version>1.12.2.3-SNAPSHOT</version>
+            <classifier>all</classifier>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>1.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>amp-menus</artifactId>
-            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -123,24 +106,9 @@
             <version>3.4</version>
         </dependency>
         <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>squirrel-id</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>fanciful</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
             <groupId>net.objecthunter</groupId>
             <artifactId>exp4j</artifactId>
             <version>0.4.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>method-command</artifactId>
-            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -282,7 +250,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.javaVersion>1.7</project.build.javaVersion>
+        <project.build.javaVersion>1.8</project.build.javaVersion>
     </properties>
 
 </project>
