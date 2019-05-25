@@ -28,11 +28,11 @@
     <parent>
         <groupId>io.pixeloutlaw</groupId>
         <artifactId>spigot-plugin-parent</artifactId>
-        <version>1.12.2.3-SNAPSHOT</version>
+        <version>1.14.1.0</version>
     </parent>
 
     <artifactId>facecore</artifactId>
-    <version>3.0.4-SNAPSHOT</version>
+    <version>3.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>facecore</name>
@@ -54,10 +54,38 @@
         </repository>
     </repositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.pixeloutlaw.spigot-commons</groupId>
+                <artifactId>spigot-commons-bom</artifactId>
+                <version>1.14.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
-            <groupId>com.destroystokyo.paper</groupId>
-            <artifactId>paper-api</artifactId>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>amp-menus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>fanciful</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>hilt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>method-command</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -73,12 +101,6 @@
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
             <version>1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>spigot-commons</artifactId>
-            <version>1.12.2.3-SNAPSHOT</version>
-            <classifier>all</classifier>
         </dependency>
         <dependency>
             <groupId>commons-validator</groupId>
@@ -109,11 +131,6 @@
             <groupId>net.objecthunter</groupId>
             <artifactId>exp4j</artifactId>
             <version>0.4.5</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
         </dependency>
     </dependencies>
 
