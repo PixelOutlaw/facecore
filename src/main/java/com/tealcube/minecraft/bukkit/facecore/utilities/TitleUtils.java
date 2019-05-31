@@ -24,41 +24,38 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.TextUtils;
 import de.Herbystar.TTA.TTA_Methods;
+import java.util.Arrays;
+import java.util.List;
 import org.apache.commons.lang3.Validate;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public final class MessageUtils {
+public final class TitleUtils {
 
-  private MessageUtils() {
+  private final static int DEFAULT_FADE_IN = 10;
+  private final static int DEFAULT_FADE_OUT = 10;
+  private final static int DEFAULT_DURATION = 40;
+
+  private TitleUtils() {
     // do nothing
   }
 
-  public static void sendMessage(CommandSender sender, String message) {
-    sendMessage(sender, message, new String[][]{});
+  public static void sendTitle(Player sender, String upper, String lower) {
+    sendTitle(sender, upper, lower, DEFAULT_DURATION, DEFAULT_FADE_IN, DEFAULT_FADE_OUT,
+        new String[][]{});
   }
 
-  public static void sendMessage(CommandSender sender, String message, String[][] args) {
+  public static void sendTitle(Player sender, String upper, String lower, int duration, int fadeIn,
+      int fadeOut, String[][] args) {
     Validate.notNull(sender, "sender cannot be null");
-    Validate.notNull(message, "message cannot be null");
+    Validate.notNull(upper, "message cannot be null");
     Validate.notNull(args, "args cannot be null");
-    String toSend = message;
+    List<String> toSend = Arrays.asList(upper, lower);
     toSend = TextUtils.args(toSend, args);
     toSend = TextUtils.color(toSend);
-    sender.sendMessage(toSend);
-  }
-
-  public static void sendActionBar(Player sender, String message) {
-    sendActionBar(sender, message, new String[][]{});
-  }
-
-  public static void sendActionBar(Player sender, String message, String[][] args) {
-    Validate.notNull(sender, "sender cannot be null");
-    Validate.notNull(message, "message cannot be null");
-    Validate.notNull(args, "args cannot be null");
-    String toSend = message;
-    toSend = TextUtils.args(toSend, args);
-    toSend = TextUtils.color(toSend);
-    TTA_Methods.sendActionBar(sender, toSend);
+    TTA_Methods.sendTitle(
+        sender,
+        toSend.get(0), fadeIn, duration, fadeOut,
+        toSend.get(1), fadeIn, duration, fadeOut
+    );
   }
 }
