@@ -28,11 +28,11 @@
     <parent>
         <groupId>io.pixeloutlaw</groupId>
         <artifactId>spigot-plugin-parent</artifactId>
-        <version>1.11.2.1</version>
+        <version>1.14.1.0</version>
     </parent>
 
     <artifactId>facecore</artifactId>
-    <version>3.0.2-SNAPSHOT</version>
+    <version>3.1.0</version>
     <packaging>jar</packaging>
 
     <name>facecore</name>
@@ -48,19 +48,55 @@
 
     <repositories>
         <repository>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <id>bintray-pixeloutlaw-pixeloutlaw-jars</id>
-            <name>bintray</name>
-            <url>http://dl.bintray.com/pixeloutlaw/pixeloutlaw-jars</url>
+            <id>pixeloutlaw-repo</id>
+            <name>PixelOutlaw Repository</name>
+            <url>https://artifactory.pixeloutlaw.io/artifactory/public</url>
+        </repository>
+        <repository>
+            <id>tta-repo</id>
+            <url>http://releases.herbystar.eu/</url>
         </repository>
     </repositories>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.pixeloutlaw.spigot-commons</groupId>
+                <artifactId>spigot-commons-bom</artifactId>
+                <version>1.14.1.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>amp-menus</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>fanciful</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>hilt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.pixeloutlaw.spigot-commons</groupId>
+            <artifactId>method-command</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.Herbystar</groupId>
+            <artifactId>TTA</artifactId>
+            <version>4.8</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -78,29 +114,9 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>hilt</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>config</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>mirror</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
             <groupId>commons-validator</groupId>
             <artifactId>commons-validator</artifactId>
             <version>1.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>amp-menus</artifactId>
-            <version>1.11.2.1</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -123,29 +139,9 @@
             <version>3.4</version>
         </dependency>
         <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>squirrel-id</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>fanciful</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
             <groupId>net.objecthunter</groupId>
             <artifactId>exp4j</artifactId>
             <version>0.4.5</version>
-        </dependency>
-        <dependency>
-            <groupId>io.pixeloutlaw</groupId>
-            <artifactId>method-command</artifactId>
-            <version>1.11.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
         </dependency>
     </dependencies>
 
@@ -282,7 +278,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.javaVersion>1.7</project.build.javaVersion>
+        <project.build.javaVersion>1.8</project.build.javaVersion>
     </properties>
 
 </project>
