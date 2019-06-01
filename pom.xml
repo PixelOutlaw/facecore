@@ -268,14 +268,6 @@
     </plugins>
   </build>
 
-  <distributionManagement>
-    <repository>
-      <id>bintray-pixeloutlaw-pixeloutlaw-jars</id>
-      <name>pixeloutlaw-pixeloutlaw-jars</name>
-      <url>https://api.bintray.com/maven/pixeloutlaw/pixeloutlaw-jars/facecore/;publish=1</url>
-    </repository>
-  </distributionManagement>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.javaVersion>1.8</project.build.javaVersion>
