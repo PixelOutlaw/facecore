@@ -200,6 +200,8 @@
               <artifactSet>
                 <includes>
                   <include>io.pixeloutlaw.spigot-commons:*</include>
+                  <include>org.jetbrains.kotlin:*</include>
+                  <include>org.jetbrains:*</include>
                   <include>commons-validator:commons-validator</include>
                   <include>commons-logging:commons-logging</include>
                   <include>ninja.amp:ampmenus</include>
