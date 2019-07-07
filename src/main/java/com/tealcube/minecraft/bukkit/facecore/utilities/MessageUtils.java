@@ -23,7 +23,8 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.TextUtils;
-import de.Herbystar.TTA.TTA_Methods;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -59,6 +60,6 @@ public final class MessageUtils {
     String toSend = message;
     toSend = TextUtils.args(toSend, args);
     toSend = TextUtils.color(toSend);
-    TTA_Methods.sendActionBar(sender, toSend);
+    sender.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(toSend));
   }
 }

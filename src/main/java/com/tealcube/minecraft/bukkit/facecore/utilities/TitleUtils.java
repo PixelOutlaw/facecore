@@ -22,11 +22,6 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import com.tealcube.minecraft.bukkit.TextUtils;
-import de.Herbystar.TTA.TTA_Methods;
-import java.util.Arrays;
-import java.util.List;
-import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
 
 public final class TitleUtils {
@@ -46,16 +41,7 @@ public final class TitleUtils {
 
   public static void sendTitle(Player sender, String upper, String lower, int duration, int fadeIn,
       int fadeOut, String[][] args) {
-    Validate.notNull(sender, "sender cannot be null");
-    Validate.notNull(upper, "message cannot be null");
-    Validate.notNull(args, "args cannot be null");
-    List<String> toSend = Arrays.asList(upper, lower);
-    toSend = TextUtils.args(toSend, args);
-    toSend = TextUtils.color(toSend);
-    TTA_Methods.sendTitle(
-        sender,
-        toSend.get(0), fadeIn, duration, fadeOut,
-        toSend.get(1), fadeIn, duration, fadeOut
-    );
+    return;
+    // TODO: logic #RIP-ROB
   }
 }

@@ -1,4 +1,5 @@
 main: com.tealcube.minecraft.bukkit.facecore.FacecorePlugin
 version: ${project.version}-${git.commit.id.abbrev}
 name: Facecore
-load: startup
+api-version: 1.14
+load: STARTUP
