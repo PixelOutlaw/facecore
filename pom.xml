@@ -32,7 +32,7 @@
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.14.4.1-SNAPSHOT</version>
+  <version>1.14.4.0</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
