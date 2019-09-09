@@ -28,7 +28,7 @@
   <parent>
     <groupId>io.pixeloutlaw</groupId>
     <artifactId>spigot-plugin-parent</artifactId>
-    <version>1.14.3.0</version>
+    <version>1.14.4.2</version>
   </parent>
 
   <artifactId>facecore</artifactId>
