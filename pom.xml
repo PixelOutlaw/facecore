@@ -28,11 +28,11 @@
   <parent>
     <groupId>io.pixeloutlaw</groupId>
     <artifactId>spigot-plugin-parent</artifactId>
-    <version>1.15.1.4</version>
+    <version>1.15.2.0</version>
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.15.1.4</version>
+  <version>1.15.2.0</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -53,7 +53,7 @@
     </repository>
     <repository>
       <id>dmulloy2-repo</id>
-      <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+      <url>https://repo.dmulloy2.net/nexus/repository/public/</url>
     </repository>
   </repositories>
 
@@ -62,7 +62,7 @@
       <dependency>
         <groupId>io.pixeloutlaw.spigot-commons</groupId>
         <artifactId>spigot-commons-bom</artifactId>
-        <version>1.15.1.1</version>
+        <version>1.15.2.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -77,8 +77,8 @@
     </dependency>
     <dependency>
       <groupId>com.comphenix.protocol</groupId>
-      <artifactId>ProtocolLib-API</artifactId>
-      <version>4.4.0</version>
+      <artifactId>ProtocolLib</artifactId>
+      <version>4.5.0</version>
       <scope>provided</scope>
     </dependency>
 
