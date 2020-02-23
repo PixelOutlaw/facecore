@@ -33,38 +33,40 @@ import java.io.File;
 
 public final class FacecorePlugin extends FacePlugin {
 
-    private static FacecorePlugin _INSTANCE;
-    private File loggerFile;
-    private SmartYamlConfiguration playerDataYAML;
-    private PlayerJoinListener playerJoinListener;
-    private BusyListener busyListener;
+  private static FacecorePlugin _INSTANCE;
+  private File loggerFile;
+  private SmartYamlConfiguration playerDataYAML;
+  private PlayerJoinListener playerJoinListener;
+  private BusyListener busyListener;
 
-    public static FacecorePlugin getInstance() {
-        return _INSTANCE;
-    }
+  public static FacecorePlugin getInstance() {
+    return _INSTANCE;
+  }
 
-    public File getLoggerFile() {
-        return loggerFile;
-    }
+  public File getLoggerFile() {
+    return loggerFile;
+  }
 
-    @Override
-    public void enable() {
-        _INSTANCE = this;
-        loggerFile = new File(getDataFolder(), "debug.log");
-        playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
-        PlayerResolver.getInstance().loadFrom(playerDataYAML);
-        playerJoinListener = new PlayerJoinListener(this);
-        busyListener = new BusyListener();
-        getServer().getPluginManager().registerEvents(playerJoinListener, this);
-        getServer().getPluginManager().registerEvents(busyListener, this);
-    }
+  @Override
+  public void enable() {
+    _INSTANCE = this;
+    loggerFile = new File(getDataFolder(), "debug.log");
+    playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
+    PlayerResolver.getInstance().loadFrom(playerDataYAML);
 
-    @Override
-    public void disable() {
-        PlayerResolver.getInstance().saveTo(playerDataYAML);
-        HandlerList.unregisterAll(this);
-        playerJoinListener = null;
-        playerDataYAML = null;
-    }
+    playerJoinListener = new PlayerJoinListener();
+    busyListener = new BusyListener();
+
+    getServer().getPluginManager().registerEvents(playerJoinListener, this);
+    getServer().getPluginManager().registerEvents(busyListener, this);
+  }
+
+  @Override
+  public void disable() {
+    PlayerResolver.getInstance().saveTo(playerDataYAML);
+    HandlerList.unregisterAll(this);
+    playerJoinListener = null;
+    playerDataYAML = null;
+  }
 
 }
