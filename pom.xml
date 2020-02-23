@@ -51,6 +51,10 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
+    <repository>
+      <id>dmulloy2-repo</id>
+      <url>http://repo.dmulloy2.net/nexus/repository/public/</url>
+    </repository>
   </repositories>
 
   <dependencyManagement>
@@ -71,9 +75,9 @@
       <artifactId>paper-api</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.github.dmulloy2</groupId>
-      <artifactId>ProtocolLib</artifactId>
-      <version>4.5.0</version>
+      <groupId>com.comphenix.protocol</groupId>
+      <artifactId>ProtocolLib-API</artifactId>
+      <version>4.4.0</version>
     </dependency>
 
     <dependency>
