@@ -22,44 +22,54 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import com.tealcube.minecraft.bukkit.TextUtils;
+import io.pixeloutlaw.minecraft.spigot.garbage.StringExtensionsKt;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import kotlin.Pair;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public final class MessageUtils {
 
-  private MessageUtils() {
-    // do nothing
-  }
+    private MessageUtils() {
+        // do nothing
+    }
 
-  public static void sendMessage(CommandSender sender, String message) {
-    sendMessage(sender, message, new String[][]{});
-  }
+    public static void sendMessage(CommandSender sender, String message) {
+        sendMessage(sender, message, new String[][]{});
+    }
 
-  public static void sendMessage(CommandSender sender, String message, String[][] args) {
-    Validate.notNull(sender, "sender cannot be null");
-    Validate.notNull(message, "message cannot be null");
-    Validate.notNull(args, "args cannot be null");
-    String toSend = message;
-    toSend = TextUtils.args(toSend, args);
-    toSend = TextUtils.color(toSend);
-    sender.sendMessage(toSend);
-  }
+    public static void sendMessage(CommandSender sender, String message, String[][] args) {
+        String toSend = prepareMessage(sender, message, args);
+        sender.sendMessage(toSend);
+    }
 
-  public static void sendActionBar(Player sender, String message) {
-    sendActionBar(sender, message, new String[][]{});
-  }
+    @NotNull
+    private static String prepareMessage(CommandSender sender, String message, String[][] args) {
+        Validate.notNull(sender, "sender cannot be null");
+        Validate.notNull(message, "message cannot be null");
+        Validate.notNull(args, "args cannot be null");
+        List<Pair<String, String>> argList = Arrays.stream(args).map(arg -> {
+            if (arg.length < 2) {
+                return null;
+            }
+            return new Pair<>(arg[0], arg[1]);
+        }).filter(Objects::nonNull).collect(Collectors.toList());
+        return StringExtensionsKt.chatColorize(StringExtensionsKt.replaceArgs(message, argList));
+    }
 
-  public static void sendActionBar(Player sender, String message, String[][] args) {
-    Validate.notNull(sender, "sender cannot be null");
-    Validate.notNull(message, "message cannot be null");
-    Validate.notNull(args, "args cannot be null");
-    String toSend = message;
-    toSend = TextUtils.args(toSend, args);
-    toSend = TextUtils.color(toSend);
-    sender.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(toSend));
-  }
+    public static void sendActionBar(Player sender, String message) {
+        sendActionBar(sender, message, new String[][]{});
+    }
+
+    public static void sendActionBar(Player sender, String message, String[][] args) {
+        String toSend = prepareMessage(sender, message, args);
+        sender.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(toSend));
+    }
 }

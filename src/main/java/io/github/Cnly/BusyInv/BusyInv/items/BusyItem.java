@@ -1,15 +1,14 @@
 package io.github.Cnly.BusyInv.BusyInv.items;
 
-import com.tealcube.minecraft.bukkit.TextUtils;
 import io.github.Cnly.BusyInv.BusyInv.ItemUtils;
 import io.github.Cnly.BusyInv.BusyInv.events.ItemClickEvent;
+import io.pixeloutlaw.minecraft.spigot.garbage.StringExtensionsKt;
+import java.util.ArrayList;
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class BusyItem {
 
@@ -32,13 +31,13 @@ public class BusyItem {
         ItemMeta meta = this.look.getItemMeta();
         boolean changed = false;
         if (null != displayName) {
-            meta.setDisplayName(TextUtils.color(ChatColor.RESET + displayName));
+            meta.setDisplayName(StringExtensionsKt.chatColorize(ChatColor.RESET + displayName));
             changed = true;
         }
         if (null != lores) {
             ArrayList<String> loreList = new ArrayList<>();
             for (String lore : lores) {
-                loreList.add(TextUtils.color(ChatColor.RESET + lore));
+                loreList.add(StringExtensionsKt.chatColorize(ChatColor.RESET + lore));
             }
             meta.setLore(loreList);
             changed = true;
@@ -102,7 +101,7 @@ public class BusyItem {
      * @return this
      */
     public BusyItem addLore(String lore) {
-        ItemUtils.addLore(this.look, TextUtils.color(ChatColor.RESET + lore));
+        ItemUtils.addLore(this.look, StringExtensionsKt.chatColorize(ChatColor.RESET + lore));
         return this;
     }
 
@@ -118,7 +117,7 @@ public class BusyItem {
      * @return this
      */
     public BusyItem setDisplayName(String displayName) {
-        ItemUtils.setDisplayName(this.look, TextUtils.color(ChatColor.RESET + displayName));
+        ItemUtils.setDisplayName(this.look, StringExtensionsKt.chatColorize(ChatColor.RESET + displayName));
         return this;
     }
 

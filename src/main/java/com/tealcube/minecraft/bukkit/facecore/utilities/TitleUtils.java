@@ -22,56 +22,19 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import static net.amoebaman.util.Reflection.getNMSClass;
-
-import java.lang.reflect.Constructor;
 import org.bukkit.entity.Player;
 
 public final class TitleUtils {
+    private final static int DEFAULT_FADE_IN = 10;
+    private final static int DEFAULT_FADE_OUT = 10;
+    private final static int DEFAULT_DURATION = 40;
 
-  private final static int DEFAULT_FADE_IN = 10;
-  private final static int DEFAULT_FADE_OUT = 10;
-  private final static int DEFAULT_DURATION = 40;
-
-  public static void sendTitle(Player sender, String upper, String lower) {
-    sendTitle(sender, upper, lower, DEFAULT_DURATION, DEFAULT_FADE_IN, DEFAULT_FADE_OUT);
-  }
-
-  public static void sendTitle(Player sender, String upper, String lower, int duration, int fadeIn,
-      int fadeOut) {
-    try {
-      Object chatTitle = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0]
-          .getMethod("a", String.class).invoke(null, "{\"text\": \"" + upper + "\"}");
-      Constructor<?> titleConstructor = getNMSClass("PacketPlayOutTitle")
-          .getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0],
-              getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
-      Object packet = titleConstructor.newInstance(
-          getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null),
-          chatTitle, fadeIn, duration, fadeOut);
-
-      Object chatsTitle = getNMSClass("IChatBaseComponent").getDeclaredClasses()[0]
-          .getMethod("a", String.class).invoke(null, "{\"text\": \"" + lower + "\"}");
-      Constructor<?> timingTitleConstructor = getNMSClass("PacketPlayOutTitle")
-          .getConstructor(getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0],
-              getNMSClass("IChatBaseComponent"), int.class, int.class, int.class);
-      Object timingPacket = timingTitleConstructor.newInstance(
-          getNMSClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null),
-          chatsTitle, fadeIn, duration, fadeOut);
-      sendPacket(sender, packet);
-      sendPacket(sender, timingPacket);
-    } catch (Exception e) {
-      e.printStackTrace();
+    public static void sendTitle(Player sender, String upper, String lower) {
+        sendTitle(sender, upper, lower, DEFAULT_DURATION, DEFAULT_FADE_IN, DEFAULT_FADE_OUT);
     }
-  }
 
-  private static void sendPacket(Player player, Object packet) {
-    try {
-      Object handle = player.getClass().getMethod("getHandle").invoke(player);
-      Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-      playerConnection.getClass().getMethod("sendPacket", getNMSClass("Packet"))
-          .invoke(playerConnection, packet);
-    } catch (Exception e) {
-      e.printStackTrace();
+    public static void sendTitle(Player sender, String upper, String lower, int duration, int fadeIn,
+                                 int fadeOut) {
+        sender.sendTitle(upper, lower, fadeIn, duration, fadeOut);
     }
-  }
 }
