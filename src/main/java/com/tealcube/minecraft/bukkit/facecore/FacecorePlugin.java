@@ -25,6 +25,7 @@ package com.tealcube.minecraft.bukkit.facecore;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
+import com.tealcube.minecraft.bukkit.facecore.utilities.AdvancedActionBarUtil;
 import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
 import org.bukkit.event.HandlerList;
@@ -59,6 +60,8 @@ public final class FacecorePlugin extends FacePlugin {
 
     getServer().getPluginManager().registerEvents(playerJoinListener, this);
     getServer().getPluginManager().registerEvents(busyListener, this);
+
+    AdvancedActionBarUtil.startTask(4);
   }
 
   @Override
@@ -67,6 +70,7 @@ public final class FacecorePlugin extends FacePlugin {
     HandlerList.unregisterAll(this);
     playerJoinListener = null;
     playerDataYAML = null;
+    AdvancedActionBarUtil.stopTask();
   }
 
 }
