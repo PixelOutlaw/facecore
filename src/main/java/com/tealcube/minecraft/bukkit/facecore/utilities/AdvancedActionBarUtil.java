@@ -31,8 +31,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -41,6 +44,7 @@ public final class AdvancedActionBarUtil {
   private final static Map<Player, ActionBarContainer> barMap = new HashMap<>();
   private static int tickRate = 4;
   private static BukkitTask task;
+  private static final String DELIMITER = ChatColor.DARK_GRAY + " ◆ ";
 
   public static void addMessage(Player player, String messageId, String message, int ticks) {
     addMessage(player, messageId, message, ticks, 0);
@@ -99,8 +103,12 @@ public final class AdvancedActionBarUtil {
         messageIterator.remove();
       }
       messageList.sort(Comparator.comparingInt(ActionBarMessage::getWeight));
-      String result = messageList.stream().map(ActionBarMessage::getMessage).collect(Collectors.joining(" "));
-      Bukkit.getScheduler().runTask(FacecorePlugin.getInstance(), () -> MessageUtils.sendActionBar(player, result));
+      AtomicReference<String> result = new AtomicReference<>(messageList.stream().map(ActionBarMessage::getMessage)
+          .collect(Collectors.joining(DELIMITER)));
+      Bukkit.getScheduler().runTask(FacecorePlugin.getInstance(), () -> {
+        result.set(PlaceholderAPI.setPlaceholders(player, result.get()));
+        MessageUtils.sendActionBar(player, result.get());
+      });
     }
   }
 
