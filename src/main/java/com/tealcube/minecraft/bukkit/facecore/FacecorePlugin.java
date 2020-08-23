@@ -23,6 +23,7 @@
 package com.tealcube.minecraft.bukkit.facecore;
 
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
+import com.tealcube.minecraft.bukkit.facecore.profile.FireworkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
 import com.tealcube.minecraft.bukkit.facecore.utilities.AdvancedActionBarUtil;
@@ -37,8 +38,6 @@ public final class FacecorePlugin extends FacePlugin {
   private static FacecorePlugin _INSTANCE;
   private File loggerFile;
   private SmartYamlConfiguration playerDataYAML;
-  private PlayerJoinListener playerJoinListener;
-  private BusyListener busyListener;
 
   public static FacecorePlugin getInstance() {
     return _INSTANCE;
@@ -50,16 +49,16 @@ public final class FacecorePlugin extends FacePlugin {
 
   @Override
   public void enable() {
+
     _INSTANCE = this;
+
     loggerFile = new File(getDataFolder(), "debug.log");
     playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
     PlayerResolver.getInstance().loadFrom(playerDataYAML);
 
-    playerJoinListener = new PlayerJoinListener();
-    busyListener = new BusyListener();
-
-    getServer().getPluginManager().registerEvents(playerJoinListener, this);
-    getServer().getPluginManager().registerEvents(busyListener, this);
+    getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+    getServer().getPluginManager().registerEvents(new BusyListener(), this);
+    getServer().getPluginManager().registerEvents(new FireworkListener(), this);
 
     AdvancedActionBarUtil.startTask(4);
   }
@@ -68,8 +67,6 @@ public final class FacecorePlugin extends FacePlugin {
   public void disable() {
     PlayerResolver.getInstance().saveTo(playerDataYAML);
     HandlerList.unregisterAll(this);
-    playerJoinListener = null;
-    playerDataYAML = null;
     AdvancedActionBarUtil.stopTask();
   }
 
