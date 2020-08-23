@@ -103,7 +103,9 @@ public final class AdvancedActionBarUtil {
         messageIterator.remove();
       }
       messageList.sort(Comparator.comparingInt(ActionBarMessage::getWeight));
-      AtomicReference<String> result = new AtomicReference<>(messageList.stream().map(ActionBarMessage::getMessage)
+      AtomicReference<String> result = new AtomicReference<>(messageList.stream().map(
+          actionBarMessage -> actionBarMessage.getMessage()
+              .replace("{n}", Integer.toString(actionBarMessage.getTicksRemaining())))
           .collect(Collectors.joining(DELIMITER)));
       Bukkit.getScheduler().runTask(FacecorePlugin.getInstance(), () -> {
         result.set(PlaceholderAPI.setPlaceholders(player, result.get()));
