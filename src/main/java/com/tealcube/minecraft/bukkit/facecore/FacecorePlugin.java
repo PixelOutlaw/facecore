@@ -24,11 +24,14 @@ package com.tealcube.minecraft.bukkit.facecore;
 
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.profile.FireworkListener;
+import com.tealcube.minecraft.bukkit.facecore.profile.MoveListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
+import com.tealcube.minecraft.bukkit.facecore.task.EveryTickTask;
 import com.tealcube.minecraft.bukkit.facecore.utilities.AdvancedActionBarUtil;
 import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
+import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 
 import java.io.File;
@@ -59,6 +62,10 @@ public final class FacecorePlugin extends FacePlugin {
     getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     getServer().getPluginManager().registerEvents(new BusyListener(), this);
     getServer().getPluginManager().registerEvents(new FireworkListener(), this);
+    getServer().getPluginManager().registerEvents(new MoveListener(), this);
+
+    EveryTickTask everyTickTask = new EveryTickTask();
+    everyTickTask.runTaskTimer(this, 20L, 1L);
 
     AdvancedActionBarUtil.startTask(4);
   }
@@ -67,6 +74,7 @@ public final class FacecorePlugin extends FacePlugin {
   public void disable() {
     PlayerResolver.getInstance().saveTo(playerDataYAML);
     HandlerList.unregisterAll(this);
+    Bukkit.getScheduler().cancelTasks(this);
     AdvancedActionBarUtil.stopTask();
   }
 
