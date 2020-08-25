@@ -33,7 +33,7 @@
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.16.2.6</version>
+  <version>1.16.2.7</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -272,7 +272,39 @@
                 </relocation>
                 <relocation>
                   <pattern>co.aikar.locales</pattern>
-                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.locales</shadedPattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.acf-locales</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.comphenix.net</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.comphenix.net</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.comphenix.protocol</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.comphenix.protocol</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.comphenix.protocol</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.comphenix.protocol</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>me.libraryaddict.disguise</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.libraryaddict.disguise</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.sk89q.worldguard</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.sk89q.worldguard</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>com.sk89q.worldguard</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.worldguard</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>github.scarsz.discordsrv</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.discordsrv</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>me.clip.placeholderapi</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.clip.placeholderapi</shadedPattern>
                 </relocation>
                 <relocation>
                   <pattern>org.apache.commons.dbcp2</pattern>
