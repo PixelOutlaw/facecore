@@ -27,10 +27,10 @@ import com.tealcube.minecraft.bukkit.facecore.pojo.ActionBarContainer;
 import com.tealcube.minecraft.bukkit.facecore.pojo.ActionBarMessage;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -41,13 +41,39 @@ import org.bukkit.scheduler.BukkitTask;
 
 public final class AdvancedActionBarUtil {
 
-  private final static Map<Player, ActionBarContainer> barMap = new HashMap<>();
-  private static int tickRate = 4;
-  private static BukkitTask task;
+  private static final Map<Player, ActionBarContainer> barMap = new WeakHashMap<>();
+  private static final Map<Player, ActionBarContainer> overrideMap = new WeakHashMap<>();
   private static final String DELIMITER = ChatColor.DARK_GRAY + " ◆ ";
+
+  private static int tickRate = 3;
+  private static BukkitTask task;
 
   public static void addMessage(Player player, String messageId, String message, int ticks) {
     addMessage(player, messageId, message, ticks, 0);
+  }
+
+  public static void addOverrideMessage(Player player, String messageId, String message, int ticks) {
+    addOverrideMessage(player, messageId, message, ticks, 0);
+  }
+
+  public static void addOverrideMessage(Player player, String messageId, String message, int ticks, int weight) {
+    if (!overrideMap.containsKey(player)) {
+      ActionBarContainer container = new ActionBarContainer();
+      overrideMap.put(player, container);
+    }
+    ActionBarContainer container = overrideMap.get(player);
+    for (String id : container.getMessageMap().keySet()) {
+      if (id.equals(messageId)) {
+        ActionBarMessage barMessage = container.getMessageMap().get(id);
+        barMessage.setMessage(message);
+        barMessage.setTicksRemaining(ticks);
+        barMessage.setWeight(weight);
+        return;
+      }
+    }
+    ActionBarMessage barMessage = new ActionBarMessage(message, ticks, weight);
+    container.getMessageMap().put(messageId, barMessage);
+    playMessageToPlayer(player, overrideMap);
   }
 
   public static void addMessage(Player player, String messageId, String message, int ticks, int weight) {
@@ -67,6 +93,9 @@ public final class AdvancedActionBarUtil {
     }
     ActionBarMessage barMessage = new ActionBarMessage(message, ticks, weight);
     container.getMessageMap().put(messageId, barMessage);
+    if (!overrideMap.containsKey(player)) {
+      playMessageToPlayer(player, barMap);
+    }
   }
 
   public static void removeMessage(Player player, String messageId) {
@@ -83,34 +112,68 @@ public final class AdvancedActionBarUtil {
     }
   }
 
-  private static void tickAllMessages() {
-    Iterator<Player> playerIterator = barMap.keySet().iterator();
-    while (playerIterator.hasNext()) {
-      Player player = playerIterator.next();
-      if (player == null || !player.isValid() || barMap.get(player).getMessageMap().isEmpty()) {
-        playerIterator.remove();
-        continue;
+  public static void removeOverrideMessage(Player player, String messageId) {
+    if (!overrideMap.containsKey(player)) {
+      return;
+    }
+    Iterator<String> messageIterator = overrideMap.get(player).getMessageMap().keySet().iterator();
+    while (messageIterator.hasNext()) {
+      String id = messageIterator.next();
+      if (id.equals(messageId)) {
+        messageIterator.remove();
+        return;
       }
-      List<ActionBarMessage> messageList = new ArrayList<>();
-      Iterator<ActionBarMessage> messageIterator = barMap.get(player).getMessageMap().values().iterator();
-      while (messageIterator.hasNext()) {
-        ActionBarMessage message = messageIterator.next();
-        if (message.getTicksRemaining() > 0) {
-          messageList.add(message);
-          message.setTicksRemaining(message.getTicksRemaining() - tickRate);
+    }
+  }
+
+  private static void tickAllMessages() {
+    for (Player p : Bukkit.getOnlinePlayers()) {
+      if (overrideMap.containsKey(p)) {
+        if (overrideMap.get(p).getMessageMap().isEmpty()) {
+          overrideMap.remove(p);
           continue;
         }
-        messageIterator.remove();
+        playMessageToPlayer(p, overrideMap);
+        incrementBars(p, overrideMap);
+        incrementBars(p, barMap);
+        continue;
       }
-      messageList.sort(Comparator.comparingInt(ActionBarMessage::getWeight));
-      AtomicReference<String> result = new AtomicReference<>(messageList.stream().map(
-          actionBarMessage -> actionBarMessage.getMessage()
-              .replace("{n}", Integer.toString(actionBarMessage.getTicksRemaining())))
-          .collect(Collectors.joining(DELIMITER)));
-      Bukkit.getScheduler().runTask(FacecorePlugin.getInstance(), () -> {
-        result.set(PlaceholderAPI.setPlaceholders(player, result.get()));
-        MessageUtils.sendActionBar(player, result.get());
-      });
+      if (barMap.containsKey(p)) {
+        if (barMap.get(p).getMessageMap().isEmpty()) {
+          barMap.remove(p);
+          continue;
+        }
+        playMessageToPlayer(p, barMap);
+        incrementBars(p, barMap);
+      }
+    }
+  }
+
+  private static void playMessageToPlayer(Player player, Map<Player, ActionBarContainer> map) {
+    List<ActionBarMessage> messageList = new ArrayList<>(map.get(player).getMessageMap().values());
+    messageList.sort(Comparator.comparingInt(ActionBarMessage::getWeight));
+    AtomicReference<String> result = new AtomicReference<>(messageList.stream().map(
+        actionBarMessage -> actionBarMessage.getMessage()
+            .replace("{n}", Integer.toString(actionBarMessage.getTicksRemaining())))
+        .collect(Collectors.joining(DELIMITER)));
+    Bukkit.getScheduler().runTask(FacecorePlugin.getInstance(), () -> {
+      result.set(PlaceholderAPI.setPlaceholders(player, result.get()));
+      MessageUtils.sendActionBar(player, result.get());
+    });
+  }
+
+  private static void incrementBars(Player p, Map<Player, ActionBarContainer> map) {
+    if (!map.containsKey(p)) {
+      return;
+    }
+    Iterator<ActionBarMessage> messageIterator = map.get(p).getMessageMap().values().iterator();
+    while (messageIterator.hasNext()) {
+      ActionBarMessage message = messageIterator.next();
+      if (message.getTicksRemaining() > 0) {
+        message.setTicksRemaining(message.getTicksRemaining() - tickRate);
+        continue;
+      }
+      messageIterator.remove();
     }
   }
 

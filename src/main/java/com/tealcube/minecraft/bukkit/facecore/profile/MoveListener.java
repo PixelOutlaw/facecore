@@ -25,10 +25,11 @@ package com.tealcube.minecraft.bukkit.facecore.profile;
 import com.tealcube.minecraft.bukkit.facecore.event.LandEvent;
 import com.tealcube.minecraft.bukkit.facecore.event.LaunchEvent;
 import com.tealcube.minecraft.bukkit.facecore.utilities.MoveUtil;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+import java.util.WeakHashMap;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -36,27 +37,28 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MoveListener implements Listener {
 
-  private final Map<UUID, Boolean> groundedLastTick = new HashMap<>();
+  private final Map<Player, Boolean> groundedLastTickMap = new WeakHashMap<>();
 
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
-  public void onPlayerMoveHorizontally(PlayerMoveEvent event) {
+  public void onPlayerMove(PlayerMoveEvent event) {
     if (event.getTo() == null) {
       return;
     }
-    boolean grounded = event.getPlayer().getVelocity().getY() <= 0 && event.getTo().clone().add(0, 0.05, 0)
-        .getBlock().getType().isSolid();
+    boolean grounded = ((Entity) event.getPlayer()).isOnGround();
+    boolean wasOnGround = groundedLastTickMap.getOrDefault(event.getPlayer(), false);
 
-    if (groundedLastTick.getOrDefault(event.getPlayer().getUniqueId(), true) != grounded) {
-      if (grounded) {
-        LandEvent ev = new LandEvent(event.getPlayer(), event.getPlayer().getLocation());
-        Bukkit.getPluginManager().callEvent(ev);
-      } else {
-        LaunchEvent ev = new LaunchEvent(event.getPlayer(), event.getPlayer().getLocation());
-        Bukkit.getPluginManager().callEvent(ev);
-        MoveUtil.setLastGrounded(event.getPlayer());
-      }
+    if (wasOnGround && !grounded) {
+      LaunchEvent ev = new LaunchEvent(event.getPlayer(), event.getPlayer().getLocation());
+      Bukkit.getPluginManager().callEvent(ev);
+    } else if (!wasOnGround && grounded) {
+      LandEvent ev = new LandEvent(event.getPlayer(), event.getPlayer().getLocation());
+      Bukkit.getPluginManager().callEvent(ev);
     }
-    groundedLastTick.put(event.getPlayer().getUniqueId(), grounded);
+
+    if (grounded) {
+      MoveUtil.setLastGrounded(event.getPlayer());
+    }
+    groundedLastTickMap.put(event.getPlayer(), grounded);
 
     if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getZ() != event.getTo().getZ()) {
       MoveUtil.setLastMoved(event.getPlayer());
