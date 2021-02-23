@@ -44,6 +44,14 @@ public class MoveListener implements Listener {
     if (event.getTo() == null) {
       return;
     }
+
+    if (event.getFrom().getX() != event.getTo().getX()
+        || event.getFrom().getY() != event.getTo().getY()
+        || event.getFrom().getZ() != event.getTo().getZ()) {
+      MoveUtil.setLastMoved(event.getPlayer());
+      MoveUtil.setVelocity(event.getPlayer());
+    }
+
     boolean grounded = ((Entity) event.getPlayer()).isOnGround();
     boolean wasOnGround = groundedLastTickMap.getOrDefault(event.getPlayer(), false);
 
@@ -59,9 +67,5 @@ public class MoveListener implements Listener {
       MoveUtil.setLastGrounded(event.getPlayer());
     }
     groundedLastTickMap.put(event.getPlayer(), grounded);
-
-    if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getZ() != event.getTo().getZ()) {
-      MoveUtil.setLastMoved(event.getPlayer());
-    }
   }
 }

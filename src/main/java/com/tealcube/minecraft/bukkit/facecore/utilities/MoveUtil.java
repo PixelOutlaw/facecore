@@ -26,12 +26,15 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class MoveUtil {
 
   private final static Map<Player, Long> LAST_MOVED = new WeakHashMap<>();
   private final static Map<Player, Long> LAST_GROUNDED = new WeakHashMap<>();
   private final static Map<Player, Long> SNEAK_START = new WeakHashMap<>();
+  private final static Map<Player, Vector> LAST_POS = new WeakHashMap<>();
+  private final static Map<Player, Vector> VELOCITY = new WeakHashMap<>();
 
   public static void setLastMoved(Player player) {
     LAST_MOVED.put(player, System.currentTimeMillis());
@@ -47,6 +50,16 @@ public class MoveUtil {
 
   public static long timeOffGround(Player player) {
     return System.currentTimeMillis() - LAST_GROUNDED.getOrDefault(player, 1L);
+  }
+
+  public static void setVelocity(Player player) {
+    VELOCITY.put(player, player.getLocation().toVector()
+        .subtract(LAST_POS.getOrDefault(player, player.getLocation().toVector())));
+    LAST_POS.put(player, player.getLocation().toVector());
+  }
+
+  public static Vector getVelocity(Player player) {
+    return VELOCITY.getOrDefault(player, new Vector(0, 0, 0)).clone();
   }
 
   public static void setSneak(Player player) {
