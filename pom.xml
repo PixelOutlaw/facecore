@@ -26,14 +26,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>io.pixeloutlaw</groupId>
-    <artifactId>spigot-plugin-parent</artifactId>
-    <version>1.16.4.0</version>
-  </parent>
-
+  <groupId>io.pixeloutlaw</groupId>
   <artifactId>facecore</artifactId>
-  <version>1.16.4.4</version>
+  <version>1.17.1.0</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -48,6 +43,18 @@
   </scm>
 
   <repositories>
+    <repository>
+      <id>papermc</id>
+      <url>https://papermc.io/repo/repository/maven-public/</url>
+    </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>sonatype</id>
+      <url>https://oss.sonatype.org/content/groups/public/</url>
+    </repository>
     <repository>
       <id>central</id>
       <url>https://jcenter.bintray.com</url>
@@ -68,50 +75,28 @@
       <id>jitpack.io</id>
       <url>https://jitpack.io</url>
     </repository>
-  </repositories>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>io.pixeloutlaw.spigot-commons</groupId>
-        <artifactId>spigot-commons-bom</artifactId>
-        <version>1.16.4.2</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+    <repository>
+      <!-- This is a temporary reference as the Maven Shade plugin
+          that supports Java 16 is not released yet -->
+      <id>maven-snapshots</id>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
+      <groupId>io.papermc.paper</groupId>
+      <artifactId>paper-api</artifactId>
+      <version>1.17.1-R0.1-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.spigotmc</groupId>
       <artifactId>spigot-api</artifactId>
+      <version>1.17.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.destroystokyo.paper</groupId>
-      <artifactId>paper-api</artifactId>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.pixeloutlaw.spigot-commons</groupId>
-      <artifactId>amp-menus</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.pixeloutlaw.spigot-commons</groupId>
-      <artifactId>config</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.pixeloutlaw.spigot-commons</groupId>
-      <artifactId>garbage-can</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.pixeloutlaw.spigot-commons</groupId>
-      <artifactId>hilt</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.pixeloutlaw.spigot-commons</groupId>
-      <artifactId>method-command</artifactId>
     </dependency>
 
     <dependency>
@@ -187,7 +172,25 @@
       <artifactId>exp4j</artifactId>
       <version>0.4.8</version>
     </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jdk8</artifactId>
+      <version>${kotlin.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-test-junit</artifactId>
+      <version>${kotlin.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>apache.snapshots</id>
+      <url>https://repository.apache.org/snapshots/</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <build>
     <defaultGoal>install</defaultGoal>
@@ -199,15 +202,6 @@
       </resource>
     </resources>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <source>${project.build.javaVersion}</source>
-          <target>${project.build.javaVersion}</target>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -233,7 +227,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.3</version>
+        <version>3.3.0-SNAPSHOT</version>
         <executions>
           <execution>
             <id>shade</id>
@@ -284,12 +278,75 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <version>${kotlin.version}</version>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <source>src/main/java</source>
+                <source>src/main/kotlin</source>
+              </sourceDirs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <jvmTarget>1.8</jvmTarget>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <executions>
+          <execution>
+            <id>default-compile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>default-testCompile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <source>16</source>
+          <target>16</target>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.build.javaVersion>1.8</project.build.javaVersion>
+    <kotlin.version>1.5.30-RC</kotlin.version>
   </properties>
 
 </project>

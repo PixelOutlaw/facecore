@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License
  * Copyright (c) 2015 Teal Cube Games
  *
@@ -22,12 +22,11 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
-import com.google.common.base.Optional;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -68,7 +67,7 @@ public final class PlayerResolver {
     }
 
     public Optional<Profile> findProfile(String name) {
-        Optional<Profile> optional = Optional.absent();
+        Optional<Profile> optional = Optional.empty();
         List<Optional<Profile>> profiles = findAllProfiles(name);
         if (profiles.size() > 0) {
             return profiles.get(0);
@@ -77,7 +76,7 @@ public final class PlayerResolver {
     }
 
     public Optional<Profile> findProfile(UUID uuid) {
-        Optional<Profile> optional = Optional.absent();
+        Optional<Profile> optional = Optional.empty();
         List<Optional<Profile>> profiles = findAllProfiles(uuid);
         if (profiles.size() > 0) {
             return profiles.get(0);

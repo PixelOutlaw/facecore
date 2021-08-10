@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License
  * Copyright (c) 2015 Teal Cube Games
  *
@@ -40,20 +40,29 @@ public class FireworkUtil {
 
   private static final Map<Firework, Boolean> NO_DAMAGE_FIREWORK = new WeakHashMap<>();
 
-  public static void spawnFirework(Location loc, Type type, Color color, Color fade, boolean trail, boolean flicker) {
+  public static void spawnFirework(Location loc, Type type, Color color, Color fade, boolean trail,
+      boolean flicker) {
 
-    Firework firework = (Firework) Objects.requireNonNull(loc.getWorld()).spawnEntity(loc, EntityType.FIREWORK);
+    Firework firework = (Firework) Objects.requireNonNull(loc.getWorld())
+        .spawn(loc, EntityType.FIREWORK.getEntityClass(), e -> {
+          Color fadeColor = fade == null ? Color.BLACK : fade;
 
-    fade = fade == null ? Color.BLACK : fade;
+          FireworkMeta fireworkMeta = ((Firework) e).getFireworkMeta();
+          fireworkMeta.setPower(0);
+          fireworkMeta.addEffect(FireworkEffect.builder()
+              .with(type)
+              .withColor(color)
+              .flicker(flicker)
+              .withFade(fadeColor)
+              .trail(trail)
+              .build()
+          );
 
-    FireworkMeta fireworkMeta = firework.getFireworkMeta();
-    fireworkMeta.setPower(0);
-    fireworkMeta.addEffect(
-        FireworkEffect.builder().with(type).withColor(color).flicker(flicker).withFade(fade).trail(trail).build());
+          ((Firework) e).setFireworkMeta(fireworkMeta);
+          e.setSilent(true);
+        });
 
-    firework.setFireworkMeta(fireworkMeta);
     NO_DAMAGE_FIREWORK.put(firework, true);
-    firework.setSilent(true);
     firework.detonate();
   }
 

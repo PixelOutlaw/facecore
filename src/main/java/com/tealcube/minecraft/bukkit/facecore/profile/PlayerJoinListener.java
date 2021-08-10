@@ -1,4 +1,4 @@
-/*
+/**
  * The MIT License
  * Copyright (c) 2015 Teal Cube Games
  *
@@ -22,7 +22,7 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
-import com.google.common.base.Optional;
+import java.util.Optional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,7 +34,8 @@ public final class PlayerJoinListener implements Listener {
   public void onPlayerJoinEvent(final PlayerJoinEvent event) {
     Optional<Profile> profileOptional = PlayerResolver.getInstance()
         .findProfile(event.getPlayer().getUniqueId());
-    Profile p = profileOptional.or(new Profile(event.getPlayer().getUniqueId(), event.getPlayer().getName()));
+    Profile p = profileOptional.orElse(
+        new Profile(event.getPlayer().getUniqueId(), event.getPlayer().getName()));
     if (!p.getName().equals(event.getPlayer().getName())) {
       p.setLastKnownName(p.getName());
       p.setName(event.getPlayer().getName());

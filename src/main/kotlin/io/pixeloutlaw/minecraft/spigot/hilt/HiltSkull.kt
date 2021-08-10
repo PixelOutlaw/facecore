@@ -1,6 +1,6 @@
 /*
  * The MIT License
- * Copyright (c) 2015 Teal Cube Games
+ * Copyright © 2015 Pixel Outlaw
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,40 +20,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.tealcube.minecraft.bukkit.facecore.database;
+package io.pixeloutlaw.minecraft.spigot.hilt
 
-import java.sql.Connection;
+import org.bukkit.OfflinePlayer
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.SkullMeta
 
-/**
- * An abstract base class for all database representations.
- */
-public abstract class Database {
+open class HiltSkull(skullType: SkullType, owner: OfflinePlayer) : ItemStack(skullType.material) {
+    var owner: OfflinePlayer?
+        get() = getFromItemMetaAs<SkullMeta, OfflinePlayer?> {
+            if (hasOwner()) {
+                owningPlayer
+            } else {
+                null
+            }
+        }
+        set(value) {
+            getThenSetItemMetaAs<SkullMeta> { owningPlayer = value }
+        }
 
-    /**
-     * Initializes the database connection. Returns true if successful, false if not.
-     * @return success
-     */
-    public abstract boolean initialize();
-
-    /**
-     * Shuts down the database connection. Returns true if successful, false if not.
-     * @return success
-     */
-    public abstract boolean shutdown();
-
-    /**
-     * Returns true if the database uses a pool of {@link java.sql.Connection}s.
-     * @return if database uses pool of Connections.
-     */
-    public abstract boolean isPool();
-
-    /**
-     * Returns a {@link java.sql.Connection} for use.
-     *
-     * If {@link Database#isPool()} is true, returns a new
-     * {@link java.sql.Connection}, otherwise returns available {@link java.sql.Connection}.
-     * @return Connection for use
-     */
-    public abstract Connection getConnection();
-
+    init {
+        this.owner = owner
+    }
 }
