@@ -27,6 +27,7 @@ import io.pixeloutlaw.minecraft.spigot.garbage.StringExtensionsKt;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 public class TextUtils {
@@ -60,6 +61,9 @@ public class TextUtils {
   }
 
   public static void setLore(ItemStack stack, List<String> lore, boolean color) {
+    if (stack == null || stack.getType() == Material.AIR || stack.getItemMeta() == null) {
+      return;
+    }
     if (color) {
       lore = color(lore);
     }

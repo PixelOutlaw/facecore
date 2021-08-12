@@ -31,6 +31,7 @@ import java.io.InputStreamReader;
 import java.lang.Runtime.Version;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -161,9 +162,9 @@ public class VersionedSmartYamlConfiguration extends SmartYamlConfiguration impl
         if (localVersionString == null || localVersionString.trim().isEmpty()) {
             return true;
         }
-        Version version = Version.parse(getVersion());
-        Version localVersion = Version.parse(getLocalVersion());
-        return localVersion.compareTo(version) > 0;
+        ComparableVersion version = new ComparableVersion(getVersion());
+        ComparableVersion localVersion = new ComparableVersion(getVersion());
+        return version.compareTo(localVersion) > 0;
     }
 
     /**
