@@ -45,7 +45,11 @@ public class MoveUtil {
   }
 
   public static boolean hasMoved(Player player) {
-    return System.currentTimeMillis() - LAST_MOVED.getOrDefault(player, 0L) < 100;
+    return hasMoved(player, 100);
+  }
+
+  public static boolean hasMoved(Player player, int millis) {
+    return System.currentTimeMillis() - LAST_MOVED.getOrDefault(player, 0L) < millis;
   }
 
   public static long timeOffGround(Player player) {

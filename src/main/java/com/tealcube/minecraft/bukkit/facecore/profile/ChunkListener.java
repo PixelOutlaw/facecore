@@ -20,21 +20,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.tealcube.minecraft.bukkit.facecore.utilities;
+package com.tealcube.minecraft.bukkit.facecore.profile;
 
-import org.bukkit.entity.Player;
+import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 
-public final class TitleUtils {
-    private final static int DEFAULT_FADE_IN = 10;
-    private final static int DEFAULT_FADE_OUT = 10;
-    private final static int DEFAULT_DURATION = 40;
+public final class ChunkListener implements Listener {
 
-    public static void sendTitle(Player sender, String upper, String lower) {
-        sendTitle(sender, upper, lower, DEFAULT_DURATION, DEFAULT_FADE_IN, DEFAULT_FADE_OUT);
-    }
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onChunkUnload(final ChunkUnloadEvent event) {
+    ChunkUtil.unCacheChunk(event.getChunk());
+  }
 
-    public static void sendTitle(Player sender, String upper, String lower, int duration,
-        int fadeIn, int fadeOut) {
-        sender.sendTitle(upper, lower, fadeIn, duration, fadeOut);
-    }
+  @EventHandler(priority = EventPriority.LOWEST)
+  public void onChunkLoad(final ChunkLoadEvent event) {
+    ChunkUtil.cacheChunk(event.getChunk());
+  }
+
 }

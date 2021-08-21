@@ -1,7 +1,7 @@
 main: com.tealcube.minecraft.bukkit.facecore.FacecorePlugin
 version: ${project.version}-${git.commit.id.abbrev}
 name: Facecore
-api-version: 1.16
+api-version: 1.17
 load: STARTUP
 softdepend:
   - WorldGuard
@@ -9,3 +9,4 @@ softdepend:
   - DiscordSRV
   - LibsDisguises
   - ProtocolLib
+  - InteractiveChat

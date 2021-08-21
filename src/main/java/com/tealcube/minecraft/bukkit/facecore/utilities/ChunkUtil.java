@@ -22,19 +22,46 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import org.bukkit.entity.Player;
+import java.util.HashSet;
+import java.util.Set;
+import org.bukkit.Chunk;
 
-public final class TitleUtils {
-    private final static int DEFAULT_FADE_IN = 10;
-    private final static int DEFAULT_FADE_OUT = 10;
-    private final static int DEFAULT_DURATION = 40;
+public class ChunkUtil {
 
-    public static void sendTitle(Player sender, String upper, String lower) {
-        sendTitle(sender, upper, lower, DEFAULT_DURATION, DEFAULT_FADE_IN, DEFAULT_FADE_OUT);
-    }
+  private static final Set<String> chunkKeys = new HashSet<>();
 
-    public static void sendTitle(Player sender, String upper, String lower, int duration,
-        int fadeIn, int fadeOut) {
-        sender.sendTitle(upper, lower, fadeIn, duration, fadeOut);
-    }
+  /**
+   * Clears saved chunk keys. Don't use this, unless you WANT
+   * unexpected results from other methods
+   */
+  public static void clearChunkCache() {
+    chunkKeys.clear();
+  }
+
+  /**
+   * Generates a unique key for the chunk and stores it
+   * for faster chunk checking
+   */
+  public static void cacheChunk(Chunk chunk) {
+    chunkKeys.add(buildChunkKey(chunk));
+  }
+
+  /**
+   * Removes a chunk from the chunk key cache
+   */
+  public static void unCacheChunk(Chunk chunk) {
+    chunkKeys.remove(buildChunkKey(chunk));
+  }
+
+  public static boolean isChunkLoaded(Chunk chunk) {
+    return isChuckLoaded(buildChunkKey(chunk));
+  }
+
+  public static boolean isChuckLoaded(String chunkKey) {
+    return chunkKeys.contains(chunkKey);
+  }
+
+  public static String buildChunkKey(Chunk chunk) {
+    return chunk.getWorld().getName() + chunk.getChunkKey();
+  }
 }

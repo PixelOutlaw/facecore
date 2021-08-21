@@ -22,16 +22,23 @@
  */
 package com.tealcube.minecraft.bukkit.facecore;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
+import com.tealcube.minecraft.bukkit.facecore.profile.ChunkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.FireworkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.MoveListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
 import com.tealcube.minecraft.bukkit.facecore.task.EveryTickTask;
 import com.tealcube.minecraft.bukkit.facecore.utilities.AdvancedActionBarUtil;
+import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
 import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
+import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.World;
 import org.bukkit.event.HandlerList;
 
 import java.io.File;
@@ -41,6 +48,9 @@ public final class FacecorePlugin extends FacePlugin {
   private static FacecorePlugin _INSTANCE;
   private File loggerFile;
   private SmartYamlConfiguration playerDataYAML;
+
+  @Getter
+  public ProtocolManager protocolManager;
 
   public static FacecorePlugin getInstance() {
     return _INSTANCE;
@@ -59,10 +69,20 @@ public final class FacecorePlugin extends FacePlugin {
     playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
     PlayerResolver.getInstance().loadFrom(playerDataYAML);
 
+    protocolManager = ProtocolLibrary.getProtocolManager();
+
     getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     getServer().getPluginManager().registerEvents(new BusyListener(), this);
     getServer().getPluginManager().registerEvents(new FireworkListener(), this);
     getServer().getPluginManager().registerEvents(new MoveListener(), this);
+    getServer().getPluginManager().registerEvents(new ChunkListener(), this);
+
+    ChunkUtil.clearChunkCache();
+    for (World world : Bukkit.getWorlds()) {
+      for (Chunk chunk : world.getLoadedChunks()) {
+        ChunkUtil.cacheChunk(chunk);
+      }
+    }
 
     EveryTickTask everyTickTask = new EveryTickTask();
     everyTickTask.runTaskTimer(this, 20L, 1L);
