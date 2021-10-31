@@ -30,6 +30,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.event.server.PluginDisableEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
@@ -61,12 +62,17 @@ public class MenuListener implements Listener {
    */
   public static void closeOpenMenus() {
     for (Player player : Bukkit.getOnlinePlayers()) {
-      if (player.getOpenInventory() != null) {
-        Inventory inventory = player.getOpenInventory().getTopInventory();
-        if (inventory.getHolder() instanceof MenuHolder) {
-          player.closeInventory();
-        }
+      Inventory inventory = player.getOpenInventory().getTopInventory();
+      if (inventory.getHolder() instanceof MenuHolder) {
+        player.closeInventory();
       }
+    }
+  }
+
+  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+  public void onInventoryClick(PlayerSwapHandItemsEvent event) {
+    if (event.getPlayer().getOpenInventory().getTopInventory() instanceof MenuHolder) {
+      event.setCancelled(true);
     }
   }
 
