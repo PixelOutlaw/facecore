@@ -87,11 +87,12 @@ public final class FacecorePlugin extends FacePlugin {
     EveryTickTask everyTickTask = new EveryTickTask();
     everyTickTask.runTaskTimer(this, 20L, 1L);
 
-    AdvancedActionBarUtil.startTask(4);
+    //AdvancedActionBarUtil.startTask(4);
   }
 
   @Override
   public void disable() {
+    ChunkUtil.despawnAllTempEntities();
     PlayerResolver.getInstance().saveTo(playerDataYAML);
     HandlerList.unregisterAll(this);
     Bukkit.getScheduler().cancelTasks(this);

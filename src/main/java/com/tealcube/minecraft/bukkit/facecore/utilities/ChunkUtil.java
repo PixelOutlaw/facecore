@@ -23,12 +23,16 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.WeakHashMap;
 import org.bukkit.Chunk;
+import org.bukkit.entity.Entity;
 
 public class ChunkUtil {
 
   private static final Set<String> chunkKeys = new HashSet<>();
+  private static final Map<Entity, Boolean> DESPAWN_ON_UNLOAD = new WeakHashMap<>();
 
   /**
    * Clears saved chunk keys. Don't use this, unless you WANT
@@ -63,5 +67,19 @@ public class ChunkUtil {
 
   public static String buildChunkKey(Chunk chunk) {
     return chunk.getWorld().getName() + chunk.getChunkKey();
+  }
+
+  public static void setDespawnOnUnload(Entity e) {
+    DESPAWN_ON_UNLOAD.put(e, true);
+  }
+
+  public static boolean isDespawnOnUnload(Entity e) {
+    return DESPAWN_ON_UNLOAD.getOrDefault(e, false);
+  }
+
+  public static void despawnAllTempEntities() {
+    for (Entity e : DESPAWN_ON_UNLOAD.keySet()) {
+      e.remove();
+    }
   }
 }

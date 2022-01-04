@@ -23,6 +23,7 @@
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
 import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,6 +35,11 @@ public final class ChunkListener implements Listener {
   @EventHandler(priority = EventPriority.LOWEST)
   public void onChunkUnload(final ChunkUnloadEvent event) {
     ChunkUtil.unCacheChunk(event.getChunk());
+    for (Entity ent : event.getChunk().getEntities()) {
+      if (ChunkUtil.isDespawnOnUnload(ent)) {
+        ent.remove();
+      }
+    }
   }
 
   @EventHandler(priority = EventPriority.LOWEST)

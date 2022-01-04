@@ -22,6 +22,7 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
+import com.tealcube.minecraft.bukkit.facecore.utilities.MoveUtil;
 import java.util.Optional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,6 +42,7 @@ public final class PlayerJoinListener implements Listener {
       p.setName(event.getPlayer().getName());
     }
     PlayerResolver.getInstance().addProfile(p);
+    MoveUtil.setLastMoved(event.getPlayer());
   }
 
 }
