@@ -23,10 +23,13 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,11 +43,26 @@ public class ItemUtils {
       World world = player.getWorld();
       Location location = player.getLocation();
       drop.values().forEach((item) -> {
-        world.dropItemNaturally(location, item);
+        if (item != null && item.getType() != Material.AIR) {
+          world.dropItemNaturally(location, item);
+        }
       });
       return drop;
     } else {
       return new HashMap();
     }
+  }
+
+  public static boolean containsLore(ItemStack itemStack, List<String> lore) {
+    if (itemStack == null || !itemStack.hasItemMeta() || !itemStack.getItemMeta().hasLore()) {
+      return false;
+    }
+    for (String s : TextUtils.getLore(itemStack)) {
+      String stripped = ChatColor.stripColor(s);
+      if (lore.contains(stripped)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

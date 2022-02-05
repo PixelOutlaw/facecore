@@ -45,7 +45,6 @@ public class MoveListener implements Listener {
         || event.getFrom().getY() != event.getTo().getY()
         || event.getFrom().getZ() != event.getTo().getZ()) {
       MoveUtil.setLastMoved(event.getPlayer());
-      MoveUtil.setVelocity(event.getPlayer());
     }
 
     boolean grounded = ((Entity) event.getPlayer()).isOnGround();

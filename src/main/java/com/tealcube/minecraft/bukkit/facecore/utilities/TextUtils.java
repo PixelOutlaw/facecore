@@ -22,10 +22,9 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import io.pixeloutlaw.minecraft.spigot.garbage.ListExtensionsKt;
-import io.pixeloutlaw.minecraft.spigot.garbage.StringExtensionsKt;
 import java.util.ArrayList;
 import java.util.List;
+import net.md_5.bungee.api.ChatColor;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -33,17 +32,21 @@ import org.bukkit.inventory.ItemStack;
 public class TextUtils {
 
   public static List<String> color(List<String> text) {
+    List<String> newList = new ArrayList<>();
     if (text == null || text.size() == 0) {
-      return new ArrayList<>();
+      return newList;
     }
-    return ListExtensionsKt.chatColorize(text);
+    for (String s : text) {
+      newList.add(ChatColor.translateAlternateColorCodes('&', s));
+    }
+    return newList;
   }
 
   public static String color(String text) {
     if (StringUtils.isBlank(text)) {
       return text;
     }
-    return StringExtensionsKt.chatColorize(text);
+    return ChatColor.translateAlternateColorCodes('&', text);
   }
 
   public static List<String> getLore(ItemStack stack) {
