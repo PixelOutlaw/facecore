@@ -34,7 +34,7 @@
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.18.2.0</version>
+  <version>1.18.2.1</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -222,6 +222,13 @@
       <artifactId>maven-artifact</artifactId>
       <version>3.8.1</version>
     </dependency>
+    <dependency>
+      <groupId>com.elmakers.mine.bukkit</groupId>
+      <artifactId>EffectLib</artifactId>
+      <version>9.4</version>
+      <scope>compile</scope>
+    </dependency>
+
   </dependencies>
 
   <dependencyManagement>
@@ -300,6 +307,10 @@
             <configuration>
               <relocations>
                 <relocation>
+                  <pattern>de.slikey</pattern>
+                  <shadedPattern>com.tealcube.minecraft.bukkit.shade.effectlib</shadedPattern>
+                </relocation>
+                <relocation>
                   <pattern>co.aikar.commands</pattern>
                   <shadedPattern>com.tealcube.minecraft.bukkit.shade.acf</shadedPattern>
                 </relocation>
@@ -336,10 +347,20 @@
                   <shadedPattern>com.tealcube.minecraft.bukkit.shade.objecthunter</shadedPattern>
                 </relocation>
               </relocations>
+              <filters>
+                <filter>
+                  <artifact>com.elmakers.mine.bukkit:EffectLib</artifact>
+                  <excludes>
+                    <exclude>plugin.yml</exclude>
+                    <exclude>META-INF/MANIFEST.MF</exclude>
+                  </excludes>
+                </filter>
+              </filters>
             </configuration>
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
@@ -370,6 +391,7 @@
           <jvmTarget>1.8</jvmTarget>
         </configuration>
       </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
