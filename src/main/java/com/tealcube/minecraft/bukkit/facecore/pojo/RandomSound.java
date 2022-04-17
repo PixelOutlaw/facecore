@@ -24,6 +24,7 @@ package com.tealcube.minecraft.bukkit.facecore.pojo;
 
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -33,11 +34,14 @@ import org.bukkit.entity.Player;
 @Data
 public class RandomSound {
 
-  private float pitchRange;
-  private float pitchBase;
-  private float volume;
+  private final float pitchRange;
+  private final float pitchBase;
+  private final float volume;
   private final Sound sound;
   private final SoundCategory soundCategory;
+
+  private static RandomSound defaultSound = new RandomSound(SoundCategory.MASTER,
+      Sound.ENTITY_CHICKEN_DEATH, 1f, 0.9f, 0.2f);
 
   public RandomSound(SoundCategory soundCategory, Sound sound, float volume,
       float pitchBase, float pitchRange) {
@@ -49,6 +53,10 @@ public class RandomSound {
   }
 
   public static RandomSound load(ConfigurationSection section) {
+    if (section == null) {
+      Bukkit.getLogger().warning("Failed to load sound - null config section - using default");
+      return defaultSound;
+    }
     String soundString = section.getString("sound");
     Sound sound = Sound.ENTITY_CHICKEN_DEATH;
     try {
