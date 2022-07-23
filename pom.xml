@@ -30,11 +30,11 @@
   <parent>
     <groupId>io.pixeloutlaw</groupId>
     <artifactId>generic-plugin-parent</artifactId>
-    <version>1.18.2.0</version>
+    <version>1.19.0.0</version>
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.18.2.2</version>
+  <version>1.19.0.1</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -52,11 +52,15 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <kotlin.version>1.6.0</kotlin.version>
     <project.depend.papi-version>2.11.1</project.depend.papi-version>
-    <project.depend.interactive-chat-version>4.1.1.14</project.depend.interactive-chat-version>
-    <project.depend.protocollib-version>4.8.0-SNAPSHOT</project.depend.protocollib-version>
+    <project.depend.interactive-chat-version>4.2.2.1</project.depend.interactive-chat-version>
+    <project.depend.protocollib-version>4.8.0</project.depend.protocollib-version>
   </properties>
 
   <repositories>
+    <repository>
+      <id>space-faceland-maven</id>
+      <url>https://maven.pkg.jetbrains.space/faceland/p/fl/faceland-maven</url>
+    </repository>
     <repository>
       <id>papermc</id>
       <url>https://papermc.io/repo/repository/maven-public/</url>
@@ -296,7 +300,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.3.0-SNAPSHOT</version>
+        <version>3.3.0</version>
         <executions>
           <execution>
             <id>shade</id>

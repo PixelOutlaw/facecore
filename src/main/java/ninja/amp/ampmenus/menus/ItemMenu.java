@@ -84,6 +84,13 @@ public class ItemMenu {
   }
 
   /**
+   * sets the name of the {@link ItemMenu}.
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
    * Gets the {@link Size} of the {@link ItemMenu}.
    *
    * @return The {@link ItemMenu}'s {@link Size}.
