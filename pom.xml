@@ -53,7 +53,7 @@
     <kotlin.version>1.6.0</kotlin.version>
     <project.depend.papi-version>2.11.1</project.depend.papi-version>
     <project.depend.interactive-chat-version>4.2.2.1</project.depend.interactive-chat-version>
-    <project.depend.protocollib-version>4.8.0</project.depend.protocollib-version>
+    <project.depend.protocollib-version>5.0.0-SNAPSHOT</project.depend.protocollib-version>
   </properties>
 
   <repositories>
