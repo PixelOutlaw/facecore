@@ -22,15 +22,18 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -38,18 +41,32 @@ public class ItemUtils {
 
   @Nonnull
   public static Map<Integer, ItemStack> giveOrDrop(@Nonnull Player player, @Nullable ItemStack... items) {
+    return giveOrDrop(player, 0, items);
+  }
+
+  @Nonnull
+  public static Map<Integer, ItemStack> giveOrDrop(@Nonnull Player player, int ticksLived, @Nullable ItemStack... items) {
     if (items != null && items.length != 0) {
       Map<Integer, ItemStack> drop = player.getInventory().addItem(items);
       World world = player.getWorld();
       Location location = player.getLocation();
       drop.values().forEach((item) -> {
         if (item != null && item.getType() != Material.AIR) {
-          world.dropItemNaturally(location, item);
+          Item itemEntity = world.dropItemNaturally(location, item);
+          if (ticksLived > 0) {
+            itemEntity.setTicksLived(ticksLived);
+          }
+          itemEntity.setOwner(player.getUniqueId());
+          Bukkit.getScheduler().runTaskLater(FacecorePlugin.getInstance(), () -> {
+            if (itemEntity.isValid()) {
+              itemEntity.setOwner(null);
+            }
+          }, 600L);
         }
       });
       return drop;
     } else {
-      return new HashMap();
+      return new HashMap<>();
     }
   }
 

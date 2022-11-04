@@ -22,16 +22,15 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.WeakHashMap;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Entity;
 
 public class ChunkUtil {
 
-  private static final Set<String> chunkKeys = new HashSet<>();
+  private static final Map<String, Chunk> chunkMap = new HashMap<>();
   private static final Map<Entity, Boolean> DESPAWN_ON_UNLOAD = new WeakHashMap<>();
 
   /**
@@ -39,7 +38,7 @@ public class ChunkUtil {
    * unexpected results from other methods
    */
   public static void clearChunkCache() {
-    chunkKeys.clear();
+    chunkMap.clear();
   }
 
   /**
@@ -47,14 +46,21 @@ public class ChunkUtil {
    * for faster chunk checking
    */
   public static void cacheChunk(Chunk chunk) {
-    chunkKeys.add(buildChunkKey(chunk));
+    chunkMap.put(buildChunkKey(chunk), chunk);
   }
 
   /**
    * Removes a chunk from the chunk key cache
    */
   public static void unCacheChunk(Chunk chunk) {
-    chunkKeys.remove(buildChunkKey(chunk));
+    chunkMap.values().remove(chunk);
+  }
+
+  public static boolean canSpawnEntity(String chunkKey) {
+    if (chunkMap.containsKey((chunkKey))) {
+      return chunkMap.get(chunkKey).isEntitiesLoaded();
+    }
+    return false;
   }
 
   public static boolean isChunkLoaded(Chunk chunk) {
@@ -62,7 +68,7 @@ public class ChunkUtil {
   }
 
   public static boolean isChuckLoaded(String chunkKey) {
-    return chunkKeys.contains(chunkKey);
+    return chunkMap.containsKey(chunkKey);
   }
 
   public static String buildChunkKey(Chunk chunk) {

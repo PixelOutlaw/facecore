@@ -22,28 +22,33 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
-import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
-import org.bukkit.entity.Entity;
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.EntitiesLoadEvent;
-import org.bukkit.event.world.EntitiesUnloadEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 
-public final class ChunkListener implements Listener {
+public final class ContainerListener implements Listener {
 
-  @EventHandler(priority = EventPriority.LOWEST)
-  public void onChunkUnload(final EntitiesUnloadEvent event) {
-    for (Entity e : event.getEntities()) {
-      if (ChunkUtil.isDespawnOnUnload(e)) {
-        e.remove();
-      }
+  @EventHandler(priority = EventPriority.LOW)
+  public void containerOpenEvent(final InventoryOpenEvent event) {
+    if (event.isCancelled()) {
+      return;
     }
-    ChunkUtil.unCacheChunk(event.getChunk());
+    if (!FacecorePlugin.getInstance().isContainersDisabled()) {
+      return;
+    }
+    if (event.getPlayer().getGameMode() != GameMode.ADVENTURE) {
+      return;
+    }
+    if (event.getInventory().getType() == InventoryType.WORKBENCH) {
+      return;
+    }
+    if (event.getInventory().getLocation() != null) {
+      event.setCancelled(true);
+    }
   }
 
-  @EventHandler(priority = EventPriority.LOWEST)
-  public void onChunkLoad(final EntitiesLoadEvent event) {
-    ChunkUtil.cacheChunk(event.getChunk());
-  }
 }

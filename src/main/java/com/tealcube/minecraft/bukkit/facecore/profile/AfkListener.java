@@ -29,6 +29,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandSendEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 public class AfkListener implements Listener {
 
@@ -44,6 +45,11 @@ public class AfkListener implements Listener {
 
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerInteract(PlayerInteractEvent event) {
+    AfkUtil.setLastInteract(event.getPlayer());
+  }
+
+  @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+  public void onPlayerInteract(PlayerJoinEvent event) {
     AfkUtil.setLastInteract(event.getPlayer());
   }
 }

@@ -25,7 +25,9 @@ package com.tealcube.minecraft.bukkit.facecore;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
+import com.tealcube.minecraft.bukkit.facecore.profile.AfkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.ChunkListener;
+import com.tealcube.minecraft.bukkit.facecore.profile.ContainerListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.FireworkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.MoveListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.PlayerJoinListener;
@@ -48,6 +50,10 @@ public final class FacecorePlugin extends FacePlugin {
   private static FacecorePlugin _INSTANCE;
   private File loggerFile;
   private SmartYamlConfiguration playerDataYAML;
+  private SmartYamlConfiguration configYAML;
+
+  @Getter
+  private boolean containersDisabled = false;
 
   @Getter
   public ProtocolManager protocolManager;
@@ -67,7 +73,10 @@ public final class FacecorePlugin extends FacePlugin {
 
     loggerFile = new File(getDataFolder(), "debug.log");
     playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
+    configYAML = new SmartYamlConfiguration(new File(getDataFolder(), "config.yml"));
     PlayerResolver.getInstance().loadFrom(playerDataYAML);
+
+    containersDisabled = configYAML.getBoolean("disable-containers-in-adventure-mode", false);
 
     protocolManager = ProtocolLibrary.getProtocolManager();
 
@@ -76,11 +85,15 @@ public final class FacecorePlugin extends FacePlugin {
     getServer().getPluginManager().registerEvents(new FireworkListener(), this);
     getServer().getPluginManager().registerEvents(new MoveListener(), this);
     getServer().getPluginManager().registerEvents(new ChunkListener(), this);
+    getServer().getPluginManager().registerEvents(new AfkListener(), this);
+    getServer().getPluginManager().registerEvents(new ContainerListener(), this);
 
     ChunkUtil.clearChunkCache();
     for (World world : Bukkit.getWorlds()) {
       for (Chunk chunk : world.getLoadedChunks()) {
-        ChunkUtil.cacheChunk(chunk);
+        if (chunk.isEntitiesLoaded()) {
+          ChunkUtil.cacheChunk(chunk);
+        }
       }
     }
 

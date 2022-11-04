@@ -24,7 +24,9 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
 
 public class PaletteUtil {
 
@@ -40,7 +42,19 @@ public class PaletteUtil {
     return colorLine(s);
   }
 
-  private static String colorLine(String s) {
+  public static void sendMessage(CommandSender sender, String message) {
+    message = color(message);
+    sender.sendMessage(message);
+  }
+
+  public static void sendMessage(List<CommandSender> sender, String message) {
+    message = color(message);
+    for (CommandSender s : sender) {
+      s.sendMessage(message);
+    }
+  }
+
+  private static String colorLine(@NotNull String s) {
     for (FaceColor c : COLORS) {
       s = s.replace(c.getChatCode(), c.s());
     }

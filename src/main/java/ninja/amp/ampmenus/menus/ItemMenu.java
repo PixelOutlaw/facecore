@@ -171,9 +171,8 @@ public class ItemMenu {
     if (!MenuListener.getInstance().isRegistered(plugin)) {
       MenuListener.getInstance().register(plugin);
     }
-    Inventory inventory = Bukkit
-        .createInventory(new MenuHolder(this, Bukkit.createInventory(player, size.getSize())),
-            size.getSize(), name);
+    Inventory inventory = Bukkit.createInventory(new MenuHolder(this,
+            Bukkit.createInventory(player, size.getSize())), size.getSize(), name);
     apply(inventory, player);
     player.openInventory(inventory);
   }

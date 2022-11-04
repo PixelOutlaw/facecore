@@ -41,6 +41,9 @@ public class MoveListener implements Listener {
 
   @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
   public void onPlayerMove(PlayerMoveEvent event) {
+    if (event.getPlayer().getVehicle() != null) {
+      return;
+    }
     if (event.getFrom().getX() != event.getTo().getX()
         || event.getFrom().getY() != event.getTo().getY()
         || event.getFrom().getZ() != event.getTo().getZ()) {

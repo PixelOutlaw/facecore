@@ -26,6 +26,7 @@ import java.awt.Color;
 import net.md_5.bungee.api.ChatColor;
 
 public enum FaceColor {
+  TRUE_WHITE("|none|", new Color(255, 255, 255)),
   WHITE("|white|", new Color(255, 251, 243)),
   LIGHT_GRAY("|lgray|", new Color(173, 161, 156)),
   GRAY("|gray|", new Color(126, 110, 110)),
@@ -37,7 +38,7 @@ public enum FaceColor {
   ORANGE("|orange|", new Color(248, 132, 44)),
   DARK_ORANGE("|dorange|", new Color(194, 106, 29)),
   RED("|red|", new Color(252, 61, 56)),
-  CRIMSON("|crimson|", new Color(239, 30, 24)),
+  CRIMSON("|crimson|", new Color(173, 30, 25)),
   PINK("|pink|", new Color(243, 109, 124)),
   PURPLE("|purple|", new Color(166, 63, 201)),
   CYAN("|cyan|", new Color(77, 242, 255)),
@@ -46,14 +47,15 @@ public enum FaceColor {
   DARK_BLUE("|dblue|", new Color(34, 94, 183)),
   BROWN("|brown|", new Color(152, 79, 37)),
   TAN("|tan|", new Color(236, 161, 106)),
-  BLACK("|black|", new Color(45, 27, 31)),
+  BLACK("|black|", new Color(35, 20, 24)),
 
   UNDERLINE("|ul|", ChatColor.UNDERLINE),
   CHAOS("|c|", ChatColor.MAGIC),
   STRIKETHROUGH("|st|", ChatColor.STRIKETHROUGH),
   ITALIC("|i|", ChatColor.ITALIC),
   RESET("|r|", ChatColor.RESET),
-  BOLD("|b|", ChatColor.BOLD);
+  BOLD("|b|", ChatColor.BOLD),
+  NO_SHADOW("|ns|", new Color(251, 251, 251));
 
   private final Color rawColor;
   private final ChatColor color;
@@ -71,7 +73,7 @@ public enum FaceColor {
     this.rawColor = new Color(0);
     this.color = color;
     this.chatCode = chatCode;
-    this.s = "" + color;
+    this.s = color + "";
   }
 
   public Color getRawColor() {
@@ -88,6 +90,10 @@ public enum FaceColor {
 
   public String s() {
     return s;
+  }
+
+  public boolean isStartOf(String string) {
+    return string.toLowerCase().startsWith(s.toLowerCase());
   }
 
   @Override
