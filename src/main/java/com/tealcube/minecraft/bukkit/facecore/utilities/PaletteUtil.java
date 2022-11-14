@@ -38,8 +38,16 @@ public class PaletteUtil {
     return newLore;
   }
 
+  public static List<String> culturallyEnrich(List<String> s) {
+    return color(s);
+  }
+
   public static String color(String s) {
     return colorLine(s);
+  }
+
+  public static String culturallyEnrich(String s) {
+    return color(s);
   }
 
   public static void sendMessage(CommandSender sender, String message) {
