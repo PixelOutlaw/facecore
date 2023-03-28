@@ -101,6 +101,7 @@ public final class FacecorePlugin extends FacePlugin {
     everyTickTask.runTaskTimer(this, 20L, 1L);
 
     //AdvancedActionBarUtil.startTask(4);
+    Bukkit.getLogger().info("[FaceCore] Enabled successfully!");
   }
 
   @Override
@@ -110,6 +111,7 @@ public final class FacecorePlugin extends FacePlugin {
     HandlerList.unregisterAll(this);
     Bukkit.getScheduler().cancelTasks(this);
     AdvancedActionBarUtil.stopTask();
+    Bukkit.getLogger().info("[FaceCore] Disabled successfully!");
   }
 
 }

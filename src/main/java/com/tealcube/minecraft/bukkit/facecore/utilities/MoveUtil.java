@@ -25,6 +25,7 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
@@ -60,6 +61,13 @@ public class MoveUtil {
     VELOCITY.put(player, player.getLocation().toVector()
         .subtract(LAST_POS.getOrDefault(player, player.getLocation().toVector())));
     LAST_POS.put(player, player.getLocation().toVector());
+  }
+
+  public static Vector getVelocity(LivingEntity livingEntity) {
+    if (livingEntity instanceof Player) {
+      return getVelocity((Player) livingEntity);
+    }
+    return livingEntity.getVelocity();
   }
 
   public static Vector getVelocity(Player player) {

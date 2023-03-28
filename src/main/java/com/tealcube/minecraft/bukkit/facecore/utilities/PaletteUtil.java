@@ -22,8 +22,12 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.facecore.utilities.FaceColor.ShaderStyle;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
@@ -31,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 public class PaletteUtil {
 
   public static final List<FaceColor> COLORS = List.of(FaceColor.values());
+  public static final Map<String, String> colorDataMap = buildMap();
 
   public static List<String> color(List<String> s) {
     List<String> newLore = new ArrayList<>();
@@ -63,8 +68,8 @@ public class PaletteUtil {
   }
 
   private static String colorLine(@NotNull String s) {
-    for (FaceColor c : COLORS) {
-      s = s.replace(c.getChatCode(), c.s());
+    for (Entry<String, String> c : colorDataMap.entrySet()) {
+      s = s.replace(c.getKey(), c.getValue());
     }
     return s;
   }
@@ -76,6 +81,21 @@ public class PaletteUtil {
 
   public static List<String> loadStrings(ConfigurationSection cs, String string) {
     return color(cs.getStringList(string));
+  }
+
+  public static Map<String, String> buildMap() {
+    Map<String, String> map = new HashMap<>();
+    for (FaceColor c : COLORS) {
+      map.put(c.getChatCode(), c.s());
+      if (c.isShaderEffects()) {
+        map.put("|" + c.getChatCode().replace("|", "") + "_shake|", c.shaded(ShaderStyle.SHAKE));
+        map.put("|" + c.getChatCode().replace("|", "") + "_flip|", c.shaded(ShaderStyle.FLIP));
+        map.put("|" + c.getChatCode().replace("|", "") + "_bounce|", c.shaded(ShaderStyle.BOUNCE));
+        map.put("|" + c.getChatCode().replace("|", "") + "_wave|", c.shaded(ShaderStyle.WAVE));
+        map.put("|" + c.getChatCode().replace("|", "") + "_outline|", c.shaded(ShaderStyle.OUTLINE));
+      }
+    }
+    return map;
   }
 }
 

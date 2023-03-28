@@ -23,9 +23,11 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
@@ -36,6 +38,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
+import ru.xezard.glow.data.glow.Glow;
 
 public class ItemUtils {
 
@@ -68,6 +72,43 @@ public class ItemUtils {
     } else {
       return new HashMap<>();
     }
+  }
+
+  public static void dropItem(Location loc, ItemStack itemStack, Player looter, int ticksLived,
+      Color dropRgb, ChatColor glowColor, boolean extraHeight) {
+    Item drop = loc.getWorld().dropItem(loc, itemStack);
+    drop.setVelocity(new Vector(
+        -0.125 + Math.random() * 0.25,
+        extraHeight ? 0.42 + Math.random() * 0.15 : 0.3,
+        -0.125 + Math.random() * 0.25
+    ));
+    if (dropRgb != null) {
+      new DropTrail(drop, looter, dropRgb);
+    }
+    try {
+      if (looter != null && glowColor != null) {
+        Glow glow = Glow.builder().color(glowColor).name("drop-glow").build();
+        glow.addHolders(drop);
+        glow.display(looter);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    if (ticksLived != 0) {
+      drop.setTicksLived(ticksLived);
+    }
+    if (looter != null) {
+      applyDropProtection(drop, looter.getUniqueId(), 300);
+    }
+  }
+
+  public static void applyDropProtection(Item drop, UUID owner, long ticks) {
+    drop.setOwner(owner);
+    Bukkit.getScheduler().runTaskLater(FacecorePlugin.getInstance(), () -> {
+      if (drop != null) {
+        drop.setOwner(null);
+      }
+    }, ticks);
   }
 
   public static boolean containsLore(ItemStack itemStack, List<String> lore) {
