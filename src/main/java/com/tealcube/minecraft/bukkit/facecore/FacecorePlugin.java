@@ -24,6 +24,8 @@ package com.tealcube.minecraft.bukkit.facecore;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.tealcube.minecraft.bukkit.facecore.command.RestartCommand;
+import com.tealcube.minecraft.bukkit.facecore.command.StopCommand;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.profile.AfkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.ChunkListener;
@@ -38,8 +40,10 @@ import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
 import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.event.HandlerList;
 
@@ -48,12 +52,15 @@ import java.io.File;
 public final class FacecorePlugin extends FacePlugin {
 
   private static FacecorePlugin _INSTANCE;
+  public static NamespacedKey killKey;
   private File loggerFile;
   private SmartYamlConfiguration playerDataYAML;
   private SmartYamlConfiguration configYAML;
 
   @Getter
   private boolean containersDisabled = false;
+  @Getter @Setter
+  private static boolean loginAllowed = true;
 
   @Getter
   public ProtocolManager protocolManager;
@@ -68,8 +75,8 @@ public final class FacecorePlugin extends FacePlugin {
 
   @Override
   public void enable() {
-
     _INSTANCE = this;
+    killKey = new NamespacedKey(this, "facecore.tempEntity");
 
     loggerFile = new File(getDataFolder(), "debug.log");
     playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
@@ -99,6 +106,9 @@ public final class FacecorePlugin extends FacePlugin {
 
     EveryTickTask everyTickTask = new EveryTickTask();
     everyTickTask.runTaskTimer(this, 20L, 1L);
+
+    this.getCommand("safe-stop").setExecutor(new StopCommand());
+    this.getCommand("safe-restart").setExecutor(new RestartCommand());
 
     //AdvancedActionBarUtil.startTask(4);
     Bukkit.getLogger().info("[FaceCore] Enabled successfully!");
