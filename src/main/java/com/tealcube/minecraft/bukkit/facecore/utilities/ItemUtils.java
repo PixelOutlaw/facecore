@@ -30,6 +30,10 @@ import java.util.Map;
 import java.util.UUID;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MiscDisguise;
+import me.libraryaddict.disguise.disguisetypes.watchers.DroppedItemWatcher;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -39,7 +43,6 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
-import ru.xezard.glow.data.glow.Glow;
 
 public class ItemUtils {
 
@@ -76,23 +79,29 @@ public class ItemUtils {
 
   public static void dropItem(Location loc, ItemStack itemStack, Player looter, int ticksLived,
       Color dropRgb, ChatColor glowColor, boolean extraHeight) {
-    Item drop = loc.getWorld().dropItem(loc, itemStack);
+    Item drop = loc.getWorld().spawn(loc, Item.class, d -> d.setItemStack(itemStack));
+    if (looter != null && glowColor != null) {
+      try {
+        MiscDisguise miscDisguise = new MiscDisguise(DisguiseType.DROPPED_ITEM);
+        miscDisguise.setVelocitySent(true);
+        DroppedItemWatcher watcher = (DroppedItemWatcher) miscDisguise.getWatcher();
+        watcher.setItemStack(itemStack);
+        watcher.setNoGravity(false);
+        watcher.setGlowing(true);
+        watcher.setGlowColor(glowColor);
+        DisguiseAPI.disguiseToPlayers(drop, miscDisguise, looter);
+      } catch (Exception e) {
+        Bukkit.getLogger().warning("[FaceCore] Failed to disguise glow loot...");
+        e.printStackTrace();
+      }
+    }
     drop.setVelocity(new Vector(
         -0.125 + Math.random() * 0.25,
         extraHeight ? 0.42 + Math.random() * 0.15 : 0.3,
-        -0.125 + Math.random() * 0.25
-    ));
+        -0.125 + Math.random() * 0.25)
+    );
     if (dropRgb != null) {
       new DropTrail(drop, looter, dropRgb);
-    }
-    try {
-      if (looter != null && glowColor != null) {
-        Glow glow = Glow.builder().color(glowColor).name("drop-glow").build();
-        glow.addHolders(drop);
-        glow.display(looter);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
     }
     if (ticksLived != 0) {
       drop.setTicksLived(ticksLived);
@@ -122,5 +131,12 @@ public class ItemUtils {
       }
     }
     return false;
+  }
+
+  public static int getModelData(@Nonnull ItemStack itemStack) {
+    if (!itemStack.hasItemMeta() || !itemStack.getItemMeta().hasCustomModelData()) {
+      return -1;
+    }
+    return itemStack.getItemMeta().getCustomModelData();
   }
 }
