@@ -22,11 +22,14 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 import org.bukkit.Chunk;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
+import org.bukkit.persistence.PersistentDataType;
 
 public class ChunkUtil {
 
@@ -76,6 +79,7 @@ public class ChunkUtil {
   }
 
   public static void setDespawnOnUnload(Entity e) {
+    e.getPersistentDataContainer().set(FacecorePlugin.killKey, PersistentDataType.SHORT, (short) 1);
     DESPAWN_ON_UNLOAD.put(e, true);
   }
 

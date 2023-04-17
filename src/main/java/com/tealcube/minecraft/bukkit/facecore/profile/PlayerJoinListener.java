@@ -22,14 +22,25 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.profile;
 
+import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import com.tealcube.minecraft.bukkit.facecore.utilities.MoveUtil;
 import java.util.Optional;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 public final class PlayerJoinListener implements Listener {
+
+  @EventHandler(priority = EventPriority.LOW)
+  public void onPlayerLogin(final PlayerLoginEvent event) {
+    if (!FacecorePlugin.isLoginAllowed()) {
+      event.setKickMessage("Server is shutting down! Bad timing I guess...");
+      event.setResult(Result.KICK_OTHER);
+    }
+  }
 
   @EventHandler(priority = EventPriority.MONITOR)
   public void onPlayerJoinEvent(final PlayerJoinEvent event) {

@@ -10,3 +10,12 @@ softdepend:
   - LibsDisguises
   - ProtocolLib
   - InteractiveChat
+commands:
+  safe-stop:
+    description: Stop
+    usage: /<command>
+    permission: facecore.admin
+  safe-restart:
+    description: Restart
+    usage: /<command>
+    permission: facecore.admin
