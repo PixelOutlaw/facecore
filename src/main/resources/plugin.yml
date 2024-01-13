@@ -19,3 +19,11 @@ commands:
     description: Restart
     usage: /<command>
     permission: facecore.admin
+  unicode-reload:
+    description: relod placeholders
+    usage: /<command>
+    permission: facecore.admin
+  toasty:
+    description: mmmmmstroknke
+    usage: /<command>
+    permission: facecore.admin

@@ -23,10 +23,13 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import com.tealcube.minecraft.bukkit.facecore.pojo.RandomSound;
 import java.awt.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -36,22 +39,46 @@ public class DropTrail extends BukkitRunnable {
   private final Player owner;
   private final Item item;
   private final DustOptions dustOptions;
+  private final RandomSound randomSound;
 
-  public DropTrail(Item item, Player owner, Color dropRgb) {
+  public DropTrail(Item item, Player owner, Color dropRgb, RandomSound randomSound) {
     this.item = item;
     this.owner = owner;
+    this.randomSound = randomSound;
     dustOptions = new DustOptions(org.bukkit.Color.fromRGB(
         dropRgb.getRed(), dropRgb.getGreen(), dropRgb.getBlue()), 2);
     this.runTaskTimer(FacecorePlugin.getInstance(), 0L, 1L);
+    if (owner != null) {
+      owner.playSound(item.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, SoundCategory.MASTER, 4f, 2f);
+    } else {
+      item.getWorld().playSound(item.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, SoundCategory.MASTER, 4f, 2f);
+    }
   }
 
   @Override
   public void run() {
     if (!item.isValid() || (item.getVelocity().getY() < 0.01 && item.isOnGround())) {
       cancel();
+      if (owner != null) {
+        if (randomSound == null) {
+          owner.playSound(item.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.MASTER, 4f, 2f);
+        } else {
+          randomSound.play(item.getLocation(), owner);
+        }
+      } else {
+        if (randomSound == null) {
+          item.getWorld().playSound(item.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_RESONATE, SoundCategory.MASTER, 4f, 2f);
+        } else {
+          randomSound.play(item.getLocation());
+        }
+      }
       return;
     }
     Location loc = item.getLocation().clone().add(item.getVelocity()).add(0, 0.5, 0);
-    owner.spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
+    if (owner != null) {
+      owner.spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
+    } else {
+      item.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
+    }
   }
 }

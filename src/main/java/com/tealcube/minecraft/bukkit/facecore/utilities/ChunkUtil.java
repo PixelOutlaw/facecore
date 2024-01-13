@@ -56,7 +56,7 @@ public class ChunkUtil {
    * Removes a chunk from the chunk key cache
    */
   public static void unCacheChunk(Chunk chunk) {
-    chunkMap.values().remove(chunk);
+    chunkMap.remove(buildChunkKey(chunk));
   }
 
   public static boolean canSpawnEntity(String chunkKey) {
@@ -75,7 +75,7 @@ public class ChunkUtil {
   }
 
   public static String buildChunkKey(Chunk chunk) {
-    return chunk.getWorld().getName() + chunk.getChunkKey();
+    return chunk.getWorld().getName() + "|" + chunk.getX() + "|" + chunk.getZ();
   }
 
   public static void setDespawnOnUnload(Entity e) {

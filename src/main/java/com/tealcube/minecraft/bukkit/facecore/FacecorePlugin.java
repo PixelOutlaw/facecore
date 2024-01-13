@@ -24,8 +24,10 @@ package com.tealcube.minecraft.bukkit.facecore;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.tealcube.minecraft.bukkit.facecore.command.RefreshUnicodeCommand;
 import com.tealcube.minecraft.bukkit.facecore.command.RestartCommand;
 import com.tealcube.minecraft.bukkit.facecore.command.StopCommand;
+import com.tealcube.minecraft.bukkit.facecore.command.ToastTest;
 import com.tealcube.minecraft.bukkit.facecore.plugin.FacePlugin;
 import com.tealcube.minecraft.bukkit.facecore.profile.AfkListener;
 import com.tealcube.minecraft.bukkit.facecore.profile.ChunkListener;
@@ -37,8 +39,10 @@ import com.tealcube.minecraft.bukkit.facecore.profile.PlayerResolver;
 import com.tealcube.minecraft.bukkit.facecore.task.EveryTickTask;
 import com.tealcube.minecraft.bukkit.facecore.utilities.AdvancedActionBarUtil;
 import com.tealcube.minecraft.bukkit.facecore.utilities.ChunkUtil;
+import com.tealcube.minecraft.bukkit.facecore.utilities.UnicodeUtil;
 import io.github.Cnly.BusyInv.BusyInv.listeners.BusyListener;
 import io.pixeloutlaw.minecraft.spigot.config.SmartYamlConfiguration;
+import java.io.File;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -46,8 +50,6 @@ import org.bukkit.Chunk;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.event.HandlerList;
-
-import java.io.File;
 
 public final class FacecorePlugin extends FacePlugin {
 
@@ -81,10 +83,10 @@ public final class FacecorePlugin extends FacePlugin {
     loggerFile = new File(getDataFolder(), "debug.log");
     playerDataYAML = new SmartYamlConfiguration(new File(getDataFolder(), "playerData.yml"));
     configYAML = new SmartYamlConfiguration(new File(getDataFolder(), "config.yml"));
+    SmartYamlConfiguration unicodeYml = new SmartYamlConfiguration(new File(getDataFolder(), "unicode.yml"));
     PlayerResolver.getInstance().loadFrom(playerDataYAML);
 
     containersDisabled = configYAML.getBoolean("disable-containers-in-adventure-mode", false);
-
     protocolManager = ProtocolLibrary.getProtocolManager();
 
     getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -104,11 +106,15 @@ public final class FacecorePlugin extends FacePlugin {
       }
     }
 
+    UnicodeUtil.cacheUnicode(unicodeYml);
+
     EveryTickTask everyTickTask = new EveryTickTask();
     everyTickTask.runTaskTimer(this, 20L, 1L);
 
     this.getCommand("safe-stop").setExecutor(new StopCommand());
     this.getCommand("safe-restart").setExecutor(new RestartCommand());
+    this.getCommand("unicode-reload").setExecutor(new RefreshUnicodeCommand(this));
+    this.getCommand("toasty").setExecutor(new ToastTest(this));
 
     //AdvancedActionBarUtil.startTask(4);
     Bukkit.getLogger().info("[FaceCore] Enabled successfully!");

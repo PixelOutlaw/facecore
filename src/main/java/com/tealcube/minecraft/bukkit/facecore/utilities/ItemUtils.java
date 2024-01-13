@@ -23,6 +23,8 @@
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import com.tealcube.minecraft.bukkit.facecore.pojo.RandomSound;
+import io.pixeloutlaw.minecraft.spigot.hilt.ItemStackExtensionsKt;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +47,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 public class ItemUtils {
+
+  public static ItemStack BLANK = buildBlankStack();
 
   @Nonnull
   public static Map<Integer, ItemStack> giveOrDrop(@Nonnull Player player, @Nullable ItemStack... items) {
@@ -79,6 +83,11 @@ public class ItemUtils {
 
   public static void dropItem(Location loc, ItemStack itemStack, Player looter, int ticksLived,
       Color dropRgb, ChatColor glowColor, boolean extraHeight) {
+    dropItem(loc, itemStack, looter, ticksLived, dropRgb, glowColor, null, extraHeight);
+  }
+
+  public static void dropItem(Location loc, ItemStack itemStack, Player looter, int ticksLived,
+      Color dropRgb, ChatColor glowColor, RandomSound randomSound, boolean extraHeight) {
     Item drop = loc.getWorld().spawn(loc, Item.class, d -> d.setItemStack(itemStack));
     if (looter != null && glowColor != null) {
       try {
@@ -101,7 +110,7 @@ public class ItemUtils {
         -0.125 + Math.random() * 0.25)
     );
     if (dropRgb != null) {
-      new DropTrail(drop, looter, dropRgb);
+      new DropTrail(drop, looter, dropRgb, randomSound);
     }
     if (ticksLived != 0) {
       drop.setTicksLived(ticksLived);
@@ -114,7 +123,7 @@ public class ItemUtils {
   public static void applyDropProtection(Item drop, UUID owner, long ticks) {
     drop.setOwner(owner);
     Bukkit.getScheduler().runTaskLater(FacecorePlugin.getInstance(), () -> {
-      if (drop != null) {
+      if (drop.isValid()) {
         drop.setOwner(null);
       }
     }, ticks);
@@ -138,5 +147,12 @@ public class ItemUtils {
       return -1;
     }
     return itemStack.getItemMeta().getCustomModelData();
+  }
+
+  private static ItemStack buildBlankStack() {
+    ItemStack stack = new ItemStack(Material.BARRIER);
+    ItemStackExtensionsKt.setCustomModelData(stack, 50);
+    ItemStackExtensionsKt.setDisplayName(stack, "");
+    return stack;
   }
 }

@@ -30,11 +30,11 @@
   <parent>
     <groupId>io.pixeloutlaw</groupId>
     <artifactId>generic-plugin-parent</artifactId>
-    <version>1.19.4.0</version>
+    <version>1.20.1.0</version>
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.19.4.1</version>
+  <version>1.20.4.1</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -52,7 +52,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <kotlin.version>1.6.0</kotlin.version>
     <project.depend.papi-version>2.11.3</project.depend.papi-version>
-    <project.depend.interactive-chat-version>4.2.6.0</project.depend.interactive-chat-version>
+    <project.depend.interactive-chat-version>4.2.9.0</project.depend.interactive-chat-version>
     <project.depend.protocollib-version>5.0.0-SNAPSHOT</project.depend.protocollib-version>
   </properties>
 

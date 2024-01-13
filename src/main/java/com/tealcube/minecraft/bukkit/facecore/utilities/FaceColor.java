@@ -61,11 +61,11 @@ public enum FaceColor {
   RESET("|r|", ChatColor.RESET, false),
   BOLD("|b|", ChatColor.BOLD, false),
 
-  NO_SHADOW("|ns|", new Color(251, 251, 251), false),
-  SKEW("|skew|", new Color(247, 247, 247), false),
-  GROW("|grow|", new Color(243, 247, 247), false),
-  FADE("|fade|", new Color(243, 243, 247), false),
-  SHIMMER("|shimmer|", new Color(243, 243, 243), false);
+  NO_SHADOW("|ns|", new Color(251, 255, 255), false),
+  SKEW("|skew|", new Color(251, 251, 255), false),
+  GROW("|grow|", new Color(251, 251, 251), false),
+  FADE("|fade|", new Color(247, 251, 251), false),
+  SHIMMER("|shimmer|", new Color(247, 247, 251), false);
 
   private final Color rawColor;
   private final ChatColor color;
