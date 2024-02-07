@@ -24,6 +24,7 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.loohp.interactivechat.api.InteractiveChatAPI;
 import com.loohp.interactivechat.objectholders.ICPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,8 +35,12 @@ public class ToastUtils {
   }
 
   public static void sendToast(Player player, String message, ItemStack stack, ToastStyle style) {
-    ICPlayer toastPlayer = InteractiveChatAPI.getICPlayer(player);
-    com.loohp.interactivechat.utils.ToastUtils.mention(toastPlayer, player, TextUtils.color(message), stack);
+    try {
+      ICPlayer toastPlayer = InteractiveChatAPI.getICPlayer(player);
+      com.loohp.interactivechat.utils.ToastUtils.mention(toastPlayer, player, TextUtils.color(message), stack);
+    } catch (Exception e) {
+      Bukkit.getLogger().warning("[FaceCore] Toast failed to send due to exception! " + e.getMessage());
+    }
   }
 
   public enum ToastStyle {

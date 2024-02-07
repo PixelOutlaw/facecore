@@ -43,7 +43,7 @@ public class UnicodeUtil {
         return;
       }
       for (String id : section.getKeys(false)) {
-        cachedUnicode.put("<" + id + ">", section.getString(id));
+        cachedUnicode.put("<" + id + ">", PaletteUtil.culturallyEnrich(section.getString(id)));
       }
     } catch (Exception e) {
       Bukkit.getLogger().severe("[Facecore] Something went wrong!! Unicode failed!!");
