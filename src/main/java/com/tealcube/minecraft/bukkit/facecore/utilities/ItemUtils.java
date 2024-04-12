@@ -40,15 +40,37 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.trim.ArmorTrim;
+import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.util.Vector;
 
 public class ItemUtils {
 
   public static ItemStack BLANK = buildBlankStack();
+  private static final Map<String, ArmorTrim> armorTrimKeys = createTrimKeys();
+
+  public static void applyCustomTrim(ItemStack stack, String faceTrim) {
+    if (!armorTrimKeys.containsKey(faceTrim)) {
+      Bukkit.getLogger().warning("[FaceCore] Trim key " + faceTrim + " does not exist");
+      return;
+    }
+    ItemMeta meta = stack.getItemMeta();
+    if (!(meta instanceof ArmorMeta armorMeta)) {
+      return;
+    }
+    armorMeta.setTrim(armorTrimKeys.get(faceTrim));
+    armorMeta.addItemFlags(ItemFlag.HIDE_ARMOR_TRIM);
+    stack.setItemMeta(armorMeta);
+  }
 
   @Nonnull
   public static Map<Integer, ItemStack> giveOrDrop(@Nonnull Player player, @Nullable ItemStack... items) {
@@ -154,5 +176,57 @@ public class ItemUtils {
     ItemStackExtensionsKt.setCustomModelData(stack, 50);
     ItemStackExtensionsKt.setDisplayName(stack, "");
     return stack;
+  }
+
+  @SuppressWarnings("DataFlowIssue")
+  private static Map<String, ArmorTrim> createTrimKeys() {
+    Map<String, ArmorTrim> keys = new HashMap<>();
+
+    keys.put("bone", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("bone"))));
+    keys.put("frog_prince", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("frog_prince"))));
+    keys.put("guardsmen", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("guardsmen"))));
+    keys.put("hunters", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("hunters"))));
+    keys.put("snazzy", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("snazzy"))));
+    keys.put("starter", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("starter"))));
+    keys.put("misc1", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("misc1"))));
+    keys.put("misc2", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("misc2"))));
+    keys.put("necro", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("necro"))));
+    keys.put("red_knight", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("red_knight"))));
+    keys.put("toasty", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("toasty"))));
+
+    keys.put("yeti", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("yeti"))));
+    keys.put("green_ogre", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("green_ogre"))));
+    keys.put("ogre", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("ogre"))));
+
+    keys.put("cloth", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth"))));
+    keys.put("cloth_t1", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth_t1"))));
+    keys.put("cloth_t2", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth_t2"))));
+    keys.put("cloth_t3", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth_t3"))));
+    keys.put("cloth_t4", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth_t4"))));
+    keys.put("cloth_t5", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("cloth_t5"))));
+
+    keys.put("heavy", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy"))));
+    keys.put("heavy_t1", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy_t1"))));
+    keys.put("heavy_t2", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy_t2"))));
+    keys.put("heavy_t3", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy_t3"))));
+    keys.put("heavy_t4", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy_t4"))));
+    keys.put("heavy_t5", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("heavy_t5"))));
+
+    keys.put("light", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light"))));
+    keys.put("light_t1", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light_t1"))));
+    keys.put("light_t2", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light_t2"))));
+    keys.put("light_t3", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light_t3"))));
+    keys.put("light_t4", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light_t4"))));
+    keys.put("light_t5", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("light_t5"))));
+
+    keys.put("extra1", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra1"))));
+    keys.put("extra2", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra2"))));
+    keys.put("extra3", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra3"))));
+    keys.put("extra4", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra4"))));
+    keys.put("extra5", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra5"))));
+    keys.put("extra6", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra6"))));
+    keys.put("extra7", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra7"))));
+
+    return keys;
   }
 }
