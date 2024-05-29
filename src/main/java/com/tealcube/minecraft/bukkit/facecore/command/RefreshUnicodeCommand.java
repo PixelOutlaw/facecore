@@ -32,7 +32,7 @@ import org.bukkit.command.CommandSender;
 
 public class RefreshUnicodeCommand implements CommandExecutor {
 
-  private FacecorePlugin plugin;
+  private final FacecorePlugin plugin;
 
   public RefreshUnicodeCommand(FacecorePlugin plugin) {
     this.plugin = plugin;
@@ -40,8 +40,7 @@ public class RefreshUnicodeCommand implements CommandExecutor {
 
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-    SmartYamlConfiguration unicodeYml = new SmartYamlConfiguration(
-        new File(plugin.getDataFolder(), "unicode.yml"));
+    SmartYamlConfiguration unicodeYml = new SmartYamlConfiguration(new File(plugin.getDataFolder(), "unicode.yml"));
     UnicodeUtil.cacheUnicode(unicodeYml);
     return true;
   }
