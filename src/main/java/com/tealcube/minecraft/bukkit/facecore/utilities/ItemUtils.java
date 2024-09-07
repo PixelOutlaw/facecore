@@ -193,6 +193,7 @@ public class ItemUtils {
     keys.put("necro", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("necro"))));
     keys.put("red_knight", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("red_knight"))));
     keys.put("toasty", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("toasty"))));
+    keys.put("nether_armor", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("nether_armor"))));
 
     keys.put("yeti", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("yeti"))));
     keys.put("green_ogre", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("green_ogre"))));
@@ -226,6 +227,9 @@ public class ItemUtils {
     keys.put("extra5", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra5"))));
     keys.put("extra6", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra6"))));
     keys.put("extra7", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra7"))));
+    keys.put("extra8", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra8"))));
+    keys.put("extra9", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra9"))));
+    keys.put("extra10", new ArmorTrim(TrimMaterial.QUARTZ, Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("extra10"))));
 
     return keys;
   }

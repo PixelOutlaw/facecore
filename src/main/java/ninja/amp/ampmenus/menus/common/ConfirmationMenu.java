@@ -11,11 +11,17 @@ import org.bukkit.inventory.ItemStack;
 
 public class ConfirmationMenu extends ItemMenu {
 
-  public ConfirmationMenu(String menuTitle,
-      String confirmTitle, List<String> confirmLore,
-      String cancelTitle, List<String> cancelLore,
-      boolean closeOnConfirm, boolean closeOnCancel,
-      Runnable confirm, Runnable cancel) {
+  public ConfirmationMenu(
+      String menuTitle,
+      String confirmTitle,
+      List<String> confirmLore,
+      String cancelTitle,
+      List<String> cancelLore,
+      boolean closeOnConfirm,
+      boolean closeOnCancel,
+      Runnable confirm,
+      Runnable cancel
+  ) {
     super(StringExtensionsKt.chatColorize("&f誒&0" + menuTitle), Size.fit(26), FacecorePlugin.getInstance());
 
     ItemStack confirmStack = new ItemStack(Material.BARRIER);

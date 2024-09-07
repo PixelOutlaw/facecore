@@ -32,6 +32,7 @@ import org.bukkit.Bukkit;
 public enum FaceColor {
   TRUE_WHITE("|none|", new Color(255, 255, 255), true),
   WHITE("|white|", new Color(255, 251, 243), true),
+  OFF_WHITE("|dwhite|", new Color(238, 236, 233), false),
   LIGHT_GRAY("|lgray|", new Color(173, 161, 156), true),
   GRAY("|gray|", new Color(126, 110, 110), true),
   DARK_GRAY("|dgray|", new Color(86, 73, 78), true),
@@ -40,7 +41,7 @@ public enum FaceColor {
   LIME("|lime|", new Color(138, 248, 40), true),
   YELLOW("|yellow|", new Color(255, 212, 66), true),
   ORANGE("|orange|", new Color(248, 132, 44), true),
-  DARK_ORANGE("|dorange|", new Color(194, 106, 29), true),
+  DARK_ORANGE("|dorange|", new Color(204, 118, 25), true),
   RED("|red|", new Color(252, 61, 56), true),
   CRIMSON("|crimson|", new Color(173, 30, 25), true),
   PINK("|pink|", new Color(243, 109, 124), true),
