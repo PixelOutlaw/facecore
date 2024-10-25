@@ -30,11 +30,11 @@
   <parent>
     <groupId>io.pixeloutlaw</groupId>
     <artifactId>generic-plugin-parent</artifactId>
-    <version>1.21.0.0</version>
+    <version>1.21.3.0</version>
   </parent>
 
   <artifactId>facecore</artifactId>
-  <version>1.21.0.0</version>
+  <version>1.21.3.0</version>
   <packaging>jar</packaging>
 
   <name>facecore</name>
@@ -55,7 +55,7 @@
     </repository>
     <repository>
       <id>papermc</id>
-      <url>https://papermc.io/repo/repository/maven-public/</url>
+      <url>https://repo.papermc.io/repository/maven-public/</url>
     </repository>
     <repository>
       <id>spigot-repo</id>
