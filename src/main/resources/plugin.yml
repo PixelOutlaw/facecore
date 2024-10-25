@@ -3,13 +3,16 @@ version: ${project.version}
 name: Facecore
 api-version: 1.17
 load: STARTUP
-softdepend:
+loadbefore:
+  - FaceShop
+  - Strife
+  - Loot
+depend:
+  - ProtocolLib
   - WorldGuard
   - PlaceholderAPI
   - DiscordSRV
   - LibsDisguises
-  - ProtocolLib
-  - InteractiveChat
 commands:
   safe-stop:
     description: Stop

@@ -76,11 +76,11 @@ public class DropTrail extends BukkitRunnable {
     }
     Location loc = item.getLocation().clone().add(item.getVelocity()).add(0, 0.5, 0);
     if (owner != null) {
-      owner.spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
-      //owner.spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, 0, dustOptions);
+      //owner.spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
+      owner.spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, 0, dustOptions);
     } else {
-      item.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
-      //item.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, 0, dustOptions);
+      //item.getWorld().spawnParticle(Particle.REDSTONE, loc, 1, 0, 0, 0, 0, dustOptions);
+      item.getWorld().spawnParticle(Particle.DUST, loc, 1, 0, 0, 0, 0, dustOptions);
     }
   }
 }

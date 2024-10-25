@@ -44,8 +44,8 @@ public class FireworkUtil {
       boolean flicker) {
 
     Firework firework = (Firework) Objects.requireNonNull(loc.getWorld())
-        .spawn(loc, EntityType.FIREWORK.getEntityClass(), e -> {
-        //.spawn(loc, EntityType.FIREWORK_ROCKET.getEntityClass(), e -> {
+        //.spawn(loc, EntityType.FIREWORK.getEntityClass(), e -> {
+        .spawn(loc, EntityType.FIREWORK_ROCKET.getEntityClass(), e -> {
           Color fadeColor = fade == null ? Color.BLACK : fade;
 
           FireworkMeta fireworkMeta = ((Firework) e).getFireworkMeta();
