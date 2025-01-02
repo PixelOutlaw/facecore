@@ -22,9 +22,11 @@
  */
 package com.tealcube.minecraft.bukkit.facecore.utilities;
 
+import com.tealcube.minecraft.bukkit.facecore.event.ToggleJumpEvent;
 import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -36,6 +38,7 @@ public class MoveUtil {
   private final static Map<Player, Long> SNEAK_START = new WeakHashMap<>();
   private final static Map<Player, Vector> LAST_POS = new WeakHashMap<>();
   private final static Map<Player, Vector> VELOCITY = new WeakHashMap<>();
+  private final static Map<Player, Boolean> JUMP_STATE = new WeakHashMap<>();
 
   public static void setLastMoved(Player player) {
     LAST_MOVED.put(player, System.currentTimeMillis());
@@ -63,6 +66,11 @@ public class MoveUtil {
     LAST_POS.put(player, player.getLocation().toVector());
   }
 
+  public static void setVelocity(Player player, Vector newVelocity) {
+    VELOCITY.put(player, newVelocity);
+    //LAST_POS.put(player, player.getLocation().toVector());
+  }
+
   public static Vector getVelocity(LivingEntity livingEntity) {
     if (livingEntity instanceof Player) {
       return getVelocity((Player) livingEntity);
@@ -72,6 +80,16 @@ public class MoveUtil {
 
   public static Vector getVelocity(Player player) {
     return VELOCITY.getOrDefault(player, new Vector(0, 0, 0)).clone();
+  }
+
+  public static void setJumpState(Player player) {
+    boolean currentState = JUMP_STATE.getOrDefault(player, false);
+    boolean newState = player.getCurrentInput().isJump();
+    if (newState != currentState) {
+      var ev = new ToggleJumpEvent(player, newState);
+      Bukkit.getPluginManager().callEvent(ev);
+      JUMP_STATE.put(player, newState);
+    }
   }
 
   public static void setSneak(Player player) {

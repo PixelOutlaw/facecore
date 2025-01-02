@@ -34,6 +34,7 @@ public class EveryTickTask extends BukkitRunnable {
     for (Player player : Bukkit.getOnlinePlayers()) {
       MoveUtil.setSneak(player);
       MoveUtil.setVelocity(player);
+      MoveUtil.setJumpState(player);
     }
   }
 }

@@ -110,6 +110,9 @@ public class ItemUtils {
 
   public static void dropItem(Location loc, ItemStack itemStack, Player looter, int ticksLived,
       Color dropRgb, ChatColor glowColor, RandomSound randomSound, boolean extraHeight) {
+    if (itemStack == null) {
+      return;
+    }
     Item drop = loc.getWorld().spawn(loc, Item.class, d -> d.setItemStack(itemStack));
     if (looter != null && glowColor != null) {
       try {
