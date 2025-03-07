@@ -168,15 +168,3 @@ fun ItemStack.setLocalizedName(string: String?) =
 
 fun ItemStack.setUnbreakable(unbreakable: Boolean) =
     getThenSetItemMeta { this.isUnbreakable = unbreakable }
-
-fun ItemStack.hasCustomModelData() = this.itemMeta?.hasCustomModelData() ?: false
-
-fun ItemStack.getCustomModelData(): Int? = this.itemMeta?.let {
-    return if (it.hasCustomModelData()) {
-        it.customModelData
-    } else {
-        null
-    }
-}
-
-fun ItemStack.setCustomModelData(customModelData: Int) = getThenSetItemMeta { this.setCustomModelData(customModelData) }

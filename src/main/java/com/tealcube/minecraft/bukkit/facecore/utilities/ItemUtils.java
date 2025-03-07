@@ -176,8 +176,10 @@ public class ItemUtils {
 
   private static ItemStack buildBlankStack() {
     ItemStack stack = new ItemStack(Material.BARRIER);
-    ItemStackExtensionsKt.setCustomModelData(stack, 50);
-    ItemStackExtensionsKt.setDisplayName(stack, "");
+    stack.editMeta(m -> {
+      m.setDisplayName("");
+      m.setItemModel(NamespacedKey.fromString("faceland:icons/empty"));
+    });
     return stack;
   }
 

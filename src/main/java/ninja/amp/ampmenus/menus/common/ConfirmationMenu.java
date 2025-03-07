@@ -1,6 +1,7 @@
 package ninja.amp.ampmenus.menus.common;
 
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
+import com.tealcube.minecraft.bukkit.facecore.utilities.ItemUtils;
 import com.tealcube.minecraft.bukkit.facecore.utilities.TextUtils;
 import io.pixeloutlaw.minecraft.spigot.garbage.StringExtensionsKt;
 import io.pixeloutlaw.minecraft.spigot.hilt.ItemStackExtensionsKt;
@@ -24,13 +25,11 @@ public class ConfirmationMenu extends ItemMenu {
   ) {
     super(StringExtensionsKt.chatColorize("&f誒&0" + menuTitle), Size.fit(26), FacecorePlugin.getInstance());
 
-    ItemStack confirmStack = new ItemStack(Material.BARRIER);
-    ItemStackExtensionsKt.setCustomModelData(confirmStack, 50);
+    ItemStack confirmStack = ItemUtils.BLANK.clone();
     ItemStackExtensionsKt.setDisplayName(confirmStack, confirmTitle);
     TextUtils.setLore(confirmStack, confirmLore, false);
 
-    ItemStack cancelStack = new ItemStack(Material.BARRIER);
-    ItemStackExtensionsKt.setCustomModelData(cancelStack, 50);
+    ItemStack cancelStack = ItemUtils.BLANK.clone();
     ItemStackExtensionsKt.setDisplayName(cancelStack, cancelTitle);
     TextUtils.setLore(cancelStack, cancelLore, false);
 

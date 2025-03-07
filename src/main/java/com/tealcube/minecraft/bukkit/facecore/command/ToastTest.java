@@ -49,7 +49,7 @@ public class ToastTest implements CommandExecutor {
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     Player p = Bukkit.getPlayer(args[0]);
     String msg = args[1];
-    ToastUtils.sendToast(p, FaceColor.NO_SHADOW + PaletteUtil.color(UnicodeUtil.unicodePlacehold(msg)), ItemUtils.BLANK, ToastStyle.INFO);
+    ToastUtils.sendToast(p, PaletteUtil.color(UnicodeUtil.unicodePlacehold(msg)), ItemUtils.BLANK, ToastStyle.INFO);
     return true;
   }
 }
