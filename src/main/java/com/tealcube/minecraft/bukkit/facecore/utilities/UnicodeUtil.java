@@ -33,17 +33,20 @@ import org.bukkit.configuration.ConfigurationSection;
 
 public class UnicodeUtil {
 
-  private static Map<String, String> cachedUnicode;
+  private static Map<String, String> CACHED_UNICODE_COLORED;
+  private static Map<String, String> CACHED_UNICODE_UNCOLORED;
 
   public static void cacheUnicode(SmartYamlConfiguration config) {
-    cachedUnicode = new HashMap<>();
+    CACHED_UNICODE_COLORED = new HashMap<>();
+    CACHED_UNICODE_UNCOLORED = new HashMap<>();
     try {
       ConfigurationSection section = config.getConfigurationSection("unicode");
       if (section == null) {
         return;
       }
       for (String id : section.getKeys(false)) {
-        cachedUnicode.put("<" + id + ">", PaletteUtil.culturallyEnrich(section.getString(id)));
+        CACHED_UNICODE_COLORED.put("<" + id + ">", PaletteUtil.culturallyEnrich(section.getString(id)));
+        CACHED_UNICODE_UNCOLORED.put("<" + id + ">", section.getString(id));
       }
     } catch (Exception e) {
       Bukkit.getLogger().severe("[Facecore] Something went wrong!! Unicode failed!!");
@@ -52,7 +55,7 @@ public class UnicodeUtil {
   }
 
   public static String unicodePlacehold(String string) {
-    for (Entry<String, String> entry : cachedUnicode.entrySet()) {
+    for (Entry<String, String> entry : CACHED_UNICODE_COLORED.entrySet()) {
       string = string.replaceAll(entry.getKey(), entry.getValue());
     }
     return string;
@@ -62,6 +65,21 @@ public class UnicodeUtil {
     List<String> strs = new ArrayList<>();
     for (String s :stringList) {
       strs.add(unicodePlacehold(s));
+    }
+    return strs;
+  }
+
+  public static String unicodePlaceholdUncolored(String string) {
+    for (Entry<String, String> entry : CACHED_UNICODE_UNCOLORED.entrySet()) {
+      string = string.replaceAll(entry.getKey(), entry.getValue());
+    }
+    return string;
+  }
+
+  public static List<String> unicodePlaceholdUncolored(List<String> stringList) {
+    List<String> strs = new ArrayList<>();
+    for (String s :stringList) {
+      strs.add(unicodePlaceholdUncolored(s));
     }
     return strs;
   }

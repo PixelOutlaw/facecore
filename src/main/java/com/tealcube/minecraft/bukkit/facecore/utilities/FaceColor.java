@@ -40,7 +40,7 @@ public enum FaceColor {
   LIGHT_GREEN("|lgreen|", new Color(78, 211, 42), true),
   LIME("|lime|", new Color(143, 211, 60), true),
   YELLOW("|yellow|", new Color(246, 198, 70), true),
-  ORANGE("|orange|", new Color(209, 133, 30), true),
+  ORANGE("|orange|", new Color(221, 143, 38), true),
   DARK_ORANGE("|dorange|", new Color(163, 76, 38), true),
   RED("|red|", new Color(228, 35, 51), true),
   CRIMSON("|crimson|", new Color(172, 21, 55), true),
