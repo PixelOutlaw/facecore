@@ -26,6 +26,12 @@ import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.ShadowColor;
+import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 
@@ -139,6 +145,26 @@ public enum FaceColor {
       );
       shaderStyles.put(s, ChatColor.of(c));
     }
+  }
+
+  public static TextComponent color(TextComponent tc, FaceColor color) {
+    return tc.color(TextColor.color(
+        color.getRawColor().getRed(),
+        color.getRawColor().getGreen(),
+        color.getRawColor().getBlue()
+    ));
+  }
+
+  public static TextComponent noShadow(TextComponent tc) {
+    return tc.colorIfAbsent(TextColor.color(NamedTextColor.WHITE)).shadowColor(ShadowColor.none());
+  }
+
+  public static TextComponent i(TextComponent tc) {
+    return tc.decorate(TextDecoration.ITALIC);
+  }
+
+  public static TextComponent b(TextComponent tc) {
+    return tc.decorate(TextDecoration.BOLD);
   }
 
   @Override

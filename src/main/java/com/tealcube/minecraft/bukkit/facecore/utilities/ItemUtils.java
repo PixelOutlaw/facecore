@@ -52,10 +52,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 public class ItemUtils {
 
   public static ItemStack BLANK = buildBlankStack();
+  public static ItemStack FILLER = buildFillerStack();
   private static final Map<String, ArmorTrim> armorTrimKeys = createTrimKeys();
 
   public static void applyCustomTrim(ItemStack stack, String faceTrim) {
@@ -167,11 +169,99 @@ public class ItemUtils {
     return false;
   }
 
-  public static int getModelData(@Nonnull ItemStack itemStack) {
-    if (!itemStack.hasItemMeta() || !itemStack.getItemMeta().hasCustomModelData()) {
-      return -1;
+  public static ItemStack setItemModel(ItemStack stack, String key) {
+    try {
+      stack.editMeta(meta -> meta.setItemModel(NamespacedKey.fromString(key)));
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    return itemStack.getItemMeta().getCustomModelData();
+    return stack;
+  }
+
+  public static ItemStack setItemModel(ItemStack stack, NamespacedKey key) {
+    try {
+      stack.editMeta(meta -> meta.setItemModel(key));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return stack;
+  }
+
+  public static ItemStack setCustomData(ItemStack stack, List<String> strings) {
+    try {
+      stack.editMeta(meta -> {
+        var modelData = meta.getCustomModelDataComponent();
+        modelData.setStrings(strings);
+        meta.setCustomModelDataComponent(modelData);
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return stack;
+  }
+
+  @NotNull
+  public static List<String> getCustomData(ItemStack stack) {
+    try {
+      return stack.getItemMeta().getCustomModelDataComponent().getStrings();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return List.of();
+  }
+
+  public static boolean checkCustomData(ItemStack stack, String string, int index) {
+    if (string == null) {
+      return false;
+    }
+    try {
+      var meta = stack.getItemMeta();
+      var strs = meta.getCustomModelDataComponent().getStrings();
+      if (strs.size() <= index) {
+        return false;
+      }
+      return string.equals(strs.get(index));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
+  }
+
+  public static ItemStack setCustomNumbers(ItemStack stack, List<Float> nums) {
+    try {
+      stack.editMeta(meta -> {
+        var modelData = meta.getCustomModelDataComponent();
+        modelData.setFloats(nums);
+        meta.setCustomModelDataComponent(modelData);
+      });
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return stack;
+  }
+
+  @NotNull
+  public static List<Float> getCustomNumbers(ItemStack stack) {
+    try {
+      return stack.getItemMeta().getCustomModelDataComponent().getFloats();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return List.of();
+  }
+
+  public static boolean checkCustomNumbers(ItemStack stack, float value, int index) {
+    try {
+      var meta = stack.getItemMeta();
+      var nums = meta.getCustomModelDataComponent().getFloats();
+      if (nums.size() <= index) {
+        return false;
+      }
+      return value == nums.get(index);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return false;
   }
 
   private static ItemStack buildBlankStack() {
@@ -179,6 +269,15 @@ public class ItemUtils {
     stack.editMeta(m -> {
       m.setDisplayName("");
       m.setItemModel(NamespacedKey.fromString("faceland:icons/empty"));
+    });
+    return stack;
+  }
+
+  private static ItemStack buildFillerStack() {
+    ItemStack stack = new ItemStack(Material.BARRIER);
+    stack.editMeta(m -> {
+      m.setItemModel(NamespacedKey.fromString("faceland:icons/empty"));
+      m.setHideTooltip(true);
     });
     return stack;
   }

@@ -28,14 +28,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class PaletteUtil {
 
   public static final List<FaceColor> COLORS = List.of(FaceColor.values());
   public static final Map<String, String> colorDataMap = buildMap();
+
+  private static final LegacyComponentSerializer HOLY_FUCK_FUCK_KYORI = LegacyComponentSerializer.builder()
+      .character('§').hexCharacter('#').hexColors().useUnusualXRepeatedCharacterHexFormat().build();
 
   public static List<String> color(List<String> s) {
     List<String> newLore = new ArrayList<>();
@@ -83,6 +92,26 @@ public class PaletteUtil {
     return color(cs.getStringList(string));
   }
 
+  public static TextComponent loadComponent(ConfigurationSection cs, String field) {
+    return loadComponent(cs, field, null);
+  }
+
+  public static TextComponent loadComponent(ConfigurationSection cs, String field, String fallback) {
+    String result = cs.getString(field, fallback);
+    return StringUtils.isBlank(result) ? Component.empty() : covertStringToRetardComponent(result);
+  }
+
+  public static List<TextComponent> loadComponents(ConfigurationSection cs, String field) {
+    List<TextComponent> components = new ArrayList<>();
+    for (String s : cs.getStringList(field)) {
+      components.add(covertStringToRetardComponent(s));
+    }
+    return components;
+  }
+  public static TextComponent convert(String s) {
+    return covertStringToRetardComponent(s);
+  }
+
   public static Map<String, String> buildMap() {
     Map<String, String> map = new HashMap<>();
     for (FaceColor c : COLORS) {
@@ -96,6 +125,11 @@ public class PaletteUtil {
       }
     }
     return map;
+  }
+
+  private static net.kyori.adventure.text.TextComponent covertStringToRetardComponent(String str) {
+    return (net.kyori.adventure.text.TextComponent) MiniMessage.miniMessage()
+        .deserialize(MiniMessage.miniMessage().serialize(HOLY_FUCK_FUCK_KYORI.deserialize(str)));
   }
 }
 

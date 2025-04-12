@@ -18,6 +18,10 @@
  */
 package ninja.amp.ampmenus.menus;
 
+import com.tealcube.minecraft.bukkit.facecore.utilities.PaletteUtil;
+import lombok.Getter;
+import lombok.Setter;
+import net.kyori.adventure.text.TextComponent;
 import ninja.amp.ampmenus.MenuListener;
 import ninja.amp.ampmenus.events.ItemClickEvent;
 import ninja.amp.ampmenus.items.MenuItem;
@@ -33,6 +37,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * A Menu controlled by ItemStacks in an Inventory.
  */
+@Getter
+@Setter
 public class ItemMenu {
 
   /**
@@ -42,20 +48,21 @@ public class ItemMenu {
   private static final MenuItem EMPTY_SLOT_ITEM = new StaticMenuItem(" ",
       new ItemStack(Material.GRAY_STAINED_GLASS_PANE, 1));
   private JavaPlugin plugin;
-  private String name;
+  private TextComponent name;
   private Size size;
   private MenuItem[] items;
   private ItemMenu parent;
 
-  /**
-   * Creates an {@link ItemMenu}.
-   *
-   * @param name The name of the inventory.
-   * @param size The {@link Size} of the inventory.
-   * @param plugin The {@link JavaPlugin} instance.
-   * @param parent The ItemMenu's parent.
-   */
+  @Deprecated
   public ItemMenu(String name, Size size, JavaPlugin plugin, ItemMenu parent) {
+    this.plugin = plugin;
+    this.name = PaletteUtil.convert(name);
+    this.size = size;
+    this.items = new MenuItem[size.getSize()];
+    this.parent = parent;
+  }
+
+  public ItemMenu(TextComponent name, Size size, JavaPlugin plugin, ItemMenu parent) {
     this.plugin = plugin;
     this.name = name;
     this.size = size;
@@ -63,40 +70,21 @@ public class ItemMenu {
     this.parent = parent;
   }
 
-  /**
-   * Creates an {@link ItemMenu} with no parent.
-   *
-   * @param name The name of the inventory.
-   * @param size The {@link Size} of the inventory.
-   * @param plugin The Plugin instance.
-   */
   public ItemMenu(String name, Size size, JavaPlugin plugin) {
     this(name, size, plugin, null);
   }
 
-  /**
-   * Gets the name of the {@link ItemMenu}.
-   *
-   * @return The {@link ItemMenu}'s name.
-   */
-  public String getName() {
-    return name;
+
+  public ItemMenu(TextComponent name, Size size, JavaPlugin plugin) {
+    this(name, size, plugin, null);
   }
 
-  /**
-   * sets the name of the {@link ItemMenu}.
-   */
   public void setName(String name) {
-    this.name = name;
+    this.name = PaletteUtil.convert(name);
   }
 
-  /**
-   * Gets the {@link Size} of the {@link ItemMenu}.
-   *
-   * @return The {@link ItemMenu}'s {@link Size}.
-   */
-  public Size getSize() {
-    return size;
+  public void setName(TextComponent name) {
+    this.name = name;
   }
 
   /**
@@ -106,24 +94,6 @@ public class ItemMenu {
    */
   public boolean hasParent() {
     return parent != null;
-  }
-
-  /**
-   * Gets the parent of the {@link ItemMenu}.
-   *
-   * @return The {@link ItemMenu}'s parent.
-   */
-  public ItemMenu getParent() {
-    return parent;
-  }
-
-  /**
-   * Sets the parent of the {@link ItemMenu}.
-   *
-   * @param parent The {@link ItemMenu}'s parent.
-   */
-  public void setParent(ItemMenu parent) {
-    this.parent = parent;
   }
 
   /**
