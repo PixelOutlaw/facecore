@@ -22,86 +22,52 @@
  */
 package ninja.amp.ampmenus.items;
 
+import com.tealcube.minecraft.bukkit.facecore.utilities.PaletteUtil;
 import java.util.Arrays;
 import java.util.List;
+import lombok.Getter;
+import net.kyori.adventure.text.TextComponent;
 import ninja.amp.ampmenus.events.ItemClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * An Item inside an {@link ninja.amp.ampmenus.menus.ItemMenu}.
- */
+@Getter
 public class MenuItem {
 
   private final String displayName;
+  private final TextComponent displayNameComponent;
   private final ItemStack icon;
   private final List<String> lore;
+  private final List<TextComponent> loreComponent;
 
   public MenuItem(String displayName, ItemStack icon, String... lore) {
     this.displayName = displayName;
+    this.displayNameComponent = PaletteUtil.convert(displayName);
     this.icon = icon;
     this.lore = Arrays.asList(lore);
+    loreComponent = PaletteUtil.convert(this.lore);
   }
 
-  /**
-   * Sets the display name and lore of an ItemStack.
-   *
-   * @param itemStack The ItemStack.
-   * @param displayName The display name.
-   * @param lore The lore.
-   * @return The ItemStack.
-   */
   public static ItemStack setNameAndLore(ItemStack itemStack, String displayName, List<String> lore) {
-    ItemMeta meta = itemStack.getItemMeta();
-    meta.setDisplayName(displayName);
-    meta.setLore(lore);
-    itemStack.setItemMeta(meta);
+    itemStack.editMeta(m -> {
+      m.setLore(lore);
+      m.setDisplayName(displayName);
+    });
     return itemStack;
   }
 
-  /**
-   * Gets the display name of the MenuItem.
-   *
-   * @return The display name.
-   */
-  public String getDisplayName() {
-    return displayName;
+  public static ItemStack setNameAndLore(ItemStack itemStack, TextComponent displayName, List<TextComponent> lore) {
+    itemStack.editMeta(m -> {
+      m.lore(lore);
+      m.displayName(displayName);
+    });
+    return itemStack;
   }
 
-  /**
-   * Gets the icon of the MenuItem.
-   *
-   * @return The icon.
-   */
-  public ItemStack getIcon() {
-    return icon;
-  }
-
-  /**
-   * Gets the lore of the MenuItem.
-   *
-   * @return The lore.
-   */
-  public List<String> getLore() {
-    return lore;
-  }
-
-  /**
-   * Gets the ItemStack to be shown to the player.
-   *
-   * @param player The player.
-   * @return The final icon.
-   */
   public ItemStack getFinalIcon(Player player) {
-    return setNameAndLore(getIcon().clone(), getDisplayName(), getLore());
+    return setNameAndLore(getIcon().clone(), displayNameComponent, loreComponent);
   }
 
-  /**
-   * Called when the MenuItem is clicked.
-   *
-   * @param event The {@link ItemClickEvent}.
-   */
   public void onItemClick(ItemClickEvent event) {
     // Do nothing by default
   }

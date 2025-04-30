@@ -154,13 +154,11 @@ public class ItemMenu {
    */
   @SuppressWarnings("deprecation")
   public void update(Player player) {
-    if (player.getOpenInventory() != null) {
-      Inventory inventory = player.getOpenInventory().getTopInventory();
-      if (inventory.getHolder() instanceof MenuHolder && ((MenuHolder) inventory.getHolder())
-          .getMenu().equals(this)) {
-        apply(inventory, player);
-        player.updateInventory();
-      }
+    player.getOpenInventory();
+    Inventory inventory = player.getOpenInventory().getTopInventory();
+    if (inventory.getHolder() instanceof MenuHolder && ((MenuHolder) inventory.getHolder()).getMenu().equals(this)) {
+      apply(inventory, player);
+      player.updateInventory();
     }
   }
 

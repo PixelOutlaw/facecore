@@ -38,11 +38,6 @@ public class MenuHolder implements InventoryHolder {
     this.inventory = inventory;
   }
 
-  /**
-   * Gets the {@link ItemMenu} holding the Inventory.
-   *
-   * @return The {@link ItemMenu} holding the Inventory.
-   */
   public ItemMenu getMenu() {
     return menu;
   }

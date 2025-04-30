@@ -24,14 +24,15 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.Getter;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.ShadowColor;
-import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.format.TextDecoration.State;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 
@@ -82,6 +83,7 @@ public enum FaceColor {
   private final String s;
   @Getter
   private final Map<ShaderStyle, ChatColor> shaderStyles = new HashMap<>();
+  private final static ShadowColor ALMOST_NO_SHADOW = ShadowColor.shadowColor(0, 0, 0, 1);
 
   FaceColor(String chatCode, Color javaColor, boolean shaderEffects) {
     this.rawColor = javaColor;
@@ -148,15 +150,56 @@ public enum FaceColor {
   }
 
   public static TextComponent color(TextComponent tc, FaceColor color) {
-    return tc.color(TextColor.color(
-        color.getRawColor().getRed(),
-        color.getRawColor().getGreen(),
-        color.getRawColor().getBlue()
-    ));
+    var newColor = TextColor.color(
+        color.getRawColor().getRed(), color.getRawColor().getGreen(), color.getRawColor().getBlue());
+    tc = tc.color(newColor);
+    return reShadow(tc).decorationIfAbsent(TextDecoration.ITALIC, State.FALSE);
+  }
+
+  public static TextComponent color(TextComponent tc, ChatColor color) {
+    var javaColor = color.getColor();
+    var newColor = TextColor.color(javaColor.getRed(), javaColor.getGreen(), javaColor.getBlue());
+    tc = tc.color(newColor);
+    return reShadow(tc).decorationIfAbsent(TextDecoration.ITALIC, State.FALSE);
   }
 
   public static TextComponent noShadow(TextComponent tc) {
-    return tc.colorIfAbsent(TextColor.color(NamedTextColor.WHITE)).shadowColor(ShadowColor.none());
+    var children = tc.children();
+    var comp = tc.children(List.of()).shadowColor(ShadowColor.none());
+    for (var c : children) {
+      comp = comp.append(c.shadowColor(ShadowColor.none()));
+    }
+    return comp.colorIfAbsent(TextColor.color(NamedTextColor.WHITE))
+        .decorationIfAbsent(TextDecoration.ITALIC, State.FALSE);
+  }
+
+  public static TextComponent fakeNoShadow(TextComponent tc) {
+    var children = tc.children();
+    var comp = tc.children(List.of()).shadowColor(ALMOST_NO_SHADOW);
+    for (var c : children) {
+      comp = comp.append(c.shadowColor(ALMOST_NO_SHADOW));
+    }
+    return comp.colorIfAbsent(TextColor.color(NamedTextColor.WHITE))
+        .decorationIfAbsent(TextDecoration.ITALIC, State.FALSE);
+  }
+
+  public static TextComponent reShadow(TextComponent tc) {
+    var color = tc.color();
+    if (color == null) {
+      return tc;
+    }
+    var shadowColor = ShadowColor.shadowColor(color.red() / 4, color.green() / 4, color.blue() / 4, 255);
+    return tc.shadowColor(shadowColor);
+  }
+
+  public static TextComponent reShadowAll(TextComponent tc) {
+    var children = tc.children();
+    var comp = tc.children(List.of());
+    comp = comp.append(reShadow(comp.children(List.of())));
+    for (var c : children) {
+      comp = comp.append(reShadow((TextComponent) c));
+    }
+    return comp;
   }
 
   public static TextComponent i(TextComponent tc) {

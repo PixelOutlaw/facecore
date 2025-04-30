@@ -24,8 +24,8 @@ package com.tealcube.minecraft.bukkit.facecore.utilities;
 
 import com.tealcube.minecraft.bukkit.facecore.FacecorePlugin;
 import com.tealcube.minecraft.bukkit.facecore.pojo.RandomSound;
-import io.pixeloutlaw.minecraft.spigot.hilt.ItemStackExtensionsKt;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -243,7 +243,7 @@ public class ItemUtils {
   @NotNull
   public static List<Float> getCustomNumbers(ItemStack stack) {
     try {
-      return stack.getItemMeta().getCustomModelDataComponent().getFloats();
+      return new ArrayList<>(stack.getItemMeta().getCustomModelDataComponent().getFloats());
     } catch (Exception e) {
       e.printStackTrace();
     }

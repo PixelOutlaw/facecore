@@ -7,12 +7,12 @@ loadbefore:
   - FaceShop
   - Strife
   - Loot
-depend:
+  - LibsDisguises
   - ProtocolLib
-  - WorldGuard
   - PlaceholderAPI
   - DiscordSRV
-  - LibsDisguises
+depend:
+  - WorldGuard
 commands:
   safe-stop:
     description: Stop

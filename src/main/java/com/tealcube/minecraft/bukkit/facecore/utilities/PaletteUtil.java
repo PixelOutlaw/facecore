@@ -30,12 +30,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.format.TextDecoration.State;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class PaletteUtil {
@@ -98,18 +99,27 @@ public class PaletteUtil {
 
   public static TextComponent loadComponent(ConfigurationSection cs, String field, String fallback) {
     String result = cs.getString(field, fallback);
-    return StringUtils.isBlank(result) ? Component.empty() : covertStringToRetardComponent(result);
+    return StringUtils.isBlank(result) ? Component.empty() : covertStringToRetardComponent(PaletteUtil.color(result));
   }
 
   public static List<TextComponent> loadComponents(ConfigurationSection cs, String field) {
     List<TextComponent> components = new ArrayList<>();
     for (String s : cs.getStringList(field)) {
-      components.add(covertStringToRetardComponent(s));
+      components.add(covertStringToRetardComponent(PaletteUtil.color(s)));
     }
     return components;
   }
+
   public static TextComponent convert(String s) {
-    return covertStringToRetardComponent(s);
+    return covertStringToRetardComponent(PaletteUtil.color(s));
+  }
+
+  public static List<TextComponent> convert(List<String> strs) {
+    List<TextComponent> comps = new ArrayList<>();
+    for (String s : strs) {
+      comps.add(covertStringToRetardComponent(PaletteUtil.color(s)));
+    }
+    return comps;
   }
 
   public static Map<String, String> buildMap() {
@@ -129,7 +139,8 @@ public class PaletteUtil {
 
   private static net.kyori.adventure.text.TextComponent covertStringToRetardComponent(String str) {
     return (net.kyori.adventure.text.TextComponent) MiniMessage.miniMessage()
-        .deserialize(MiniMessage.miniMessage().serialize(HOLY_FUCK_FUCK_KYORI.deserialize(str)));
+        .deserialize(MiniMessage.miniMessage().serialize(HOLY_FUCK_FUCK_KYORI.deserialize(str))).decorationIfAbsent(
+            TextDecoration.ITALIC, State.FALSE);
   }
 }
 
